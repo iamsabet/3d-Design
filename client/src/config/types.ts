@@ -1,0 +1,1 @@
+type DecalType = "logo" | "full"
