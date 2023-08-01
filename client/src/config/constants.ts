@@ -1,4 +1,4 @@
-import { Euler, Vector2, Vector3 } from "@react-three/fiber";
+import { Euler, Vector3 } from "@react-three/fiber";
 import { swatch, fileIcon, ai, logoShirt, stylishShirt } from "../assets";
 
 export const EditorTabs = [
@@ -7,7 +7,11 @@ export const EditorTabs = [
     icon: swatch,
   },
   {
-    name: "filepicker",
+    name: "logopicker",
+    icon: fileIcon,
+  },
+  {
+    name: "texturepicker",
     icon: fileIcon,
   },
   {
@@ -55,8 +59,8 @@ export const LogoPositions: LogoPositionsType = {
 
 interface DecalTypesType {
   [key: string]: {
-    stateProperty: string,
-    filterTab: string,
+    stateProperty: "logoDecal" | "fullDecal",
+    filterTab: "logoShirt" | "stylishShirt",
   }
 }
 

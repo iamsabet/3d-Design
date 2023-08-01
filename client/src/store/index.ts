@@ -10,6 +10,10 @@ const state = proxy<StoreType>({
     logoDecal: "./threejs.png",
     fullDecal: "./threejs.png",
 
+    activeFilterTab: {
+        logoShirt: true,
+        stylishShirt: false,
+    },
     logoPosition: "topLeft"
 
 });

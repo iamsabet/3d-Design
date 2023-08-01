@@ -8,7 +8,6 @@ type Props = {
 };
 
 const CameraRig = ({ children }: Props) => {
-  // @ts-ignore
   const group = useRef();
   const snap = useSnapshot(state);
 

@@ -3,6 +3,8 @@ type StateKeyTypes = "intro" | "color" | "isLogoTexture"
 
 type logoPositionType = "center" | "topLeft" | "topRight";
 
+type ShirtTypes = "logoShirt" | "stylishShirt"
+
 type StoreType = {
     intro: boolean,
     color: string,
@@ -10,6 +12,10 @@ type StoreType = {
     isFullTexture: boolean,
     logoDecal: string,
     fullDecal: string,
+    activeFilterTab:
+    { [key: string]: boolean }
+
+
     logoPosition: logoPositionType
 
 }

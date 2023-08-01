@@ -20,28 +20,40 @@ import {
 import state from "../store";
 const Customizer = () => {
   const snap = useSnapshot(state);
-  const [file, setFile] = useState("");
+  const [logoFile, setLogoFile] = useState("");
+  const [textureFile, settextureFile] = useState("");
   const [prompt, setPrompt] = useState("");
   const [generatingImg, setGeneratingImg] = useState(false);
   const [activeEditorTab, setActiveEditorTab] = useState("");
 
-  const [activeFilterTab, setActiveFilterTab] = useState<ActiveFilterTabType>({
-    logoShirt: true,
-    stylishShirt: false,
-  });
+  // const [activeFilterTab, setActiveFilterTab] = useState<ActiveFilterTabType>({
+  //   logoShirt: true,
+  //   stylishShirt: false,
+  // });
 
   // show tab content depending on the active tab
   const generateTabContent = () => {
     switch (activeEditorTab) {
       case "colorpicker":
         return <ColorPicker />;
-      case "filepicker":
+      case "logopicker":
         return (
           <FilePicker
             // @ts-ignore
-            file={file}
+            file={logoFile}
             readFile={readFile}
-            setFile={setFile}
+            setFile={setLogoFile}
+            type="logo"
+          />
+        );
+      case "texturepicker":
+        return (
+          <FilePicker
+            // @ts-ignore
+            file={textureFile}
+            readFile={readFile}
+            setFile={settextureFile}
+            type="full"
           />
         );
       case "aipicker":
@@ -91,19 +103,18 @@ const Customizer = () => {
   };
   const handleDecals = (type: DecalType, result: any) => {
     const decalType = DecalTypes[type];
-    // @ts-ignore
     state[decalType.stateProperty] = result;
-    if (!activeFilterTab[decalType.filterTab]) {
+    if (!snap.activeFilterTab[decalType.filterTab]) {
       handleActiveFilterTab(decalType.filterTab);
     }
   };
   const handleActiveFilterTab = (tabName: string) => {
     switch (tabName) {
       case "logoShirt":
-        state.isLogoTexture = !activeFilterTab[tabName];
+        state.isLogoTexture = !snap.activeFilterTab[tabName];
         break;
       case "stylishShirt":
-        state.isFullTexture = !activeFilterTab[tabName];
+        state.isFullTexture = !snap.activeFilterTab[tabName];
         break;
       default:
         state.isLogoTexture = true;
@@ -112,14 +123,13 @@ const Customizer = () => {
     }
 
     // after setting state we need to set activeFilterTab to update the UI
-    setActiveFilterTab((prevState) => {
-      return {
-        ...prevState,
-        [tabName]: !prevState[tabName],
-      };
-    });
+    setActiveFilterTab(tabName);
   };
-  const readFile = (type: DecalType) => {
+  const setActiveFilterTab = (tabName: string) => {
+    state.activeFilterTab[tabName] = !state.activeFilterTab[tabName];
+  };
+  const readFile = (type: DecalType, file: Blob | MediaSource | undefined) => {
+    // let file = type === "logo" ? logoFile : textureFile;
     reader(file)
       .then((result) => {
         handleDecals(type, result);
@@ -146,8 +156,11 @@ const Customizer = () => {
                     tab={tab}
                     isActiveTab={tab.name === activeEditorTab}
                     handleClick={() => {
-                      if (tab.name === activeEditorTab) setActiveEditorTab("");
-                      else setActiveEditorTab(tab.name);
+                      if (tab.name === activeEditorTab) {
+                        setActiveEditorTab("");
+                      } else {
+                        setActiveEditorTab(tab.name);
+                      }
                     }}
                   />
                 ))}
@@ -163,7 +176,12 @@ const Customizer = () => {
               type="filled"
               title="Go Back"
               styles="w-fit px-4 py-2.5 text-sm"
-              handleClick={() => (state.intro = true)}
+              handleClick={() => {
+                setActiveEditorTab("");
+                setTimeout(() => {
+                  state.intro = true;
+                }, 50);
+              }}
             />
           </motion.div>
           <motion.div
@@ -175,7 +193,7 @@ const Customizer = () => {
                 key={tab.name}
                 tab={tab}
                 isFilterTab
-                isActiveTab={activeFilterTab[tab.name]}
+                isActiveTab={snap.activeFilterTab[tab.name]}
                 handleClick={() => handleActiveFilterTab(tab.name)}
               />
             ))}
