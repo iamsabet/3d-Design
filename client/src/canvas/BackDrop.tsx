@@ -24,13 +24,12 @@ const BackDrop = () => {
         position={[5, 5, -10]}
       />
       <RandomizedLight
-        amount={10}
+        amount={5}
         radius={5}
         intensity={0.25}
         ambient={0.55}
         position={[-5, 5, -8]}
       />
-      {/* <RandomizedLight /> */}
     </AccumulativeShadows>
   );
 };
