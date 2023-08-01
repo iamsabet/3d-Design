@@ -44,8 +44,10 @@ html {
   @apply absolute z-10 bottom-5 right-0 left-0 w-full flex justify-center items-center flex-wrap gap-4;
 }
 
-.aipicker-container {
-  @apply absolute left-full ml-3 glassmorphism p-3 w-[195px] h-[220px] rounded-md flex flex-col gap-4;
+
+
+.aipicker-container{
+  @apply absolute left-full ml-2 glassmorphism p-2 w-[240px] h-[290px] rounded-md flex flex-col gap-4;
 }
 
 .aipicker-textarea {
@@ -53,8 +55,8 @@ html {
 }
 
 .filepicker-container {
-  @apply absolute left-full ml-3 glassmorphism p-3 
-  w-[220px] h-[220px] flex flex-col rounded-md;
+  @apply absolute left-full ml-3 glassmorphism p-2 
+  w-[240px] h-[290px] flex flex-col rounded-md;
 }
 
 .filepicker-label {
@@ -80,15 +82,22 @@ input[type="file"] {
 }
 
 .sketch-picker {
-  width: 170px !important;
+  width: 220px !important;
+   /* makes it (240px, 290px)  */
+  height: 280px !important;
   background: rgba(255, 255, 255, 0.25) !important;
   box-shadow: 0 2px 30px 0 rgba(31, 38, 135, 0.07) !important;
   backdrop-filter: blur(4px) !important;
-  -webkit-backdrop-filter: blur(4px) !important;
-  border: 1px solid rgba(255, 255, 255, 0.18) !important;
+  -webkit-backdrop-filter: blur(3px) !important;
+  border: 0px solid rgba(255, 255, 255, 0.18) !important;
   border-radius: 6px !important;
 }
 
 .sketch-picker > div:nth-child(3) {
   display: none !important;
+}
+.flexbox-fix:last-child{
+  margin: 10px -10px !important;
+  padding: 10px 0px 0px 10px !important;
+  border-top: 1px solid rgb(210, 210, 210) !important;
 }

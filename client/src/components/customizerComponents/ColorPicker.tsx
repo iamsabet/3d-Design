@@ -11,9 +11,10 @@ const ColorPicker = () => {
     <AnimatePresence>
       <motion.div
         {...slideAnimation("left")}
-        className="absolute left-full m-3"
+        className="absolute left-full m-2"
       >
         <SketchPicker
+          // already has className="sketch-picker"
           color={snap.color}
           onChange={(e) => (state.color = e.hex) /*, console.log(e.hex)*/}
           presetColors={[
