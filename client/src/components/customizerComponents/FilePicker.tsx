@@ -49,25 +49,24 @@ const FilePicker = ({ file, type, setFile, readFile }: FilePickerProps) => {
           <label htmlFor="file-upload" className="filepicker-label">
             Upload Your Image
           </label>
-          <p className="mt-2 text-gray-500 text-sm truncate">
+          <p className="mt-2 text-gray-700 text-sm truncate text-center">
             {file === ""
               ? "No File Selected"
               : // @ts-ignore
-                file?.name}
+                `${file?.name}`}
           </p>
           {file && type === "logo" && (
-            <img
-              src={snap.logoDecal}
-              className="w-16 h-16 object-contain mx-auto mt-3"
-            />
+            <img src={snap.logoDecal} className="picked-thumbnail" />
           )}
           {file && type === "full" && (
-            <img
-              src={snap.fullDecal}
-              className="w-16 h-16 object-contain mx-auto mt-3"
-            />
+            <img src={snap.fullDecal} className="picked-thumbnail" />
           )}
         </div>
+        {type === "logo" && (
+          <p className="mt-2 text-gray-900 font-semibold text-md truncate text-center">
+            Logo Position
+          </p>
+        )}
         {type === "logo" && (
           <div className="mt-4 flex flex-row gap-1">
             <CustomButton
