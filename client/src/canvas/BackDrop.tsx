@@ -1,15 +1,14 @@
 import { useRef } from "react";
-// import { easing } from "maath";
-// import { useFrame } from "@react-three/fiber";
 import { AccumulativeShadows, RandomizedLight } from "@react-three/drei";
-
 const BackDrop = () => {
   const shadows = useRef();
+
   return (
     <AccumulativeShadows
       // @ts-ignore
       ref={shadows}
       temporal
+      color="#EFBD38"
       frames={60}
       alphaTest={0.25}
       scale={10}

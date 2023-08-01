@@ -4,6 +4,7 @@ import { useSnapshot } from "valtio";
 import { useFrame } from "@react-three/fiber";
 import { Decal, useGLTF, useTexture } from "@react-three/drei";
 import state from "../store";
+import { LogoPositions } from "../config/constants";
 
 const Shirt = () => {
   const snap = useSnapshot(state);
@@ -20,8 +21,13 @@ const Shirt = () => {
   });
 
   const state_string = JSON.stringify(state);
+
   return (
-    <group key={state_string}>
+    <group
+      key={state_string}
+      // rotation={[0, Math.PI, 0]}
+      rotation={[0, 0, 0]}
+    >
       <mesh
         castShadow
         geometry={nodes.T_Shirt_male.geometry}
@@ -40,15 +46,9 @@ const Shirt = () => {
         )}
         {snap.isLogoTexture && (
           <Decal
-            // position={[0, 0.04, 0.15]}
-            // rotation={[0, 0, 0]}
-            // scale={0.15}
-            // position={[-0.1, 0.1, 0.1]}
-            // rotation={[0, 0, 0]}
-            // scale={0.07}
-            position={[0.1, 0.1, 0.1]}
-            rotation={[0, 0, 0]}
-            scale={0.07}
+            position={LogoPositions[snap.logoPosition].position}
+            rotation={LogoPositions[snap.logoPosition].rotation}
+            scale={LogoPositions[snap.logoPosition].scale}
             map={logoTexture}
             // map-anisotropy={16}
             depthTest={false}

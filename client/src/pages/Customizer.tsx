@@ -93,7 +93,6 @@ const Customizer = () => {
     const decalType = DecalTypes[type];
     // @ts-ignore
     state[decalType.stateProperty] = result;
-    // @ts-ignore
     if (!activeFilterTab[decalType.filterTab]) {
       handleActiveFilterTab(decalType.filterTab);
     }
@@ -116,16 +115,19 @@ const Customizer = () => {
     setActiveFilterTab((prevState) => {
       return {
         ...prevState,
-        // @ts-ignore
         [tabName]: !prevState[tabName],
       };
     });
   };
   const readFile = (type: DecalType) => {
-    reader(file).then((result) => {
-      handleDecals(type, result);
-      // setActiveEditorTab("");
-    });
+    reader(file)
+      .then((result) => {
+        handleDecals(type, result);
+        // setActiveEditorTab("");
+      })
+      .catch((e) => {
+        // console.log(e);
+      });
   };
   return (
     <AnimatePresence>
@@ -173,7 +175,6 @@ const Customizer = () => {
                 key={tab.name}
                 tab={tab}
                 isFilterTab
-                // @ts-ignore
                 isActiveTab={activeFilterTab[tab.name]}
                 handleClick={() => handleActiveFilterTab(tab.name)}
               />

@@ -1,3 +1,4 @@
+import { Euler, Vector2, Vector3 } from "@react-three/fiber";
 import { swatch, fileIcon, ai, logoShirt, stylishShirt } from "../assets";
 
 export const EditorTabs = [
@@ -26,8 +27,40 @@ export const FilterTabs = [
   },
 ];
 
+interface LogoPositionsType {
+  [key: string]: {
+    position: Vector3,
+    rotation: (Euler & (number | Euler)) | undefined,
+    scale: number
+  };
+}
 
-export const DecalTypes = {
+export const LogoPositions: LogoPositionsType = {
+  "center": {
+    position: [0, 0.04, 0.15],
+    rotation: [0, 0, 0],
+    scale: 0.15
+  },
+  "topLeft": {
+    position: [0.1, 0.1, 0.1],
+    rotation: [0, 0, 0],
+    scale: 0.075
+  },
+  "topRight": {
+    position: [-0.1, 0.1, 0.1],
+    rotation: [0, 0, 0],
+    scale: 0.075
+  }
+}
+
+interface DecalTypesType {
+  [key: string]: {
+    stateProperty: string,
+    filterTab: string,
+  }
+}
+
+export const DecalTypes: DecalTypesType = {
   logo: {
     stateProperty: "logoDecal",
     filterTab: "logoShirt",

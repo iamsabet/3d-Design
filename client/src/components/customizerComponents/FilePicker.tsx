@@ -2,8 +2,11 @@ import { useEffect, useState } from "react";
 import { CustomButton } from "..";
 import { motion, AnimatePresence } from "framer-motion";
 import { slideAnimation } from "../../config/motion";
+import { useSnapshot } from "valtio";
+import state from "../../store";
 const FilePicker = ({ file, setFile, readFile }: FilePickerProps) => {
   const [thumbnail, setThumbnail] = useState("");
+  const snap = useSnapshot(state);
 
   useEffect(() => {
     if (file) {
@@ -11,6 +14,11 @@ const FilePicker = ({ file, setFile, readFile }: FilePickerProps) => {
     }
     return () => {};
   }, []);
+
+  const setLogoPosition = (pos: logoPositionType) => {
+    state.logoPosition = pos;
+    return;
+  };
 
   return (
     <AnimatePresence>
@@ -44,8 +52,37 @@ const FilePicker = ({ file, setFile, readFile }: FilePickerProps) => {
             />
           )}
         </div>
-        <div className="mt-4 flex flex-wrap gap-3">
+        <div className="mt-4 flex flex-row gap-1">
           <CustomButton
+            type="filled"
+            title="Top Left"
+            handleClick={() => {
+              readFile("logo");
+              setLogoPosition("topLeft");
+            }}
+            styles="text-ss"
+          />
+          <CustomButton
+            type="filled"
+            title="Center"
+            handleClick={() => {
+              readFile("logo");
+              setLogoPosition("center");
+            }}
+            styles="text-ss"
+          />
+          <CustomButton
+            type="filled"
+            title="Top Right"
+            handleClick={() => {
+              readFile("logo");
+              setLogoPosition("topRight");
+            }}
+            styles="text-ss"
+          />
+        </div>
+        <div className="mt-4 flex flex-wrap gap-3">
+          {/* <CustomButton
             type="outline"
             title="Logo"
             handleClick={() => readFile("logo")}
@@ -56,7 +93,7 @@ const FilePicker = ({ file, setFile, readFile }: FilePickerProps) => {
             title="Full"
             handleClick={() => readFile("full")}
             styles="text-ss"
-          />
+          /> */}
         </div>
       </motion.div>
     </AnimatePresence>
