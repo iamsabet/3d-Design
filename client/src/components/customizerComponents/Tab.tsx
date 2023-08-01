@@ -25,20 +25,24 @@ const Tab = ({
           backgroundColor: "transparent",
           opacity: 1,
         };
+  const imageClasses = isFilterTab
+    ? "w-2/3 h-2/3"
+    : "w-11/12 h-11/12 object-contain";
+  const isActiveEditorTabClasses =
+    !isFilterTab && isActiveTab ? "bg-gray-500 bg-opacity-30" : "";
   return (
     <div
       key={tab.name}
-      className={`tab-btn ${
+      className={`tab-btn rounded-lg ${isActiveEditorTabClasses}  ${
         isFilterTab ? "rounded-full glassmorphism" : "rounded-4"
-      } ${activeStyles}`}
+      }`}
+      style={isFilterTab ? activeStyles : {}}
       onClick={handleClick}
     >
       <img
         src={tab.icon}
         alt={`${tab.name} icon`}
-        className={
-          isFilterTab ? "w-2/3 h-2/3" : "w-11/12 h-11/12 object-contain"
-        }
+        className={`${imageClasses}`}
       />
     </div>
   );

@@ -59,13 +59,34 @@ const Customizer = () => {
   };
   const handleSubmit = async (type: DecalType) => {
     if (!prompt) return alert("Please Enter a Prompt");
+    let error = false;
     try {
       // call out backend to generate an AI image
+      setGeneratingImg(true);
+      const response = await fetch(config.development.backendUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          prompt,
+        }),
+      });
+      const data = await response.json();
+      if (response.status === 200) {
+        handleDecals(type, `data:image/png;base64,${data.photo}`);
+      } else {
+        console.log(JSON.stringify(data));
+        alert("Error");
+      }
     } catch (e) {
-      alert(e);
+      debugger;
+      error = true;
+      console.error(JSON.stringify(e));
+      window.alert(e);
     } finally {
       setGeneratingImg(false);
-      setActiveEditorTab("");
+      if (!error) {
+        setActiveEditorTab("");
+      }
     }
   };
   const handleDecals = (type: DecalType, result: any) => {
@@ -120,6 +141,7 @@ const Customizer = () => {
                   <Tab
                     key={tab.name}
                     tab={tab}
+                    isActiveTab={tab.name === activeEditorTab}
                     handleClick={() => {
                       if (tab.name === activeEditorTab) setActiveEditorTab("");
                       else setActiveEditorTab(tab.name);

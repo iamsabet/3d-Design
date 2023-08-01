@@ -22,7 +22,7 @@ const CustomButton = ({
         backgroundColor: "transparent",
         borderWidth: "2px",
         borderColor: snap.color,
-        color: getContrastingColor(snap.color),
+        color: snap.color,
       };
     }
   };
