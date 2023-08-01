@@ -2,9 +2,9 @@ import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useSnapshot } from "valtio";
 import config from "../config/config";
-// import store from "../store";
-// import { download } from "../assets";
-// import { downloadCanvasToImage } from "../config/helpers";
+import store from "../store";
+import { download } from "../assets";
+import { downloadCanvasToImage } from "../config/helpers";
 import { reader } from "../config/helpers";
 import { EditorTabs, FilterTabs, DecalTypes } from "../config/constants";
 import { fadeAnimation, slideAnimation } from "../config/motion";
@@ -197,6 +197,13 @@ const Customizer = () => {
                 handleClick={() => handleActiveFilterTab(tab.name)}
               />
             ))}
+            <Tab
+              key={"download"}
+              tab={{ name: "download", icon: download }}
+              isFilterTab
+              isActiveTab={false}
+              handleClick={downloadCanvasToImage}
+            />
           </motion.div>
         </>
       )}
