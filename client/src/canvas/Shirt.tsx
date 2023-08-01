@@ -26,7 +26,7 @@ const Shirt = () => {
         geometry={nodes.T_Shirt_male.geometry}
         // geometry={nodes.girl_top_Natal2.geometry}
         material={materials.lambert1}
-        material-roughness={0.95}
+        material-roughness={1}
         dispose={() => {}}
       >
         {snap.isFullTexture && (

@@ -21,7 +21,7 @@ import state from "../store";
 const Customizer = () => {
   const snap = useSnapshot(state);
   const [file, setFile] = useState("");
-  const [AIPrompt, setAIPrompt] = useState("");
+  const [prompt, setPrompt] = useState("");
   const [generatingImg, setGeneratingImg] = useState(false);
   const [activeEditorTab, setActiveEditorTab] = useState("");
 
@@ -45,9 +45,27 @@ const Customizer = () => {
           />
         );
       case "aipicker":
-        return <AIPicker />;
+        return (
+          <AIPicker
+            prompt={prompt}
+            setPrompt={setPrompt}
+            generatingImg={generatingImg}
+            handleSubmit={handleSubmit}
+          />
+        );
       default:
         return null;
+    }
+  };
+  const handleSubmit = async (type: DecalType) => {
+    if (!prompt) return alert("Please Enter a Prompt");
+    try {
+      // call out backend to generate an AI image
+    } catch (e) {
+      alert(e);
+    } finally {
+      setGeneratingImg(false);
+      setActiveEditorTab("");
     }
   };
   const handleDecals = (type: DecalType, result: any) => {
@@ -71,6 +89,15 @@ const Customizer = () => {
         state.isLogoTexture = true;
         state.isFullTexture = false;
     }
+
+    // after setting state we need to set activeFilterTab to update the UI
+    setActiveFilterTab((prevState) => {
+      return {
+        ...prevState,
+        // @ts-ignore
+        [tabName]: !prevState[tabName],
+      };
+    });
   };
   const readFile = (type: DecalType) => {
     reader(file).then((result) => {
@@ -123,8 +150,9 @@ const Customizer = () => {
                 key={tab.name}
                 tab={tab}
                 isFilterTab
-                isActiveTab={false}
-                handleClick={() => {}}
+                // @ts-ignore
+                isActiveTab={activeFilterTab[tab.name]}
+                handleClick={() => handleActiveFilterTab(tab.name)}
               />
             ))}
           </motion.div>

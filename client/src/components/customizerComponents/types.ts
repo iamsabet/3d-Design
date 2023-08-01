@@ -3,3 +3,9 @@ interface FilePickerProps {
     setFile: Function
     readFile: Function
 }
+interface AIPickerProps {
+    prompt: string;
+    setPrompt: Function;
+    generatingImg: boolean;
+    handleSubmit: Function;
+}
