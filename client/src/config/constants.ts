@@ -11,10 +11,6 @@ export const EditorTabs = [
     icon: fileIcon,
   },
   {
-    name: "texturepicker",
-    icon: fileIcon,
-  },
-  {
     name: "aipicker",
     icon: ai,
   },

@@ -12,6 +12,7 @@ type StoreType = {
     isFullTexture: boolean,
     logoDecal: string,
     fullDecal: string,
+    uploadSelectedTab: "logo" | "texture",
     activeFilterTab:
     { [key: string]: boolean }
 

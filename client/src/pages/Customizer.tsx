@@ -43,7 +43,6 @@ const Customizer = () => {
             file={logoFile}
             readFile={readFile}
             setFile={setLogoFile}
-            type="logo"
           />
         );
       case "texturepicker":
@@ -53,7 +52,6 @@ const Customizer = () => {
             file={textureFile}
             readFile={readFile}
             setFile={settextureFile}
-            type="full"
           />
         );
       case "aipicker":
