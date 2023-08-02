@@ -35,7 +35,7 @@ const Tab = ({
       key={tab.name}
       className={`tab-btn rounded-lg ${isActiveEditorTabClasses}  ${
         isFilterTab ? "rounded-full glassmorphism" : "rounded-4"
-      }`}
+      } transition-all duration-200 ease-in-out`}
       style={isFilterTab ? activeStyles : {}}
       onClick={handleClick}
     >

@@ -13,6 +13,7 @@ const Shirt = () => {
   const { nodes, materials } = useGLTF("/shirt_baked.glb");
   //   const { nodes, materials } = useGLTF("/Female_Light_Blue_Shirt.glb");
   const logoTexture = useTexture(snap.logoDecal);
+  const logoChet = useTexture(snap.logoDecal);
   const fullTexture = useTexture(snap.fullDecal);
 
   useFrame((state, delta) => {
@@ -25,6 +26,8 @@ const Shirt = () => {
   return (
     <group
       key={state_string}
+      // rotation={[0, (3 * Math.PI) / 2, 0]}
+      // rotation={[0, (1 * Math.PI) / 2, 0]}
       // rotation={[0, Math.PI, 0]}
       rotation={[0, 0, 0]}
     >
@@ -55,6 +58,24 @@ const Shirt = () => {
             // depthWrite={true}
           />
         )}
+        <Decal
+          position={[0.25, 0.085, -0.021]}
+          rotation={[-(2 * Math.PI), (1 * Math.PI) / 2, 0]}
+          scale={0.067}
+          map={logoChet}
+          // map-anisotropy={16}
+          depthTest={false}
+          // depthWrite={true}
+        />
+        <Decal
+          position={[-0.25, 0.085, -0.021]}
+          rotation={[-(2 * Math.PI), (3 * Math.PI) / 2, 0]}
+          scale={0.067}
+          map={logoChet}
+          // map-anisotropy={16}
+          depthTest={false}
+          // depthWrite={true}
+        />
       </mesh>
     </group>
   );

@@ -21,6 +21,7 @@ const BackDrop = () => {
         intensity={0.55}
         ambient={0.25}
         position={[5, 5, -10]}
+        rotation={[0, 0, 0]}
       />
       <RandomizedLight
         amount={5}
@@ -28,6 +29,7 @@ const BackDrop = () => {
         intensity={0.25}
         ambient={0.55}
         position={[-5, 5, -8]}
+        rotation={[0, 0, 0]}
       />
     </AccumulativeShadows>
   );

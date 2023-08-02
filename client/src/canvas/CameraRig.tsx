@@ -3,6 +3,7 @@ import { useFrame } from "@react-three/fiber";
 import { easing } from "maath";
 import { useSnapshot } from "valtio";
 import state from "../store";
+import { Euler } from "three/src/math/Euler.js";
 type Props = {
   children?: JSX.Element | JSX.Element[];
 };
@@ -16,12 +17,16 @@ const CameraRig = ({ children }: Props) => {
     const isMobile = window.innerWidth < 620;
     let targetPosition = [-0.4, 0.0, 2.0];
     // set the initial position of the model
+    let targetRotation = new Euler(0, 0, 0);
     if (snap.intro) {
       if (isBreakPoint) targetPosition = [0, 0, 2];
       if (isMobile) targetPosition = [0, 0.2, 2.5];
+
+      targetRotation = new Euler(0, (-4 * Math.PI) / 5, 0);
     } else {
       if (isMobile) targetPosition = [0, 0, 2.5];
       else targetPosition = [0, 0, 2];
+      targetRotation = new Euler(0, 0, 0);
     }
 
     // set the model camera position
@@ -36,8 +41,16 @@ const CameraRig = ({ children }: Props) => {
     easing.dampE(
       // @ts-ignore
       group.current.rotation,
-      [state.pointer.y / 6, -state.pointer.x / 4, 0],
+      [state.pointer.y / 10, -state.pointer.x / 3, 0],
       0.2,
+      delta
+    );
+
+    easing.dampE(
+      // @ts-ignore
+      group.current.rotation,
+      targetRotation,
+      0.35,
       delta
     );
   });
