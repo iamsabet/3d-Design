@@ -3,7 +3,13 @@ import { motion, AnimatePresence } from "framer-motion";
 import { slideAnimation } from "../../config/motion";
 import { useSnapshot } from "valtio";
 import state from "../../store";
-import { fileIcon, tshirt } from "../../assets";
+import {
+  centerLogo,
+  fileIcon,
+  leftSideLogo,
+  rightSideLogo,
+  tshirt,
+} from "../../assets";
 const FilePicker = ({ file, setFile, readFile }: FilePickerProps) => {
   const snap = useSnapshot(state);
 
@@ -70,15 +76,15 @@ const FilePicker = ({ file, setFile, readFile }: FilePickerProps) => {
               <div className="mt-4 flex flex-row gap-1">
                 <CustomButton
                   type={
-                    snap.logoPosition === "topLeft" ? "filled" : "glass"
+                    snap.logoPosition === "topRight" ? "filled" : "glass"
                   } /* change between glass and filled */
-                  title="Left"
+                  title="Right"
                   handleClick={() => {
                     readFile("logo");
-                    setLogoPosition("topLeft");
+                    setLogoPosition("topRight");
                   }}
                   styles="text-ss glassmorphism"
-                  children={[<img src={tshirt} />]}
+                  children={[<img src={rightSideLogo} />]}
                 />
                 <CustomButton
                   type={
@@ -90,19 +96,19 @@ const FilePicker = ({ file, setFile, readFile }: FilePickerProps) => {
                     setLogoPosition("center");
                   }}
                   styles="text-ss glassmorphism"
-                  children={[<img src={tshirt} />]}
+                  children={[<img src={centerLogo} />]}
                 />
                 <CustomButton
                   type={
-                    snap.logoPosition === "topRight" ? "filled" : "glass"
+                    snap.logoPosition === "topLeft" ? "filled" : "glass"
                   } /* change between glass and filled */
-                  title="Right"
+                  title="Left"
                   handleClick={() => {
                     readFile("logo");
-                    setLogoPosition("topRight");
+                    setLogoPosition("topLeft");
                   }}
                   styles="text-ss glassmorphism"
-                  children={[<img src={tshirt} />]}
+                  children={[<img src={leftSideLogo} />]}
                 />
               </div>
             </motion.div>

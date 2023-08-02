@@ -6,4 +6,21 @@ import tshirt from "./logo-tshirt.png"
 import logoShirt from "./logo-tshirt.png";
 import stylishShirt from "./stylish-tshirt.png";
 
-export { ai, fileIcon, swatch, download, logoShirt, stylishShirt, tshirt };
+import leftSideLogo from "./left-logo.png"
+import rightSideLogo from "./right-logo.png"
+import centerLogo from "./center-logo.png"
+import greenLogo from "./center-logo-green.png"
+
+export {
+    ai,
+    fileIcon,
+    swatch,
+    download,
+    logoShirt,
+    stylishShirt,
+    tshirt,
+    leftSideLogo,
+    rightSideLogo,
+    centerLogo,
+    greenLogo
+};

@@ -1,5 +1,5 @@
 import { Euler, Vector3 } from "@react-three/fiber";
-import { swatch, fileIcon, ai, logoShirt, stylishShirt } from "../assets";
+import { swatch, fileIcon, ai, logoShirt, stylishShirt, greenLogo } from "../assets";
 
 export const EditorTabs = [
   {
@@ -19,7 +19,7 @@ export const EditorTabs = [
 export const FilterTabs = [
   {
     name: "logoShirt",
-    icon: logoShirt,
+    icon: greenLogo,
   },
   {
     name: "stylishShirt",
