@@ -1,7 +1,7 @@
 type StateKeyTypes = "intro" | "color" | "isLogoTexture"
     | "isFullTexture" | "logoDecal" | "fullDecal";
 
-type logoPositionType = "center" | "topLeft" | "topRight";
+type logoPositionType = "center" | "topLeft" | "topRight" | "bottomCenter";
 
 type ShirtTypes = "logoShirt" | "stylishShirt"
 

@@ -1,5 +1,5 @@
 import { Euler, Vector3 } from "@react-three/fiber";
-import { swatch, fileIcon, ai, logoShirt, stylishShirt, greenLogo } from "../assets";
+import { swatch, fileIcon, ai, logoShirt, stylishShirt, greenLogo, tShirts } from "../assets";
 
 export const EditorTabs = [
   {
@@ -13,6 +13,10 @@ export const EditorTabs = [
   {
     name: "aipicker",
     icon: ai,
+  },
+  {
+    name: "designs",
+    icon: tShirts,
   },
 ];
 
@@ -37,9 +41,14 @@ interface LogoPositionsType {
 
 export const LogoPositions: LogoPositionsType = {
   "center": {
-    position: [0, 0.04, 0.15],
+    position: [0, -0.02, 0.15],
     rotation: [0, 0, 0],
-    scale: 0.15
+    scale: 0.22
+  },
+  "bottomCenter": {
+    position: [0, -0.08, 0.15],
+    rotation: [0, 0, 0],
+    scale: 0.25
   },
   "topLeft": {
     position: [0.1, 0.1, 0.1],

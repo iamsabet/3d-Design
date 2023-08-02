@@ -10,7 +10,7 @@ import leftSideLogo from "./left-logo.png"
 import rightSideLogo from "./right-logo.png"
 import centerLogo from "./center-logo.png"
 import greenLogo from "./center-logo-green.png"
-
+import tShirts from "./tshirts.png"
 export {
     ai,
     fileIcon,
@@ -22,5 +22,6 @@ export {
     leftSideLogo,
     rightSideLogo,
     centerLogo,
-    greenLogo
+    greenLogo,
+    tShirts
 };

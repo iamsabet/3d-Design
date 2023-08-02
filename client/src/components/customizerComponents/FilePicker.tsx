@@ -84,7 +84,7 @@ const FilePicker = ({ file, setFile, readFile }: FilePickerProps) => {
                     setLogoPosition("topRight");
                   }}
                   styles="text-ss glassmorphism"
-                  children={[<img src={rightSideLogo} />]}
+                  children={[<img src={rightSideLogo} key={"rightTopImg"} />]}
                 />
                 <CustomButton
                   type={
@@ -96,7 +96,7 @@ const FilePicker = ({ file, setFile, readFile }: FilePickerProps) => {
                     setLogoPosition("center");
                   }}
                   styles="text-ss glassmorphism"
-                  children={[<img src={centerLogo} />]}
+                  children={[<img src={centerLogo} key={"centerImg"} />]}
                 />
                 <CustomButton
                   type={
@@ -108,7 +108,7 @@ const FilePicker = ({ file, setFile, readFile }: FilePickerProps) => {
                     setLogoPosition("topLeft");
                   }}
                   styles="text-ss glassmorphism"
-                  children={[<img src={leftSideLogo} />]}
+                  children={[<img src={leftSideLogo} key={"topLeftImg"} />]}
                 />
               </div>
             </motion.div>
