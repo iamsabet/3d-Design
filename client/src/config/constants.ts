@@ -62,6 +62,17 @@ export const LogoPositions: LogoPositionsType = {
   }
 }
 
+interface RotationTypes {
+  [key: string]: Euler
+}
+
+export const modelRotations: RotationTypes = {
+  left: [0, (3 * Math.PI) / 2, 0],
+  right: [0, (1 * Math.PI) / 2, 0],
+  front: [0, 0, 0],
+  back: [0, Math.PI, 0]
+}
+
 interface DecalTypesType {
   [key: string]: {
     stateProperty: "logoDecal" | "fullDecal",

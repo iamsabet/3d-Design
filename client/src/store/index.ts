@@ -16,6 +16,7 @@ const state = proxy<StoreType>({
     },
     logoPosition: "topLeft",
 
+    modelRotation: "front"
 });
 
 export default state

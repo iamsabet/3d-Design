@@ -17,6 +17,7 @@ type StoreType = {
     { [key: string]: boolean }
 
 
-    logoPosition: logoPositionType
+    logoPosition: logoPositionType,
+    modelRotation: "front" | "left" | "right" | "back"
 
 }

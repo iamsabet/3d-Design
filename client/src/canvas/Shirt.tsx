@@ -4,7 +4,8 @@ import { useSnapshot } from "valtio";
 import { useFrame } from "@react-three/fiber";
 import { Decal, useGLTF, useTexture } from "@react-three/drei";
 import state from "../store";
-import { LogoPositions } from "../config/constants";
+import { LogoPositions, modelRotations } from "../config/constants";
+import { Euler } from "three/src/math/Euler.js";
 
 const Shirt = () => {
   const snap = useSnapshot(state);
@@ -23,13 +24,17 @@ const Shirt = () => {
 
   const state_string = JSON.stringify(state);
 
+  const generateModelRotation = () => {
+    return modelRotations[snap.modelRotation];
+  };
+
   return (
     <group
       key={state_string}
       // rotation={[0, (3 * Math.PI) / 2, 0]}
       // rotation={[0, (1 * Math.PI) / 2, 0]}
       // rotation={[0, Math.PI, 0]}
-      rotation={[0, 0, 0]}
+      rotation={generateModelRotation()}
     >
       <mesh
         castShadow
