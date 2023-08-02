@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { slideAnimation } from "../../config/motion";
 import { useSnapshot } from "valtio";
 import state from "../../store";
+import { fileIcon, tshirt } from "../../assets";
 const FilePicker = ({ file, setFile, readFile }: FilePickerProps) => {
   const snap = useSnapshot(state);
 
@@ -53,46 +54,55 @@ const FilePicker = ({ file, setFile, readFile }: FilePickerProps) => {
                 Upload Your Image
               </label>
               <p className="mt-2 text-gray-700 text-sm truncate text-center">
-                {file === ""
+                {file === "" || snap.logoDecal === "./threejs.png"
                   ? "No File Selected"
                   : // @ts-ignore
                     `${file?.name}`}
               </p>
-              {file && (
+              {/* {file && (
                 <img src={snap.logoDecal} className="picked-thumbnail" />
-              )}
+              )} */}
 
               <p className="mt-2 text-gray-900 font-semibold text-md truncate text-center">
-                Logo Position
+                Position
               </p>
 
               <div className="mt-4 flex flex-row gap-1">
                 <CustomButton
-                  type="filled"
-                  title="Top Left"
+                  type={
+                    snap.logoPosition === "topLeft" ? "filled" : "glass"
+                  } /* change between glass and filled */
+                  title="Left"
                   handleClick={() => {
                     readFile("logo");
                     setLogoPosition("topLeft");
                   }}
-                  styles="text-ss"
+                  styles="text-ss glassmorphism"
+                  children={[<img src={tshirt} />]}
                 />
                 <CustomButton
-                  type="filled"
+                  type={
+                    snap.logoPosition === "center" ? "filled" : "glass"
+                  } /* change between glass and filled */
                   title="Center"
                   handleClick={() => {
                     readFile("logo");
                     setLogoPosition("center");
                   }}
-                  styles="text-ss"
+                  styles="text-ss glassmorphism"
+                  children={[<img src={tshirt} />]}
                 />
                 <CustomButton
-                  type="filled"
-                  title="Top Right"
+                  type={
+                    snap.logoPosition === "topRight" ? "filled" : "glass"
+                  } /* change between glass and filled */
+                  title="Right"
                   handleClick={() => {
                     readFile("logo");
                     setLogoPosition("topRight");
                   }}
-                  styles="text-ss"
+                  styles="text-ss glassmorphism"
+                  children={[<img src={tshirt} />]}
                 />
               </div>
             </motion.div>

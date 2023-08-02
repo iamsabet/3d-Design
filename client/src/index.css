@@ -47,7 +47,7 @@ html {
 
 
 .aipicker-container{
-  @apply absolute left-full ml-2 glassmorphism p-2 w-[240px] h-[290px] rounded-md flex flex-col gap-4;
+  @apply absolute left-full ml-2 glassmorphism p-2 w-[240px] h-[260px] rounded-md flex flex-col gap-4;
 }
 
 .aipicker-textarea {
@@ -57,8 +57,8 @@ border-gray-500 p-2 outline-none flex-1;
 }
 
 .filepicker-container {
-  @apply absolute left-full ml-3 glassmorphism p-2 
-  w-[240px] h-[290px] flex flex-col rounded-md;
+  @apply absolute left-full ml-2 glassmorphism p-2 
+  w-[240px] h-[260px] flex flex-col rounded-md;
 }
 
 .daisy-tab{
@@ -66,8 +66,9 @@ border-gray-500 p-2 outline-none flex-1;
 }
 
 .filepicker-label {
-  @apply border border-gray-800 py-1.5 px-2 rounded-md shadow-sm text-sm mx-auto
-  text-gray-800 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 cursor-pointer w-fit;
+  @apply border border-gray-100 py-1.5 px-2 rounded-md shadow-sm text-sm mx-auto
+  text-gray-100 focus:outline-none focus:ring-1 bg-gray-900
+  focus:ring-blue-500 focus:border-blue-500 cursor-pointer w-fit;
 }
 .picked-thumbnail{
   @apply w-14 h-14 object-contain mx-auto mt-0
@@ -91,9 +92,9 @@ input[type="file"] {
 }
 
 .sketch-picker {
-  width: 220px !important;
+  width: 195px !important;
    /* makes it (240px, 290px)  */
-  height: 280px !important;
+  height: 250px !important;
   background: rgba(255, 255, 255, 0.25) !important;
   box-shadow: 0 2px 30px 0 rgba(31, 38, 135, 0.07) !important;
   backdrop-filter: blur(4px) !important;
