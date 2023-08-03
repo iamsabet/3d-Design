@@ -25,7 +25,7 @@ const state = proxy<StoreType>({
 });
 const closet = proxy<StoreType[]>([
     {
-        id: "T-871236gbvdw8",
+        id: "T-8712gbvdw8",
         intro: true,
         modelRotation: "front",
         activeEditorTab: "",
