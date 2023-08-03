@@ -2,16 +2,17 @@ import { useRef } from "react";
 import { useFrame } from "@react-three/fiber";
 import { easing } from "maath";
 import { useSnapshot } from "valtio";
-import state from "../store";
+import { state } from "../store";
 import { Euler } from "three/src/math/Euler.js";
 import { modelRotations } from "../config/constants";
 type Props = {
   children?: JSX.Element | JSX.Element[];
+  canvasProps: CanvasType;
 };
 
-const CameraRig = ({ children }: Props) => {
+const CameraRig = ({ children, canvasProps }: Props) => {
   const group = useRef();
-  const snap = useSnapshot(state);
+  const snap = useSnapshot(state); // conditional on parent CanvasType -> state || closet[canvas_id] store
   let smoothTime = 0.2;
   const generateModelRotation = () => {
     return modelRotations[snap.modelRotation];

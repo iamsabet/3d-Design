@@ -7,7 +7,7 @@ import {
   slideAnimation,
 } from "../config/motion";
 
-import state from "../store";
+import { state } from "../store";
 import { CustomButton } from "../components";
 
 const Home = () => {

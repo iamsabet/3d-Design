@@ -2,7 +2,7 @@ import { CustomButton } from "..";
 import { motion, AnimatePresence } from "framer-motion";
 import { slideAnimation } from "../../config/motion";
 import { useSnapshot } from "valtio";
-import state from "../../store";
+import { state } from "../../store";
 import { centerLogo, leftSideLogo, rightSideLogo } from "../../assets";
 import { useRef } from "react";
 const FilePicker = ({ file, setFile, readFile }: FilePickerProps) => {

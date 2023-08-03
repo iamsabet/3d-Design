@@ -1,6 +1,6 @@
 import { SketchPicker } from "react-color";
 import { useSnapshot } from "valtio";
-import state from "../../store";
+import { state } from "../../store";
 import { slideAnimation } from "../../config/motion";
 import { AnimatePresence, motion } from "framer-motion";
 

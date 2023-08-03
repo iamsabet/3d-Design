@@ -5,14 +5,14 @@ import Shirt from "./Shirt";
 import BackDrop from "./BackDrop";
 import CameraRig from "./CameraRig";
 
-const CanvasModel = () => {
+const CanvasModel = ({ canvasId, canvasType }: CanvasType) => {
   return (
     <Canvas
+      key={canvasId}
       shadows
       camera={{ position: [0, 0, 10], fov: 27 }}
       gl={{
         preserveDrawingBuffer: true,
-        autoClearColor: true,
       }}
       className="w-full max-w-full h-full transition-all ease-in-ou"
       style={{
@@ -21,10 +21,14 @@ const CanvasModel = () => {
     >
       <ambientLight intensity={1} />
       <Environment preset="city" />
-      <CameraRig>
+      <CameraRig key={"C" + canvasId} canvasProps={{ canvasId, canvasType }}>
         <BackDrop />
         <Center>
-          <Shirt />
+          <Shirt
+            key={"T" + canvasId}
+            canvasId={canvasId}
+            canvasType={canvasType}
+          />
         </Center>
       </CameraRig>
     </Canvas>

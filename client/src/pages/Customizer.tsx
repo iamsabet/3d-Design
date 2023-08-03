@@ -17,7 +17,7 @@ import {
   Closet,
 } from "../components";
 
-import state from "../store";
+import { state } from "../store";
 const Customizer = () => {
   const snap = useSnapshot(state);
   const [logoFile, setLogoFile] = useState("");

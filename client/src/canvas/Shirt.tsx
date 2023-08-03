@@ -1,14 +1,13 @@
-// import React from "react";
 import { easing } from "maath";
 import { useSnapshot } from "valtio";
 import { useFrame } from "@react-three/fiber";
 import { Decal, useGLTF, useTexture } from "@react-three/drei";
-import state from "../store";
+import { state, closet } from "../store";
 import { LogoPositions } from "../config/constants";
 import { useRef } from "react";
 
-const Shirt = () => {
-  const snap = useSnapshot(state);
+const Shirt = ({ canvasId, canvasType }: CanvasType) => {
+  const snap = useSnapshot(canvasType === "open" ? state : closet[canvasId]); // conditional on parent CanvasType -> state || closet[canvas_id] store
   const group = useRef();
   // @ts-ignore
   const { nodes, materials } = useGLTF("/shirt_baked.glb");
@@ -17,12 +16,24 @@ const Shirt = () => {
   const fullTexture = useTexture(snap.fullDecal);
   const leftTexture = useTexture(snap.leftDecal);
   const rightTexture = useTexture(snap.rightDecal);
+  if (canvasType === "open") {
+    // useFrame((_state, delta) => {
+    //   easing.dampC(materials.lambert1.color, snap.color, 0.25, delta);
+    // });
+  } else {
+    useFrame((_state, delta) => {
+      easing.dampC(
+        materials.lambert1.color,
+        closet[canvasId].color,
+        0.25,
+        delta
+      );
+    });
+  }
 
-  useFrame((_state, delta) => {
-    easing.dampC(materials.lambert1.color, snap.color, 0.25, delta);
-  });
-
-  const state_string = JSON.stringify(state);
+  const state_string = JSON.stringify(
+    canvasType === "open" ? state : closet[canvasId]
+  );
 
   return (
     <group

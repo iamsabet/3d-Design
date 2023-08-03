@@ -8,7 +8,9 @@ const Closet = () => {
       <motion.div {...slideAnimation("left")} className="closet-container">
         <div className="flex flex-col justify-center items-center w-full h-full">
           <CanvasModel
-          // need to pass prompts to initiate tshirt
+            canvasType="close"
+            canvasId="T-8T12gBv2dwU8e"
+            // need to pass prompts to initiate tshirt
           />
         </div>
       </motion.div>
