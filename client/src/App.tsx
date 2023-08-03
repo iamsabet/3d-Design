@@ -1,7 +1,7 @@
 // import { useState } from "react";
 import Home from "./pages/Home";
 import Customizer from "./pages/Customizer";
-import Canvas from "./canvas";
+import CanvasModel from "./canvas";
 
 function App() {
   // const [count, setCount] = useState(0);
@@ -9,7 +9,9 @@ function App() {
   return (
     <main className="app transition-all ease-in">
       <Home />
-      <Canvas />
+      <CanvasModel
+      // need to pass prompts to initiate tshirt
+      />
       <Customizer />
     </main>
   );

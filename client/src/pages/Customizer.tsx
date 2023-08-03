@@ -14,6 +14,7 @@ import {
   FilePicker,
   Tab,
   CustomButton,
+  Closet,
 } from "../components";
 
 import state from "../store";
@@ -55,6 +56,8 @@ const Customizer = () => {
             handleSubmit={handleSubmit}
           />
         );
+      case "closet":
+        return <Closet />;
       default:
         return null;
     }

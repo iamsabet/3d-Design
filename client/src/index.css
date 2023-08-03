@@ -46,7 +46,7 @@ html {
 
 
 
-.aipicker-container{
+.aipicker-container,.closet-container{
   @apply absolute left-full ml-2 glassmorphism p-2 w-[240px] h-[260px] rounded-md flex flex-col gap-4;
 }
 

@@ -16,7 +16,7 @@ export const EditorTabs: EditorTabType[] = [
     icon: ai,
   },
   {
-    name: "designs",
+    name: "closet",
     icon: tShirts,
   },
 ];

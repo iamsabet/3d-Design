@@ -6,6 +6,7 @@ type logoPositionType = "center" | "topLeft" | "topRight" | "bottomCenter";
 type ShirtTypes = "logoShirt" | "stylishShirt"
 
 type StoreType = {
+    id?: string,
     intro: boolean,
     color: string,
     isLogoTexture: boolean,
