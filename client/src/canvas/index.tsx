@@ -15,7 +15,7 @@ const CanvasModel = () => {
       }}
       className="w-full max-w-full h-full transition-all ease-in-out"
     >
-      <ambientLight intensity={0.95} />
+      <ambientLight intensity={1} />
       <Environment preset="city" />
       <CameraRig>
         <BackDrop />

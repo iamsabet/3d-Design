@@ -9,10 +9,15 @@ const state = proxy<StoreType>({
     isFullTexture: false,
     logoDecal: "./threejs.png",
     fullDecal: "./threejs.png",
+    leftDecal: "./react.png",
+    rightDecal: "./react.png",
+
     uploadSelectedTab: "logo",
     activeFilterTab: {
         logoShirt: true,
         stylishShirt: false,
+        leftLogo: true,
+        rightLogo: false
     },
     logoPosition: "topLeft",
 

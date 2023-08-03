@@ -4,6 +4,7 @@ import { easing } from "maath";
 import { useSnapshot } from "valtio";
 import state from "../store";
 import { Euler } from "three/src/math/Euler.js";
+import { modelRotations } from "../config/constants";
 type Props = {
   children?: JSX.Element | JSX.Element[];
 };
@@ -11,7 +12,10 @@ type Props = {
 const CameraRig = ({ children }: Props) => {
   const group = useRef();
   const snap = useSnapshot(state);
-
+  let smoothTime = 0.2;
+  const generateModelRotation = () => {
+    return modelRotations[snap.modelRotation];
+  };
   useFrame((state, delta) => {
     const isBreakPoint = window.innerWidth < 1260;
     const isMobile = window.innerWidth < 620;
@@ -22,11 +26,16 @@ const CameraRig = ({ children }: Props) => {
       if (isBreakPoint) targetPosition = [0, 0, 2];
       if (isMobile) targetPosition = [0, 0.2, 2.5];
 
-      targetRotation = new Euler(0, (-4 * Math.PI) / 5, 0);
+      targetRotation = new Euler(0, (-2 * Math.PI) / 3, 0);
+      smoothTime = 0.35;
+      // const targ = modelRotations["front"];
+      // targetRotation = new Euler(targ[0], targ[1], targ[2]);
     } else {
       if (isMobile) targetPosition = [0, 0, 2.5];
       else targetPosition = [0, 0, 2];
-      targetRotation = new Euler(0, 0, 0);
+      smoothTime = 0.1;
+      const targ = generateModelRotation();
+      targetRotation = new Euler(targ[0], targ[1], targ[2]);
     }
 
     // set the model camera position
@@ -50,7 +59,7 @@ const CameraRig = ({ children }: Props) => {
       // @ts-ignore
       group.current.rotation,
       targetRotation,
-      0.35,
+      smoothTime,
       delta
     );
   });

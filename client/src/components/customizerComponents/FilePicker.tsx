@@ -3,13 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { slideAnimation } from "../../config/motion";
 import { useSnapshot } from "valtio";
 import state from "../../store";
-import {
-  centerLogo,
-  fileIcon,
-  leftSideLogo,
-  rightSideLogo,
-  tshirt,
-} from "../../assets";
+import { centerLogo, leftSideLogo, rightSideLogo } from "../../assets";
 const FilePicker = ({ file, setFile, readFile }: FilePickerProps) => {
   const snap = useSnapshot(state);
 
@@ -26,9 +20,12 @@ const FilePicker = ({ file, setFile, readFile }: FilePickerProps) => {
               className={`daisy-tab${
                 snap.uploadSelectedTab === "logo" ? " tab-active" : ""
               }`}
-              onClick={() => (state.uploadSelectedTab = "logo")}
+              onClick={() => {
+                state.modelRotation = "front";
+                state.uploadSelectedTab = "logo";
+              }}
             >
-              Logo
+              Front
             </button>
             <button
               className={`daisy-tab${
@@ -37,6 +34,28 @@ const FilePicker = ({ file, setFile, readFile }: FilePickerProps) => {
               onClick={() => (state.uploadSelectedTab = "texture")}
             >
               Texture
+            </button>
+            <button
+              className={`daisy-tab${
+                snap.uploadSelectedTab === "left" ? " tab-active" : ""
+              }`}
+              onClick={() => {
+                state.modelRotation = "left";
+                state.uploadSelectedTab = "left";
+              }}
+            >
+              Left
+            </button>
+            <button
+              className={`daisy-tab${
+                snap.uploadSelectedTab === "right" ? " tab-active" : ""
+              }`}
+              onClick={() => {
+                state.modelRotation = "right";
+                state.uploadSelectedTab = "right";
+              }}
+            >
+              Right
             </button>
           </div>
           {snap.uploadSelectedTab === "logo" && (
@@ -155,6 +174,103 @@ const FilePicker = ({ file, setFile, readFile }: FilePickerProps) => {
                   handleClick={() =>
                     // remove fullDecal from store and set it to initial value
                     readFile("full")
+                  }
+                  styles="text-ss"
+                />
+              </div>
+            </motion.div>
+          )}
+          {snap.uploadSelectedTab === "left" && (
+            <motion.div
+              {...slideAnimation("up")}
+              className="flex-1 flex flex-col tab-1"
+            >
+              <input
+                id="file-upload"
+                type="file"
+                accept="images/*"
+                onChange={(e) => {
+                  //
+                  if (e.target.files) {
+                    setFile(e.target.files[0]);
+                    readFile("left", e.target.files[0]);
+                  }
+                }}
+              />
+              <label htmlFor="file-upload" className="filepicker-label">
+                Upload Your Image
+              </label>
+              <p className="mt-2 text-gray-700 text-sm truncate text-center">
+                {file === "" || snap.fullDecal === "./threejs.png"
+                  ? "No File Selected"
+                  : // @ts-ignore
+                    `${file?.name}`}
+              </p>
+              {file && snap.leftDecal !== "" && (
+                <img src={snap.leftDecal} className="picked-thumbnail" />
+              )}
+              <div className="mt-4 flex flex-wrap gap-3">
+                {/* <CustomButton
+                type="outline"
+                title="Logo"
+                handleClick={() => readFile("logo")}
+                styles="text-ss"
+              /> */}
+                <CustomButton
+                  type="filled"
+                  title="Remove"
+                  handleClick={() =>
+                    // remove fullDecal from store and set it to initial value
+                    readFile("left")
+                  }
+                  styles="text-ss"
+                />
+              </div>
+            </motion.div>
+          )}
+
+          {snap.uploadSelectedTab === "right" && (
+            <motion.div
+              {...slideAnimation("up")}
+              className="flex-1 flex flex-col tab-1"
+            >
+              <input
+                id="file-upload"
+                type="file"
+                accept="images/*"
+                onChange={(e) => {
+                  //
+                  if (e.target.files) {
+                    setFile(e.target.files[0]);
+                    readFile("right", e.target.files[0]);
+                  }
+                }}
+              />
+              <label htmlFor="file-upload" className="filepicker-label">
+                Upload Your Image
+              </label>
+              <p className="mt-2 text-gray-700 text-sm truncate text-center">
+                {file === "" || snap.fullDecal === "./threejs.png"
+                  ? "No File Selected"
+                  : // @ts-ignore
+                    `${file?.name}`}
+              </p>
+              {file && snap.rightDecal !== "" && (
+                <img src={snap.rightDecal} className="picked-thumbnail" />
+              )}
+              <div className="mt-4 flex flex-wrap gap-3">
+                {/* <CustomButton
+                type="outline"
+                title="Logo"
+                handleClick={() => readFile("logo")}
+                styles="text-ss"
+              /> */}
+                <CustomButton
+                  type="filled"
+                  title="Remove"
+                  handleClick={() =>
+                    // remove fullDecal from store and set it to initial value
+                    readFile("right")
                   }
                   styles="text-ss"
                 />

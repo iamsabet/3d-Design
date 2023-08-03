@@ -63,7 +63,7 @@ export const LogoPositions: LogoPositionsType = {
 }
 
 interface RotationTypes {
-  [key: string]: Euler
+  [key: string]: number[]
 }
 
 export const modelRotations: RotationTypes = {
@@ -75,8 +75,8 @@ export const modelRotations: RotationTypes = {
 
 interface DecalTypesType {
   [key: string]: {
-    stateProperty: "logoDecal" | "fullDecal",
-    filterTab: "logoShirt" | "stylishShirt",
+    stateProperty: "logoDecal" | "fullDecal" | "leftDecal" | "rightDecal",
+    filterTab: "logoShirt" | "stylishShirt" | "leftLogo" | "rightLogo",
   }
 }
 
@@ -84,6 +84,14 @@ export const DecalTypes: DecalTypesType = {
   logo: {
     stateProperty: "logoDecal",
     filterTab: "logoShirt",
+  },
+  left: {
+    stateProperty: "leftDecal",
+    filterTab: "leftLogo",
+  },
+  right: {
+    stateProperty: "rightDecal",
+    filterTab: "rightLogo",
   },
   full: {
     stateProperty: "fullDecal",

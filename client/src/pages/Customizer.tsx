@@ -45,15 +45,6 @@ const Customizer = () => {
             setFile={setLogoFile}
           />
         );
-      case "texturepicker":
-        return (
-          <FilePicker
-            // @ts-ignore
-            file={textureFile}
-            readFile={readFile}
-            setFile={settextureFile}
-          />
-        );
       case "aipicker":
         return (
           <AIPicker

@@ -11,7 +11,7 @@ const BackDrop = () => {
       color="#EFBD38"
       frames={60}
       alphaTest={0.25}
-      scale={10}
+      scale={20}
       rotation={[Math.PI / 2, 0, 0]}
       position={[0, 0, -0.14]}
     >

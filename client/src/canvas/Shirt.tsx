@@ -4,8 +4,7 @@ import { useSnapshot } from "valtio";
 import { useFrame } from "@react-three/fiber";
 import { Decal, useGLTF, useTexture } from "@react-three/drei";
 import state from "../store";
-import { LogoPositions, modelRotations } from "../config/constants";
-import { Euler } from "three/src/math/Euler.js";
+import { LogoPositions } from "../config/constants";
 
 const Shirt = () => {
   const snap = useSnapshot(state);
@@ -14,19 +13,15 @@ const Shirt = () => {
   const { nodes, materials } = useGLTF("/shirt_baked.glb");
   //   const { nodes, materials } = useGLTF("/Female_Light_Blue_Shirt.glb");
   const logoTexture = useTexture(snap.logoDecal);
-  const logoChet = useTexture(snap.logoDecal);
   const fullTexture = useTexture(snap.fullDecal);
+  const leftTexture = useTexture(snap.leftDecal);
+  const rightTexture = useTexture(snap.rightDecal);
 
-  useFrame((state, delta) => {
-    state;
+  useFrame((_state, delta) => {
     easing.dampC(materials.lambert1.color, snap.color, 0.25, delta);
   });
 
   const state_string = JSON.stringify(state);
-
-  const generateModelRotation = () => {
-    return modelRotations[snap.modelRotation];
-  };
 
   return (
     <group
@@ -34,7 +29,7 @@ const Shirt = () => {
       // rotation={[0, (3 * Math.PI) / 2, 0]}
       // rotation={[0, (1 * Math.PI) / 2, 0]}
       // rotation={[0, Math.PI, 0]}
-      rotation={generateModelRotation()}
+      rotation={[0, 0, 0]}
     >
       <mesh
         castShadow
@@ -63,24 +58,28 @@ const Shirt = () => {
             // depthWrite={true}
           />
         )}
-        <Decal
-          position={[0.25, 0.085, -0.021]}
-          rotation={[-(2 * Math.PI), (1 * Math.PI) / 2, 0]}
-          scale={0.067}
-          map={logoChet}
-          // map-anisotropy={16}
-          depthTest={false}
-          // depthWrite={true}
-        />
-        <Decal
-          position={[-0.25, 0.085, -0.021]}
-          rotation={[-(2 * Math.PI), (3 * Math.PI) / 2, 0]}
-          scale={0.067}
-          map={logoChet}
-          // map-anisotropy={16}
-          depthTest={false}
-          // depthWrite={true}
-        />
+        {leftTexture && (
+          <Decal
+            position={[0.25, 0.085, -0.021]}
+            rotation={[-(2 * Math.PI), (1 * Math.PI) / 2, 0]}
+            scale={0.067}
+            map={leftTexture}
+            // map-anisotropy={16}
+            depthTest={false}
+            // depthWrite={true}
+          />
+        )}
+        {rightTexture && (
+          <Decal
+            position={[-0.25, 0.085, -0.021]}
+            rotation={[-(2 * Math.PI), (3 * Math.PI) / 2, 0]}
+            scale={0.067}
+            map={rightTexture}
+            // map-anisotropy={16}
+            depthTest={false}
+            // depthWrite={true}
+          />
+        )}
       </mesh>
     </group>
   );

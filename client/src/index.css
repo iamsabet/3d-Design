@@ -62,7 +62,7 @@ border-gray-500 p-2 outline-none flex-1;
 }
 
 .daisy-tab{
-  @apply tab tab-md tab-bordered tab-active font-semibold w-1/2 ;
+  @apply tab tab-md tab-bordered tab-active font-semibold w-1/4 ;
 }
 
 .filepicker-label {
