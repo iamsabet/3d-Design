@@ -61,7 +61,7 @@ const CameraRig = ({ children }: Props) => {
     }
 
     // @ts-ignore
-    if (snap.activeEditorTab === "filepicker" || snap.activeEditorTab === "") {
+    if (snap.activeEditorTab === "filepicker") {
       // console.log(
       //   JSON.stringify(
       //     // @ts-ignore

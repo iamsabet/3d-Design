@@ -1,13 +1,21 @@
-export const downloadCanvasToImage = () => {
-  const canvas = document.querySelector("canvas");
-  const dataURL = canvas?.toDataURL();
-  const link = document.createElement("a");
 
-  link.href = dataURL || "";
-  link.download = "canvas.png";
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
+export const downloadCanvasToImage = () => {
+
+  const canvas = document.querySelector("canvas");
+  // if (canvas)
+  //   canvas.style["backgroundColor"] = "#F5F3EF";
+  setTimeout(() => {
+
+
+    const dataURL = canvas?.toDataURL();
+    const link = document.createElement("a");
+
+    link.href = dataURL || "";
+    link.download = "canvas.png";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  }, 50)
 };
 
 export const reader = (file: any) =>
