@@ -29,6 +29,8 @@ const Customizer = () => {
   // });
   const setActiveEditorTab = (type: EditorTabNameType) => {
     state.activeEditorTab = type;
+    state.modelRotation = "front";
+    state.uploadSelectedTab = "logo";
   };
   // show tab content depending on the active tab
   const generateTabContent = () => {

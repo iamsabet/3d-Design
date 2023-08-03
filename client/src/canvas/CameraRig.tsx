@@ -33,7 +33,7 @@ const CameraRig = ({ children }: Props) => {
     } else {
       if (isMobile) targetPosition = [0, 0, 2.5];
       else targetPosition = [0, 0, 2];
-      smoothTime = 0.18;
+      smoothTime = 0.1;
       const targ = generateModelRotation();
       targetRotation = new Euler(targ[0], targ[1], targ[2]);
     }
@@ -47,13 +47,18 @@ const CameraRig = ({ children }: Props) => {
       delta
     );
 
-    easing.dampE(
-      // @ts-ignore
-      group.current.rotation,
-      [state.pointer.y / 10, -state.pointer.x / 4, 0],
-      0.3,
-      delta
-    );
+    if (
+      snap.uploadSelectedTab !== "left" &&
+      snap.uploadSelectedTab !== "right"
+    ) {
+      easing.dampE(
+        // @ts-ignore
+        group.current.rotation,
+        [state.pointer.y / 8, -state.pointer.x / 4, 0],
+        0.2,
+        delta
+      );
+    }
 
     // @ts-ignore
     if (snap.activeEditorTab === "filepicker" || snap.activeEditorTab === "") {

@@ -33,17 +33,6 @@ const FilePicker = ({ file, setFile, readFile }: FilePickerProps) => {
             </button>
             <button
               className={`daisy-tab${
-                snap.uploadSelectedTab === "texture" ? " tab-active" : ""
-              }`}
-              onClick={() => {
-                state.uploadSelectedTab = "texture";
-                state.modelRotation = "front";
-              }}
-            >
-              Texture
-            </button>
-            <button
-              className={`daisy-tab${
                 snap.uploadSelectedTab === "left" ? " tab-active" : ""
               }`}
               onClick={() => {
@@ -63,6 +52,17 @@ const FilePicker = ({ file, setFile, readFile }: FilePickerProps) => {
               }}
             >
               Right
+            </button>
+            <button
+              className={`daisy-tab${
+                snap.uploadSelectedTab === "texture" ? " tab-active" : ""
+              }`}
+              onClick={() => {
+                state.uploadSelectedTab = "texture";
+                state.modelRotation = "front";
+              }}
+            >
+              Texture
             </button>
           </div>
           {snap.uploadSelectedTab === "logo" && (
