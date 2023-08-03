@@ -13,6 +13,7 @@ const state = proxy<StoreType>({
     rightDecal: "./react.png",
 
     uploadSelectedTab: "logo",
+    activeEditorTab: "",
     activeFilterTab: {
         logoShirt: true,
         stylishShirt: false,

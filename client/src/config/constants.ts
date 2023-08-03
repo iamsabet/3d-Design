@@ -1,7 +1,8 @@
 import { Euler, Vector3 } from "@react-three/fiber";
-import { swatch, fileIcon, ai, logoShirt, stylishShirt, greenLogo, tShirts } from "../assets";
+import { swatch, fileIcon, ai, stylishShirt, greenLogo, tShirts } from "../assets";
 
-export const EditorTabs = [
+
+export const EditorTabs: EditorTabType[] = [
   {
     name: "colorpicker",
     icon: swatch,

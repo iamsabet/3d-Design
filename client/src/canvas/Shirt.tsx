@@ -4,11 +4,13 @@ import { useSnapshot } from "valtio";
 import { useFrame } from "@react-three/fiber";
 import { Decal, useGLTF, useTexture } from "@react-three/drei";
 import state from "../store";
-import { LogoPositions } from "../config/constants";
+import { LogoPositions, modelRotations } from "../config/constants";
+import { Euler } from "three/src/math/Euler.js";
+import { useRef } from "react";
 
 const Shirt = () => {
   const snap = useSnapshot(state);
-
+  const group = useRef();
   // @ts-ignore
   const { nodes, materials } = useGLTF("/shirt_baked.glb");
   //   const { nodes, materials } = useGLTF("/Female_Light_Blue_Shirt.glb");
@@ -18,6 +20,33 @@ const Shirt = () => {
   const rightTexture = useTexture(snap.rightDecal);
 
   useFrame((_state, delta) => {
+    let smoothTime = 0.2;
+    const generateModelRotation = () => {
+      return modelRotations[snap.modelRotation];
+    };
+    // set the initial position of the model
+    let targetRotation = new Euler(0, 0, 0);
+    if (snap.intro) {
+      targetRotation = new Euler(0, (-2 * Math.PI) / 3, 0);
+      smoothTime = 0.35;
+      // const targ = modelRotations["front"];
+      // targetRotation = new Euler(targ[0], targ[1], targ[2]);
+    } else {
+      smoothTime = 0.1;
+      const targ = generateModelRotation();
+      targetRotation = new Euler(targ[0], targ[1], targ[2]);
+    }
+
+    // easing.dampE(
+    //   // @ts-ignore
+    //   group.current.rotation,
+    //   targetRotation,
+    //   smoothTime,
+    //   delta
+    // );
+  });
+
+  useFrame((_state, delta) => {
     easing.dampC(materials.lambert1.color, snap.color, 0.25, delta);
   });
 
@@ -25,6 +54,8 @@ const Shirt = () => {
 
   return (
     <group
+      // @ts-ignore
+      ref={group}
       key={state_string}
       // rotation={[0, (3 * Math.PI) / 2, 0]}
       // rotation={[0, (1 * Math.PI) / 2, 0]}
@@ -60,7 +91,7 @@ const Shirt = () => {
         )}
         {leftTexture && (
           <Decal
-            position={[0.25, 0.085, -0.021]}
+            position={[0.25, 0.085, -0.015]}
             rotation={[-(2 * Math.PI), (1 * Math.PI) / 2, 0]}
             scale={0.067}
             map={leftTexture}
@@ -71,7 +102,7 @@ const Shirt = () => {
         )}
         {rightTexture && (
           <Decal
-            position={[-0.25, 0.085, -0.021]}
+            position={[-0.25, 0.085, -0.015]}
             rotation={[-(2 * Math.PI), (3 * Math.PI) / 2, 0]}
             scale={0.067}
             map={rightTexture}

@@ -2,7 +2,6 @@ import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useSnapshot } from "valtio";
 import config from "../config/config";
-import store from "../store";
 import { download } from "../assets";
 import { downloadCanvasToImage } from "../config/helpers";
 import { reader } from "../config/helpers";
@@ -21,19 +20,19 @@ import state from "../store";
 const Customizer = () => {
   const snap = useSnapshot(state);
   const [logoFile, setLogoFile] = useState("");
-  const [textureFile, settextureFile] = useState("");
   const [prompt, setPrompt] = useState("");
   const [generatingImg, setGeneratingImg] = useState(false);
-  const [activeEditorTab, setActiveEditorTab] = useState("");
 
   // const [activeFilterTab, setActiveFilterTab] = useState<ActiveFilterTabType>({
   //   logoShirt: true,
   //   stylishShirt: false,
   // });
-
+  const setActiveEditorTab = (type: EditorTabNameType) => {
+    state.activeEditorTab = type;
+  };
   // show tab content depending on the active tab
   const generateTabContent = () => {
-    switch (activeEditorTab) {
+    switch (snap.activeEditorTab) {
       case "colorpicker":
         return <ColorPicker />;
       case "logopicker":
@@ -143,9 +142,9 @@ const Customizer = () => {
                   <Tab
                     key={tab.name}
                     tab={tab}
-                    isActiveTab={tab.name === activeEditorTab}
+                    isActiveTab={tab.name === snap.activeEditorTab}
                     handleClick={() => {
-                      if (tab.name === activeEditorTab) {
+                      if (tab.name === snap.activeEditorTab) {
                         setActiveEditorTab("");
                       } else {
                         setActiveEditorTab(tab.name);

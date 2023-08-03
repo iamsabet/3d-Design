@@ -16,6 +16,7 @@ type StoreType = {
     rightDecal: string,
 
     uploadSelectedTab: "logo" | "texture" | "left" | "right",
+    activeEditorTab: EditorTabNameType,
     activeFilterTab:
     { [key: string]: boolean }
 

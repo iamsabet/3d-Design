@@ -31,7 +31,10 @@ const FilePicker = ({ file, setFile, readFile }: FilePickerProps) => {
               className={`daisy-tab${
                 snap.uploadSelectedTab === "texture" ? " tab-active" : ""
               }`}
-              onClick={() => (state.uploadSelectedTab = "texture")}
+              onClick={() => {
+                state.uploadSelectedTab = "texture";
+                state.modelRotation = "front";
+              }}
             >
               Texture
             </button>

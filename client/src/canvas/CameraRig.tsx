@@ -26,14 +26,14 @@ const CameraRig = ({ children }: Props) => {
       if (isBreakPoint) targetPosition = [0, 0, 2];
       if (isMobile) targetPosition = [0, 0.2, 2.5];
 
-      targetRotation = new Euler(0, (-2 * Math.PI) / 3, 0);
+      targetRotation = new Euler(0, (4 * Math.PI) / 3, 0);
       smoothTime = 0.35;
       // const targ = modelRotations["front"];
       // targetRotation = new Euler(targ[0], targ[1], targ[2]);
     } else {
       if (isMobile) targetPosition = [0, 0, 2.5];
       else targetPosition = [0, 0, 2];
-      smoothTime = 0.1;
+      smoothTime = 0.18;
       const targ = generateModelRotation();
       targetRotation = new Euler(targ[0], targ[1], targ[2]);
     }
@@ -50,18 +50,32 @@ const CameraRig = ({ children }: Props) => {
     easing.dampE(
       // @ts-ignore
       group.current.rotation,
-      [state.pointer.y / 10, -state.pointer.x / 3, 0],
-      0.2,
+      [state.pointer.y / 10, -state.pointer.x / 4, 0],
+      0.19,
       delta
     );
 
-    easing.dampE(
-      // @ts-ignore
-      group.current.rotation,
-      targetRotation,
-      smoothTime,
-      delta
-    );
+    // @ts-ignore
+    if (
+      snap.activeEditorTab !== "colorpicker" &&
+      snap.activeEditorTab !== "aipicker"
+    ) {
+      // console.log(
+      //   JSON.stringify(
+      //     // @ts-ignore
+      //     group.current.rotation +
+      //       " changed to " +
+      //       targetRotation.toArray().toString()
+      //   )
+      // );
+      easing.dampE(
+        // @ts-ignore
+        group.current.rotation,
+        targetRotation,
+        smoothTime,
+        delta
+      );
+    }
   });
   // set the model rotation smoothly
 
