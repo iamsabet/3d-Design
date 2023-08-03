@@ -17,9 +17,9 @@ const Shirt = ({ canvasId, canvasType }: CanvasType) => {
   const leftTexture = useTexture(snap.leftDecal);
   const rightTexture = useTexture(snap.rightDecal);
   if (canvasType === "open") {
-    // useFrame((_state, delta) => {
-    //   easing.dampC(materials.lambert1.color, snap.color, 0.25, delta);
-    // });
+    useFrame((_state, delta) => {
+      easing.dampC(materials.lambert1.color, snap.color, 0.25, delta);
+    });
   } else {
     useFrame((_state, delta) => {
       easing.dampC(

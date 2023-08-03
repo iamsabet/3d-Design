@@ -9,7 +9,12 @@ const Closet = () => {
         <div className="flex flex-col justify-center items-center w-full h-full">
           <CanvasModel
             canvasType="close"
-            canvasId="T-8T12gBv2dwU8e"
+            canvasId="T-1"
+            // need to pass prompts to initiate tshirt
+          />
+          <CanvasModel
+            canvasType="close"
+            canvasId="T-2"
             // need to pass prompts to initiate tshirt
           />
         </div>

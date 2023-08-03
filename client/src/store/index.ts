@@ -25,7 +25,7 @@ const state = proxy<StoreType>({
 
 });
 const closet = proxy<{ [key: string]: StoreType }>({
-    "T-8T12gBv2dwU8e": { // T-ShirtId map->Object
+    "T-1": { // T-ShirtId map->Object
         title: "Nice 1",
         intro: true,
         modelRotation: "front",
@@ -47,6 +47,30 @@ const closet = proxy<{ [key: string]: StoreType }>({
             rightLogo: false
         },
         logoPosition: "center",
+
+    },
+    "T-2": { // T-ShirtId map->Object
+        title: "Nice 2",
+        intro: true,
+        modelRotation: "front",
+        activeEditorTab: "",
+        uploadSelectedTab: "logo",
+        // T-Shirt States
+        color: "#0000FF", // also app state
+        isLogoTexture: true,
+        isFullTexture: false,
+        logoDecal: "./threejs.png",
+        fullDecal: "./1x1.png",
+        leftDecal: qMark,
+        // leftDecal: "./1x1.png",
+        rightDecal: "./1x1.png",
+        activeFilterTab: { // also app state
+            logoShirt: true,
+            stylishShirt: false,
+            leftLogo: false,
+            rightLogo: false
+        },
+        logoPosition: "topRight",
 
     }
 });

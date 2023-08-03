@@ -14,10 +14,12 @@ const CanvasModel = ({ canvasId, canvasType }: CanvasType) => {
       gl={{
         preserveDrawingBuffer: true,
       }}
-      className="w-full max-w-full h-full transition-all ease-in-ou"
+      id={"canvas-" + canvasId}
+      className="w-full max-w-full h-full transition-all ease-in-out"
       style={{
         backgroundColor: "#F5F3EF",
       }}
+      accessKey={"canvas-" + canvasId}
     >
       <ambientLight intensity={1} />
       <Environment preset="city" />
