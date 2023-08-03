@@ -35,7 +35,7 @@ const Customizer = () => {
     switch (snap.activeEditorTab) {
       case "colorpicker":
         return <ColorPicker />;
-      case "logopicker":
+      case "filepicker":
         return (
           <FilePicker
             // @ts-ignore
@@ -92,7 +92,11 @@ const Customizer = () => {
   const handleDecals = (type: DecalType, result: any) => {
     const decalType = DecalTypes[type];
     state[decalType.stateProperty] = result;
-    if (!snap.activeFilterTab[decalType.filterTab]) {
+    if (
+      !snap.activeFilterTab[decalType.filterTab] ||
+      decalType.filterTab === "leftLogo" ||
+      decalType.filterTab === "rightLogo"
+    ) {
       handleActiveFilterTab(decalType.filterTab);
     }
   };
@@ -114,7 +118,7 @@ const Customizer = () => {
     setActiveFilterTab(tabName);
   };
   const setActiveFilterTab = (tabName: string) => {
-    state.activeFilterTab[tabName] = !state.activeFilterTab[tabName];
+    state.activeFilterTab[tabName] = !snap.activeFilterTab[tabName];
   };
   const readFile = (type: DecalType, file: Blob | MediaSource | undefined) => {
     // let file = type === "logo" ? logoFile : textureFile;

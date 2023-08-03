@@ -8,7 +8,7 @@ export const EditorTabs: EditorTabType[] = [
     icon: swatch,
   },
   {
-    name: "logopicker",
+    name: "filepicker",
     icon: fileIcon,
   },
   {

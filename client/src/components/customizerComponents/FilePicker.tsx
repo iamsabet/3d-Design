@@ -4,13 +4,17 @@ import { slideAnimation } from "../../config/motion";
 import { useSnapshot } from "valtio";
 import state from "../../store";
 import { centerLogo, leftSideLogo, rightSideLogo } from "../../assets";
+import { useRef } from "react";
 const FilePicker = ({ file, setFile, readFile }: FilePickerProps) => {
   const snap = useSnapshot(state);
+  const rightUploadRef = useRef(null);
+  const leftUploadRef = useRef(null);
+  const logoUploadRef = useRef(null);
+  const textureUploadRef = useRef(null);
 
   const setLogoPosition = (pos: logoPositionType) => {
     state.logoPosition = pos;
   };
-
   return (
     <AnimatePresence>
       <motion.div {...slideAnimation("left")} className="filepicker-container">
@@ -68,6 +72,7 @@ const FilePicker = ({ file, setFile, readFile }: FilePickerProps) => {
             >
               <input
                 id="file-upload"
+                ref={logoUploadRef}
                 type="file"
                 accept="images/*"
                 onChange={(e) => {
@@ -82,7 +87,7 @@ const FilePicker = ({ file, setFile, readFile }: FilePickerProps) => {
                 Upload Your Image
               </label>
               <p className="mt-2 text-gray-700 text-sm truncate text-center">
-                {file === "" || snap.logoDecal === "./threejs.png"
+                {file === ""
                   ? "No File Selected"
                   : // @ts-ignore
                     `${file?.name}`}
@@ -141,8 +146,9 @@ const FilePicker = ({ file, setFile, readFile }: FilePickerProps) => {
               className="flex-1 flex flex-col tab-1"
             >
               <input
-                id="file-upload"
+                id="file-upload-texture"
                 type="file"
+                ref={textureUploadRef}
                 accept="images/*"
                 onChange={(e) => {
                   //
@@ -152,31 +158,30 @@ const FilePicker = ({ file, setFile, readFile }: FilePickerProps) => {
                   }
                 }}
               />
-              <label htmlFor="file-upload" className="filepicker-label">
+              <label htmlFor="file-upload-texture" className="filepicker-label">
                 Upload Your Image
               </label>
               <p className="mt-2 text-gray-700 text-sm truncate text-center">
-                {file === "" || snap.fullDecal === "./threejs.png"
+                {file === "" || snap.fullDecal === "./1x1.png"
                   ? "No File Selected"
                   : // @ts-ignore
                     `${file?.name}`}
               </p>
-              {file && snap.fullDecal !== "./threejs.png" && (
+              {file && snap.fullDecal !== "./1x1.png" && (
                 <img src={snap.fullDecal} className="picked-thumbnail" />
               )}
               <div className="mt-4 flex flex-wrap gap-3">
-                {/* <CustomButton
-                type="outline"
-                title="Logo"
-                handleClick={() => readFile("logo")}
-                styles="text-ss"
-              /> */}
                 <CustomButton
                   type="filled"
                   title="Remove"
                   handleClick={() =>
                     // remove fullDecal from store and set it to initial value
-                    readFile("full")
+                    {
+                      state.fullDecal = "./1x1.png";
+                      state.activeFilterTab.stylishShirt = false;
+                      // @ts-ignore
+                      textureUploadRef.current.value = "";
+                    }
                   }
                   styles="text-ss"
                 />
@@ -189,7 +194,8 @@ const FilePicker = ({ file, setFile, readFile }: FilePickerProps) => {
               className="flex-1 flex flex-col tab-1"
             >
               <input
-                id="file-upload"
+                id="file-upload-left"
+                ref={leftUploadRef}
                 type="file"
                 accept="images/*"
                 onChange={(e) => {
@@ -200,11 +206,11 @@ const FilePicker = ({ file, setFile, readFile }: FilePickerProps) => {
                   }
                 }}
               />
-              <label htmlFor="file-upload" className="filepicker-label">
+              <label htmlFor="file-upload-left" className="filepicker-label">
                 Upload Your Image
               </label>
               <p className="mt-2 text-gray-700 text-sm truncate text-center">
-                {file === "" || snap.fullDecal === "./threejs.png"
+                {file !== "" || snap.leftDecal === "./1x1.png"
                   ? "No File Selected"
                   : // @ts-ignore
                     `${file?.name}`}
@@ -223,8 +229,12 @@ const FilePicker = ({ file, setFile, readFile }: FilePickerProps) => {
                   type="filled"
                   title="Remove"
                   handleClick={() =>
-                    // remove fullDecal from store and set it to initial value
-                    readFile("left")
+                    // remove leftDecal from store and set it to initial value
+                    {
+                      state.leftDecal = "./1x1.png";
+                      // @ts-ignore
+                      leftUploadRef.current.value = "";
+                    }
                   }
                   styles="text-ss"
                 />
@@ -238,7 +248,8 @@ const FilePicker = ({ file, setFile, readFile }: FilePickerProps) => {
               className="flex-1 flex flex-col tab-1"
             >
               <input
-                id="file-upload"
+                id="file-upload-right"
+                ref={rightUploadRef}
                 type="file"
                 accept="images/*"
                 onChange={(e) => {
@@ -249,33 +260,35 @@ const FilePicker = ({ file, setFile, readFile }: FilePickerProps) => {
                   }
                 }}
               />
-              <label htmlFor="file-upload" className="filepicker-label">
+              <label htmlFor="file-upload-right" className="filepicker-label">
                 Upload Your Image
               </label>
               <p className="mt-2 text-gray-700 text-sm truncate text-center">
-                {file === "" || snap.fullDecal === "./threejs.png"
+                {file !== "" || snap.rightDecal === "./1x1.png"
                   ? "No File Selected"
                   : // @ts-ignore
                     `${file?.name}`}
               </p>
-              {file && snap.rightDecal !== "" && (
+              {file && snap.rightDecal !== "./1x1.png" && (
                 <img src={snap.rightDecal} className="picked-thumbnail" />
               )}
               <div className="mt-4 flex flex-wrap gap-3">
-                {/* <CustomButton
-                type="outline"
-                title="Logo"
-                handleClick={() => readFile("logo")}
-                styles="text-ss"
-              /> */}
                 <CustomButton
                   type="filled"
                   title="Remove"
                   handleClick={() =>
-                    // remove fullDecal from store and set it to initial value
-                    readFile("right")
+                    // remove rightDecal from store and set it to initial value
+                    {
+                      state.rightDecal = "./1x1.png";
+                      // @ts-ignore
+                      rightUploadRef.current.value = "";
+                    }
                   }
-                  styles="text-ss"
+                  styles={`text-ss mx-10 ${
+                    state.rightDecal === "./1x1.png"
+                      ? "opacity-50 cursor-default"
+                      : ""
+                  }`}
                 />
               </div>
             </motion.div>

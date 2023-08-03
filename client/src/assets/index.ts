@@ -11,6 +11,9 @@ import rightSideLogo from "./right-logo.png"
 import centerLogo from "./center-logo.png"
 import greenLogo from "./center-logo-green.png"
 import tShirts from "./tshirts.png"
+
+import qMark from "./question-mark.png"
+
 export {
     ai,
     fileIcon,
@@ -23,5 +26,6 @@ export {
     rightSideLogo,
     centerLogo,
     greenLogo,
-    tShirts
+    tShirts,
+    qMark
 };

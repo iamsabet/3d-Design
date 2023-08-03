@@ -1,6 +1,6 @@
 type DecalType = "logo" | "full"
 
-type EditorTabNameType = "colorpicker" | "logopicker" | "aipicker" | "designs" | ""
+type EditorTabNameType = "colorpicker" | "filepicker" | "aipicker" | "designs" | ""
 
 type EditorTabType = {
     name: EditorTabNameType,

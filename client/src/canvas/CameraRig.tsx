@@ -43,7 +43,7 @@ const CameraRig = ({ children }: Props) => {
       state.camera.position,
       // @ts-ignore
       targetPosition,
-      0.25,
+      0.3,
       delta
     );
 
@@ -51,15 +51,12 @@ const CameraRig = ({ children }: Props) => {
       // @ts-ignore
       group.current.rotation,
       [state.pointer.y / 10, -state.pointer.x / 4, 0],
-      0.19,
+      0.3,
       delta
     );
 
     // @ts-ignore
-    if (
-      snap.activeEditorTab !== "colorpicker" &&
-      snap.activeEditorTab !== "aipicker"
-    ) {
+    if (snap.activeEditorTab === "filepicker" || snap.activeEditorTab === "") {
       // console.log(
       //   JSON.stringify(
       //     // @ts-ignore
