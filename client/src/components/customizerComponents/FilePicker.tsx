@@ -183,7 +183,11 @@ const FilePicker = ({ file, setFile, readFile }: FilePickerProps) => {
                       textureUploadRef.current.value = "";
                     }
                   }
-                  styles="text-ss"
+                  styles={`text-ss mx-10 ${
+                    state.fullDecal === "./1x1.png"
+                      ? "opacity-50 cursor-default"
+                      : ""
+                  }`}
                 />
               </div>
             </motion.div>
@@ -236,7 +240,11 @@ const FilePicker = ({ file, setFile, readFile }: FilePickerProps) => {
                       leftUploadRef.current.value = "";
                     }
                   }
-                  styles="text-ss"
+                  styles={`text-ss mx-10 ${
+                    state.leftDecal === "./1x1.png"
+                      ? "opacity-50 cursor-default"
+                      : ""
+                  }`}
                 />
               </div>
             </motion.div>

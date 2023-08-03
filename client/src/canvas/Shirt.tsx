@@ -4,8 +4,7 @@ import { useSnapshot } from "valtio";
 import { useFrame } from "@react-three/fiber";
 import { Decal, useGLTF, useTexture } from "@react-three/drei";
 import state from "../store";
-import { LogoPositions, modelRotations } from "../config/constants";
-import { Euler } from "three/src/math/Euler.js";
+import { LogoPositions } from "../config/constants";
 import { useRef } from "react";
 
 const Shirt = () => {
@@ -18,33 +17,6 @@ const Shirt = () => {
   const fullTexture = useTexture(snap.fullDecal);
   const leftTexture = useTexture(snap.leftDecal);
   const rightTexture = useTexture(snap.rightDecal);
-
-  useFrame((_state, delta) => {
-    let smoothTime = 0.2;
-    const generateModelRotation = () => {
-      return modelRotations[snap.modelRotation];
-    };
-    // set the initial position of the model
-    let targetRotation = new Euler(0, 0, 0);
-    if (snap.intro) {
-      targetRotation = new Euler(0, (-2 * Math.PI) / 3, 0);
-      smoothTime = 0.35;
-      // const targ = modelRotations["front"];
-      // targetRotation = new Euler(targ[0], targ[1], targ[2]);
-    } else {
-      smoothTime = 0.1;
-      const targ = generateModelRotation();
-      targetRotation = new Euler(targ[0], targ[1], targ[2]);
-    }
-
-    // easing.dampE(
-    //   // @ts-ignore
-    //   group.current.rotation,
-    //   targetRotation,
-    //   smoothTime,
-    //   delta
-    // );
-  });
 
   useFrame((_state, delta) => {
     easing.dampC(materials.lambert1.color, snap.color, 0.25, delta);

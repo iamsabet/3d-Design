@@ -129,7 +129,7 @@ const Customizer = () => {
         handleDecals(type, result);
         // setActiveEditorTab("");
       })
-      .catch((e) => {
+      .catch((_e) => {
         // console.log(e);
       });
   };
