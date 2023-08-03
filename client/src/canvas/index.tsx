@@ -4,6 +4,7 @@ import { Environment, Center } from "@react-three/drei";
 import Shirt from "./Shirt";
 import BackDrop from "./BackDrop";
 import CameraRig from "./CameraRig";
+import { Suspense } from "react";
 
 const CanvasModel = ({ canvasId, canvasType }: CanvasType) => {
   return (
@@ -26,11 +27,13 @@ const CanvasModel = ({ canvasId, canvasType }: CanvasType) => {
       <CameraRig key={"C" + canvasId} canvasProps={{ canvasId, canvasType }}>
         <BackDrop />
         <Center>
-          <Shirt
-            key={"T" + canvasId}
-            canvasId={canvasId}
-            canvasType={canvasType}
-          />
+          <Suspense fallback={null}>
+            <Shirt
+              key={"T" + canvasId}
+              canvasId={canvasId}
+              canvasType={canvasType}
+            />
+          </Suspense>
         </Center>
       </CameraRig>
     </Canvas>
