@@ -16,7 +16,6 @@ const SaveModal = () => {
   //   const closetSnap = useSnapshot(closet);
   const [timer, setTimer] = useState(0);
   const titleRef = useRef(null);
-  const [_closet, setCloset] = useLocalStorage("closet", []);
   const errorStyle =
     formSnap.status &&
     formSnap.status.type === "error" &&
@@ -25,7 +24,7 @@ const SaveModal = () => {
       : "";
 
   const saveToCloud = async () => {
-    const saveData = JSON.parse(JSON.stringify(snap));
+    let saveData = JSON.parse(JSON.stringify(snap));
     if (formSnap.title.length < 4) {
       showFormMessage({
         type: "error",
@@ -60,7 +59,7 @@ const SaveModal = () => {
       data.id = "T-" + makeid(10);
       setTimeout(() => {
         closet.list.push(data);
-        setCloset(closet.list);
+        localStorage.setItem("closet", JSON.stringify(closet.list));
         return resolve(true);
         // for error reject, or resolve (false)
       }, 2000);
@@ -137,7 +136,6 @@ const SaveModal = () => {
             placeholder="Design Title"
             onChange={(e) => {
               setFormTitle(e.target.value);
-              console.log(e.target.value.length);
             }}
             className={`rounded-md text-center h-12 w-full ${errorStyle}`}
             maxLength={MAX_FORM_TITLE_LENGTH}
