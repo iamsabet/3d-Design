@@ -136,7 +136,7 @@ const Customizer = () => {
   const generateCloset = () => {
     setTimeout(() => {
       setClosetComponent((_) => <Closet />);
-      console.log("generated closet");
+      console.log("closet initiated");
     }, 2000);
   };
   const setActiveFilterTab = (tabName: string) => {
