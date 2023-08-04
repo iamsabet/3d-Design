@@ -13,7 +13,7 @@ import { makeid } from "../config/helpers";
 const SaveModal = () => {
   const snap = useSnapshot(state);
   const formSnap = useSnapshot(formState);
-  const closetSnap = useSnapshot(closet);
+  //   const closetSnap = useSnapshot(closet);
   const [timer, setTimer] = useState(0);
   const titleRef = useRef(null);
   const [_closet, setCloset] = useLocalStorage("closet", []);
@@ -96,29 +96,29 @@ const SaveModal = () => {
       // @ts-ignore
       .click();
   };
-  const messagesTest = () => {
-    // implement loading
-    showFormMessage({
-      type: "info",
-      message: "Uploading your files, please wait and dont click ...",
-      timeout: null,
-    });
-    formState.isUploading = true;
-    setTimeout(() => {
-      // implement error
-      //   showFormMessage({
-      //     type: "error",
-      //     message: "Oops something went wrong, please try later.",
-      //     timeout: 5000,
-      //   });
-      // implement success
-      showFormMessage({
-        type: "success",
-        message: "Your design Saved Successfully.",
-        timeout: 2000,
-      });
-    }, 4000);
-  };
+  //   const messagesTest = () => {
+  //     // implement loading
+  //     showFormMessage({
+  //       type: "info",
+  //       message: "Uploading your files, please wait and dont click ...",
+  //       timeout: null,
+  //     });
+  //     formState.isUploading = true;
+  //     setTimeout(() => {
+  //       // implement error
+  //       //   showFormMessage({
+  //       //     type: "error",
+  //       //     message: "Oops something went wrong, please try later.",
+  //       //     timeout: 5000,
+  //       //   });
+  //       // implement success
+  //       showFormMessage({
+  //         type: "success",
+  //         message: "Your design Saved Successfully.",
+  //         timeout: 2000,
+  //       });
+  //     }, 4000);
+  //   };
 
   return (
     <dialog id="save_modal" className="modal">

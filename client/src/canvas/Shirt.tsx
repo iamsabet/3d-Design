@@ -2,7 +2,7 @@ import { easing } from "maath";
 import { useSnapshot } from "valtio";
 import { useFrame } from "@react-three/fiber";
 import { Decal, useGLTF, useTexture } from "@react-three/drei";
-import { state, closet, getModel } from "../store";
+import { state, getModel } from "../store";
 import { LogoPositions } from "../config/constants";
 import { useRef } from "react";
 

@@ -5,8 +5,6 @@ import config from "../config/config";
 import { bin, cloudSave, download } from "../assets";
 import { downloadCanvasToImage } from "../config/helpers";
 import { reader } from "../config/helpers";
-import { BiSolidError } from "react-icons/bi";
-import { MdCloudDone } from "react-icons/md";
 import {
   EditorTabs,
   FilterTabs,
