@@ -2,9 +2,11 @@ import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useSnapshot } from "valtio";
 import config from "../config/config";
-import { bin, download } from "../assets";
+import { bin, cloudSave, download } from "../assets";
 import { downloadCanvasToImage } from "../config/helpers";
 import { reader } from "../config/helpers";
+import { BiSolidError } from "react-icons/bi";
+import { MdCloudDone } from "react-icons/md";
 import {
   EditorTabs,
   FilterTabs,
@@ -24,6 +26,8 @@ import {
 
 import { state } from "../store";
 import closetState from "../store/closet";
+import Message from "../components/Message";
+import InfinityLoading from "../components/InfinityLoading";
 const Customizer = () => {
   const snap = useSnapshot(state);
   const closetSnap = useSnapshot(closetState);
@@ -31,6 +35,8 @@ const Customizer = () => {
   const [prompt, setPrompt] = useState("");
   const [generatingImg, setGeneratingImg] = useState(false);
   const [closetComponent, setClosetComponent] = useState<JSX.Element>(<></>);
+  const [formTitle, setFormTitle] = useState("");
+  const MAX_FORM_TITLE_LENGTH = 50;
   // const [activeFilterTab, setActiveFilterTab] = useState<ActiveFilterTabType>({
   //   logoShirt: true,
   //   stylishShirt: false,
@@ -170,6 +176,14 @@ const Customizer = () => {
     // not sure what to do with it
     state.title = "edit";
   };
+
+  const saveToCloud = () => {
+    const saveData = JSON.parse(JSON.stringify(snap));
+    console.log(saveData);
+    // show modal enter title and save title to it
+
+    // then send a post req to server with all
+  };
   return (
     <AnimatePresence>
       {!snap.intro && (
@@ -243,7 +257,96 @@ const Customizer = () => {
               isActiveTab={false}
               handleClick={restoreDefault}
             />
+            <Tab
+              key={"save"}
+              tab={{ name: "save", icon: cloudSave }}
+              isFilterTab={false}
+              isActiveTab={false}
+              handleClick={() => {
+                // @ts-ignore
+                window.save_modal.showModal();
+              }}
+            />
           </motion.div>
+
+          <dialog id="save_modal" className="modal">
+            <form method="dialog" className="modal-box">
+              <div className="flex flex-row gap-2 justify-center items-center">
+                <img src={cloudSave} className="w-10 h-10 object-contain" />
+                <h3 className="font-bold text-lg">
+                  Upload and Save your design to the cloud
+                </h3>
+              </div>
+              <p className="py-4 text-center">What do you want to call it ?</p>
+              <div className="flex flex-col justify-center items-end text-center h-14 w-full">
+                <input
+                  value={formTitle}
+                  placeholder="Design Title"
+                  onChange={(e) => {
+                    setFormTitle((_prev) => e.target.value);
+                    console.log(e.target.value.length);
+                  }}
+                  className="rounded-md text-center h-12 w-full"
+                  maxLength={MAX_FORM_TITLE_LENGTH}
+                />
+                <span className={`text-right h-4`}>
+                  {formTitle.length} / {MAX_FORM_TITLE_LENGTH}
+                </span>
+              </div>
+              <div className="w-full flex flex-row h-14 mt-5">
+                <Message
+                  type="info"
+                  icon={<InfinityLoading size="xl" />}
+                  message="Uploading your files, please wait ..."
+                />
+                {/* <Message
+                  type="error"
+                  icon={<BiSolidError size={28} />}
+                  message="Task Failed Successfully"
+                /> */}
+                {/* <Message
+                  type="success"
+                  icon={<MdCloudDone size={28} />}
+                  message="Design Saved Successfully"
+                /> */}
+              </div>
+              <div
+                className="py-2 pt-1 flex flex-row justify-around 
+              gap-3 items-center"
+              >
+                <CustomButton
+                  type="outline"
+                  title={"Cancel"}
+                  styles={"text-lg rounded-lg"}
+                  handleClick={(e) => {
+                    e.preventDefault();
+
+                    window.document
+                      .querySelectorAll(".modal-backdrop button")[0]
+                      // @ts-ignore
+                      .click();
+                  }}
+                />
+                <CustomButton
+                  type="filled"
+                  title={"Save"}
+                  styles={"text-lg rounded-lg"}
+                  handleClick={(e) => {
+                    e.preventDefault();
+                  }}
+                />
+              </div>
+            </form>
+            <form method="dialog" className="modal-backdrop">
+              <button
+                onClick={() => {
+                  setFormTitle(() => "");
+                }}
+              >
+                close
+              </button>
+            </form>
+          </dialog>
         </>
       )}
     </AnimatePresence>

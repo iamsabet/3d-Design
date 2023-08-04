@@ -5,3 +5,10 @@ interface CustomButtonProps {
     handleClick: React.MouseEventHandler<HTMLButtonElement>;
     children?: JSX.Element | JSX.Element[] | undefined
 }
+interface MessageType {
+    icon: JSX.Element,
+    message: string,
+    type: "success" | "info" | "warning" | "error",
+    timeout?: number,
+    trigger?: Function
+}

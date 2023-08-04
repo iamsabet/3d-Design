@@ -12,6 +12,7 @@ import centerLogo from "./center-logo.png"
 import greenLogo from "./center-logo-green.png"
 import tShirts from "./tshirts.png"
 import bin from "./bin.png"
+import cloudSave from "./cloud.png"
 
 import qMark from "./question-mark.png"
 
@@ -29,5 +30,6 @@ export {
     greenLogo,
     tShirts,
     qMark,
-    bin
+    bin,
+    cloudSave
 };
