@@ -1,6 +1,7 @@
 import { proxy } from 'valtio'
 import { qMark } from '../assets';
 import { initialState } from '../config/constants';
+import formState from './form';
 
 const state = proxy<StoreType>(initialState);
 
@@ -55,5 +56,5 @@ const closet = proxy<{ [key: string]: StoreType }>({
     }
 });
 
-export { state, closet }
+export { state, closet, formState }
 // export default state

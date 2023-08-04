@@ -27,6 +27,11 @@ type StoreType = {
 
 }
 
-type ClosetStateType = {
-    isLoadingCloset: boolean,
+type FormStateType = {
+    title: string,
+    isUploading: boolean,
+    status?: {
+        type: "success" | "error" | "info" | "warning",
+        message: string,
+    }
 }

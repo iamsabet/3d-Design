@@ -91,7 +91,7 @@ border-gray-500 p-2 outline-none flex-1;
 }
 
 .alert{
-  @apply transition-all duration-200 ease-in-out rounded-lg;
+  @apply rounded-lg;
 }
 .alert-error{
   @apply bg-red-500
@@ -113,7 +113,9 @@ border-gray-500 p-2 outline-none flex-1;
   -webkit-backdrop-filter: blur(4px);
   border: 1px solid rgba(255, 255, 255, 0.18);
 }
-
+button:disabled{
+  @apply opacity-40
+}
 input[type="file"] {
   z-index: -1;
   position: absolute;

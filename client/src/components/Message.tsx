@@ -1,18 +1,4 @@
-import { useState } from "react";
-
-const Message = ({ icon, message, type }: MessageType) => {
-  // trigger(() => {
-  //   debugger;
-  //   setClassName((_) => "show");
-  //   let interval = setTimeout(() => {
-  //     setClassName((_) => "hide");
-  //   }, timeout);
-
-  //   return () => {
-  //     clearInterval(interval);
-  //   };
-  // }, []);
-
+const Message = ({ icon, message, type }: MessagePropsType) => {
   return (
     <div className={`alert-component alert alert-${type} relative`}>
       {icon}

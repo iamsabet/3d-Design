@@ -1,5 +1,6 @@
 import { Euler, Vector3 } from "@react-three/fiber";
 import { swatch, fileIcon, ai, stylishShirt, greenLogo, tShirts } from "../assets";
+export const MAX_FORM_TITLE_LENGTH = 50;
 
 export const initialState: StoreType = {
   title: "edit",

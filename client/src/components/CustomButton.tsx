@@ -8,6 +8,8 @@ const CustomButton = ({
   styles,
   handleClick,
   children,
+  submit,
+  disabled,
 }: CustomButtonProps) => {
   const snap = useSnapshot(state);
   const generateStyle = (type: string) => {
@@ -40,6 +42,8 @@ const CustomButton = ({
       flex-col items-center justify-center transition-all duration-150 ease-in-out`}
       style={generateStyle(type)}
       onClick={handleClick}
+      type={submit ? "submit" : "button"}
+      disabled={disabled ? true : false}
     >
       {children}
       <span>{title}</span>
