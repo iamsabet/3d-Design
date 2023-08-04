@@ -1,7 +1,29 @@
 import { Euler, Vector3 } from "@react-three/fiber";
 import { swatch, fileIcon, ai, stylishShirt, greenLogo, tShirts } from "../assets";
 
+export const initialState: StoreType = {
+  title: "edit",
+  intro: true,
+  modelRotation: "front",
+  activeEditorTab: "",
+  uploadSelectedTab: "logo",
+  // T-Shirt States
+  color: "#EFBD38", // also app state
+  isLogoTexture: true,
+  isFullTexture: false,
+  logoDecal: "./threejs.png",
+  fullDecal: "./1x1.png",
+  leftDecal: "./1x1.png",
+  rightDecal: "./1x1.png",
+  activeFilterTab: { // also app state
+    logoShirt: true,
+    stylishShirt: false,
+    leftLogo: false,
+    rightLogo: false
+  },
+  logoPosition: "topLeft",
 
+}
 export const EditorTabs: EditorTabType[] = [
   {
     name: "colorpicker",

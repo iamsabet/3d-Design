@@ -50,7 +50,13 @@ html {
   @apply absolute left-full ml-2 glassmorphism p-2 w-[240px] h-[260px] rounded-md flex flex-col gap-4;
 }
 .closet-container{
-  @apply absolute left-full ml-2 glassmorphism p-2 w-[240px] rounded-md flex flex-col gap-4;
+  @apply transition-all duration-500 ease-in-out absolute left-full  glassmorphism p-2 w-[240px] rounded-md flex flex-col gap-4;
+}
+.closet-container.hid{
+  @apply -ml-[300px]
+}
+.closet-container.show{
+  @apply ml-2
 }
 
 .aipicker-textarea {
@@ -78,6 +84,10 @@ border-gray-500 p-2 outline-none flex-1;
 }
 .tab-btn {
   @apply w-14 h-14 flex justify-center items-center cursor-pointer select-none;
+}
+.carousel-btn{
+  @apply absolute rounded-full bg-gray-100 flex-col text-center p-1 justify-center items-center translate-x-[-50%] left-[50%]
+  z-10 text-2xl w-8 h-8 transition-all duration-150 ease-in-out focus:bg-slate-200;
 }
 
 .glassmorphism {

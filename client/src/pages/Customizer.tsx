@@ -1,11 +1,16 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useSnapshot } from "valtio";
 import config from "../config/config";
-import { download } from "../assets";
+import { bin, download } from "../assets";
 import { downloadCanvasToImage } from "../config/helpers";
 import { reader } from "../config/helpers";
-import { EditorTabs, FilterTabs, DecalTypes } from "../config/constants";
+import {
+  EditorTabs,
+  FilterTabs,
+  DecalTypes,
+  initialState,
+} from "../config/constants";
 import { fadeAnimation, slideAnimation } from "../config/motion";
 
 import {
@@ -18,16 +23,21 @@ import {
 } from "../components";
 
 import { state } from "../store";
+import closetState from "../store/closet";
 const Customizer = () => {
   const snap = useSnapshot(state);
+  const closetSnap = useSnapshot(closetState);
   const [logoFile, setLogoFile] = useState("");
   const [prompt, setPrompt] = useState("");
   const [generatingImg, setGeneratingImg] = useState(false);
-
+  const [closetComponent, setClosetComponent] = useState<JSX.Element>(<></>);
   // const [activeFilterTab, setActiveFilterTab] = useState<ActiveFilterTabType>({
   //   logoShirt: true,
   //   stylishShirt: false,
   // });
+  useEffect(() => {
+    generateCloset();
+  }, []);
   const setActiveEditorTab = (type: EditorTabNameType) => {
     state.activeEditorTab = type;
     state.modelRotation = "front";
@@ -57,7 +67,7 @@ const Customizer = () => {
           />
         );
       case "closet":
-        return <Closet />;
+        break;
       default:
         return null;
     }
@@ -122,6 +132,12 @@ const Customizer = () => {
     // after setting state we need to set activeFilterTab to update the UI
     setActiveFilterTab(tabName);
   };
+  const generateCloset = () => {
+    setTimeout(() => {
+      setClosetComponent((_) => <Closet />);
+      console.log("generated closet");
+    }, 2000);
+  };
   const setActiveFilterTab = (tabName: string) => {
     state.activeFilterTab[tabName] = !snap.activeFilterTab[tabName];
   };
@@ -135,6 +151,24 @@ const Customizer = () => {
       .catch((_e) => {
         // console.log(e);
       });
+  };
+  const restoreDefault = () => {
+    const data = initialState;
+    //
+    state.color = data.color;
+    state.isLogoTexture = data.isLogoTexture;
+    state.isFullTexture = data.isFullTexture;
+    state.logoDecal = data.logoDecal;
+    state.fullDecal = data.fullDecal;
+    state.leftDecal = data.leftDecal;
+    state.rightDecal = data.rightDecal;
+    state.activeFilterTab = data.activeFilterTab;
+    state.logoPosition = data.logoPosition;
+    state.modelRotation = data.modelRotation;
+    state.activeEditorTab = data.activeEditorTab;
+    state.uploadSelectedTab = data.uploadSelectedTab;
+    // not sure what to do with it
+    state.title = "edit";
   };
   return (
     <AnimatePresence>
@@ -162,6 +196,7 @@ const Customizer = () => {
                   />
                 ))}
                 {generateTabContent()}
+                {closetComponent}
               </div>
             </div>
           </motion.div>
@@ -200,6 +235,13 @@ const Customizer = () => {
               isFilterTab
               isActiveTab={false}
               handleClick={downloadCanvasToImage}
+            />
+            <Tab
+              key={"clear"}
+              tab={{ name: "clear", icon: bin }}
+              isFilterTab
+              isActiveTab={false}
+              handleClick={restoreDefault}
             />
           </motion.div>
         </>

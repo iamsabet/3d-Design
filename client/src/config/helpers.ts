@@ -2,9 +2,6 @@
 export const downloadCanvasToImage = () => {
 
   const canvas = document.querySelector('canvas');
-  debugger;
-  // if (canvas)
-  //   canvas.style["backgroundColor"] = "#F5F3EF";
   setTimeout(() => {
 
     const dataURL = canvas?.toDataURL();

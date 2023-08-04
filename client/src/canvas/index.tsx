@@ -8,19 +8,15 @@ import CameraRig from "./CameraRig";
 const CanvasModel = ({ canvasId, canvasType }: CanvasType) => {
   return (
     <Canvas
-      key={canvasId}
       shadows
-      camera={{ position: [0, 0, 10], fov: 27 }}
+      camera={{ position: [0, 0, canvasType === "open" ? 10 : 1], fov: 27 }}
       gl={{
-        preserveDrawingBuffer: true,
+        preserveDrawingBuffer: canvasType === "open",
       }}
-      id={"canvas-" + canvasId}
       className="w-full max-w-full h-full transition-all ease-in-out"
       style={{
         backgroundColor: canvasType === "open" ? "#F5F3EF" : "#E7E2DA",
       }}
-      accessKey={"canvas-" + canvasId}
-      title={canvasId}
     >
       <ambientLight intensity={1} />
       <Environment preset="city" />

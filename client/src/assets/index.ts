@@ -11,6 +11,7 @@ import rightSideLogo from "./right-logo.png"
 import centerLogo from "./center-logo.png"
 import greenLogo from "./center-logo-green.png"
 import tShirts from "./tshirts.png"
+import bin from "./bin.png"
 
 import qMark from "./question-mark.png"
 
@@ -27,5 +28,6 @@ export {
     centerLogo,
     greenLogo,
     tShirts,
-    qMark
+    qMark,
+    bin
 };

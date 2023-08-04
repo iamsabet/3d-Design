@@ -45,7 +45,6 @@ const Shirt = ({ canvasId, canvasType }: CanvasType) => {
         material={materials.lambert1}
         material-roughness={1}
         dispose={() => {}}
-        key={"mesh-" + canvasId}
       >
         {/* <meshStandardMaterial color={snap.color} /> */}
         {/* <meshLambertMaterial color={snap.color} depthTest={false} /> */}

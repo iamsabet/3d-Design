@@ -26,3 +26,7 @@ type StoreType = {
     modelRotation: "front" | "left" | "right" | "back"
 
 }
+
+type ClosetStateType = {
+    isLoadingCloset: boolean,
+}
