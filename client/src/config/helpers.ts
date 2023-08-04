@@ -14,7 +14,17 @@ export const downloadCanvasToImage = () => {
     document.body.removeChild(link);
   }, 50)
 };
-
+export const makeid = (length: number): string => {
+  let result = '';
+  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  const charactersLength = characters.length;
+  let counter = 0;
+  while (counter < length) {
+    result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    counter += 1;
+  }
+  return result;
+}
 export const reader = (file: any) =>
   new Promise((resolve) => {
     const fileReader = new FileReader();

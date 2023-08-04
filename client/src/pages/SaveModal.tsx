@@ -5,16 +5,18 @@ import InfinityLoading from "../components/InfinityLoading";
 import { MAX_FORM_TITLE_LENGTH } from "../config/constants";
 import { CustomButton } from "../components";
 import { useSnapshot } from "valtio";
-import { state, formState } from "../store";
+import { state, formState, closet } from "../store";
 import { BiSolidError } from "react-icons/bi";
 import { MdCloudDone } from "react-icons/md";
 import useLocalStorage from "../hooks/useLocalStorage";
+import { makeid } from "../config/helpers";
 const SaveModal = () => {
   const snap = useSnapshot(state);
   const formSnap = useSnapshot(formState);
+  const closetSnap = useSnapshot(closet);
   const [timer, setTimer] = useState(0);
   const titleRef = useRef(null);
-  const [closet, setCloset] = useLocalStorage("closet", []);
+  const [_closet, setCloset] = useLocalStorage("closet", []);
   const errorStyle =
     formSnap.status &&
     formSnap.status.type === "error" &&
@@ -22,7 +24,7 @@ const SaveModal = () => {
       ? "outline-red-600"
       : "";
 
-  const saveToCloud = () => {
+  const saveToCloud = async () => {
     const saveData = JSON.parse(JSON.stringify(snap));
     if (formSnap.title.length < 4) {
       showFormMessage({
@@ -38,9 +40,32 @@ const SaveModal = () => {
 
     // show modal enter title and save title to it
     saveData.title = formSnap.title;
+    await saveToLocalStorage(saveData);
+    showFormMessage({
+      type: "success",
+      message: "Your design Saved Successfully.",
+      timeout: 2000,
+    });
     // then send a post req to server with all
   };
-
+  const saveToLocalStorage = (data: StoreType) => {
+    return new Promise((resolve, _reject) => {
+      showFormMessage({
+        type: "info",
+        message: "Uploading your files, please wait and dont click ...",
+        timeout: null,
+      });
+      formState.isUploading = true;
+      // create random string for id
+      data.id = "T-" + makeid(10);
+      setTimeout(() => {
+        closet.list.push(data);
+        setCloset(closet.list);
+        return resolve(true);
+        // for error reject, or resolve (false)
+      }, 2000);
+    });
+  };
   const showFormMessage = ({ type, message, timeout }: MessageType) => {
     if (timer) {
       clearInterval(timer);
@@ -90,7 +115,7 @@ const SaveModal = () => {
       showFormMessage({
         type: "success",
         message: "Your design Saved Successfully.",
-        timeout: 4000,
+        timeout: 2000,
       });
     }, 4000);
   };

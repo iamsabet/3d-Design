@@ -2,12 +2,12 @@ import { easing } from "maath";
 import { useSnapshot } from "valtio";
 import { useFrame } from "@react-three/fiber";
 import { Decal, useGLTF, useTexture } from "@react-three/drei";
-import { state, closet } from "../store";
+import { state, closet, getModel } from "../store";
 import { LogoPositions } from "../config/constants";
 import { useRef } from "react";
 
 const Shirt = ({ canvasId, canvasType }: CanvasType) => {
-  const snap = useSnapshot(canvasType === "open" ? state : closet[canvasId]); // conditional on parent CanvasType -> state || closet[canvas_id] store
+  const snap = useSnapshot(canvasType === "open" ? state : getModel(canvasId)); // conditional on parent CanvasType -> state || closet[canvas_id] store
   const group = useRef();
   // @ts-ignore
   const { nodes, materials } = useGLTF("/shirt_baked.glb");
@@ -23,7 +23,7 @@ const Shirt = ({ canvasId, canvasType }: CanvasType) => {
   });
 
   const state_string = JSON.stringify(
-    canvasType === "open" ? state : closet[canvasId]
+    canvasType === "open" ? state : getModel(canvasId)
   );
 
   return (

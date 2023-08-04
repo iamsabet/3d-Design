@@ -3,6 +3,7 @@ import { swatch, fileIcon, ai, stylishShirt, greenLogo, tShirts } from "../asset
 export const MAX_FORM_TITLE_LENGTH = 50;
 
 export const initialState: StoreType = {
+  id: "main",
   title: "edit",
   intro: true,
   modelRotation: "front",
