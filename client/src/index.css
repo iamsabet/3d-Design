@@ -50,7 +50,7 @@ html {
   @apply absolute left-full ml-2 glassmorphism p-2 w-[240px] h-[260px] rounded-md flex flex-col gap-4;
 }
 .closet-container{
-  @apply absolute left-full ml-2 glassmorphism p-2 w-[240px] h-[520px] rounded-md flex flex-col gap-4;
+  @apply absolute left-full ml-2 glassmorphism p-2 w-[240px] rounded-md flex flex-col gap-4;
 }
 
 .aipicker-textarea {

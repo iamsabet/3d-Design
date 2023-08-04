@@ -16,20 +16,11 @@ const Shirt = ({ canvasId, canvasType }: CanvasType) => {
   const fullTexture = useTexture(snap.fullDecal);
   const leftTexture = useTexture(snap.leftDecal);
   const rightTexture = useTexture(snap.rightDecal);
-  if (canvasType === "open") {
-    useFrame((_state, delta) => {
+  // if (canvasType === "open") {
+  useFrame((_state, delta) => {
+    if (canvasType === "open")
       easing.dampC(materials.lambert1.color, snap.color, 0.25, delta);
-    });
-  } else {
-    useFrame((_state, delta) => {
-      easing.dampC(
-        materials.lambert1.color,
-        closet[canvasId].color,
-        0.25,
-        delta
-      );
-    });
-  }
+  });
 
   const state_string = JSON.stringify(
     canvasType === "open" ? state : closet[canvasId]
@@ -39,7 +30,9 @@ const Shirt = ({ canvasId, canvasType }: CanvasType) => {
     <group
       // @ts-ignore
       ref={group}
+      name={canvasId}
       key={state_string}
+      // id={canvasId}
       // rotation={[0, (3 * Math.PI) / 2, 0]}
       // rotation={[0, (1 * Math.PI) / 2, 0]}
       // rotation={[0, Math.PI, 0]}
@@ -52,7 +45,13 @@ const Shirt = ({ canvasId, canvasType }: CanvasType) => {
         material={materials.lambert1}
         material-roughness={1}
         dispose={() => {}}
+        key={"mesh-" + canvasId}
       >
+        {/* <meshStandardMaterial color={snap.color} /> */}
+        {/* <meshLambertMaterial color={snap.color} depthTest={false} /> */}
+        {/* <meshToonMaterial color={snap.color} /> */}
+        {canvasType === "close" && <meshMatcapMaterial color={snap.color} />}
+
         {snap.isFullTexture && (
           <Decal
             position={[0, 0, 0]}

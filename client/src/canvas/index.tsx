@@ -4,7 +4,6 @@ import { Environment, Center } from "@react-three/drei";
 import Shirt from "./Shirt";
 import BackDrop from "./BackDrop";
 import CameraRig from "./CameraRig";
-import { Suspense } from "react";
 
 const CanvasModel = ({ canvasId, canvasType }: CanvasType) => {
   return (
@@ -21,21 +20,27 @@ const CanvasModel = ({ canvasId, canvasType }: CanvasType) => {
         backgroundColor: "#F5F3EF",
       }}
       accessKey={"canvas-" + canvasId}
+      title={canvasId}
     >
       <ambientLight intensity={1} />
       <Environment preset="city" />
-      <CameraRig key={"C" + canvasId} canvasProps={{ canvasId, canvasType }}>
-        <BackDrop />
-        <Center>
-          <Suspense fallback={null}>
-            <Shirt
-              key={"T" + canvasId}
-              canvasId={canvasId}
-              canvasType={canvasType}
-            />
-          </Suspense>
-        </Center>
-      </CameraRig>
+      {canvasType === "open" && (
+        <CameraRig canvasProps={{ canvasId, canvasType }}>
+          <BackDrop />
+
+          <Center>
+            <Shirt canvasId={canvasId} canvasType={canvasType} />
+          </Center>
+        </CameraRig>
+      )}
+      {canvasType === "close" && (
+        <CameraRig canvasProps={{ canvasId, canvasType }}>
+          {/* <BackDrop /> */}
+          <Center>
+            <Shirt canvasId={canvasId} canvasType={canvasType} />
+          </Center>
+        </CameraRig>
+      )}
     </Canvas>
   );
 };

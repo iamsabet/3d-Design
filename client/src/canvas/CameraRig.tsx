@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import { useFrame } from "@react-three/fiber";
+import { CanvasProps, useFrame } from "@react-three/fiber";
 import { easing } from "maath";
 import { useSnapshot } from "valtio";
 import { state } from "../store";
@@ -52,13 +52,23 @@ const CameraRig = ({ children, canvasProps }: Props) => {
       snap.uploadSelectedTab !== "left" &&
       snap.uploadSelectedTab !== "right"
     ) {
-      easing.dampE(
-        // @ts-ignore
-        group.current.rotation,
-        [state.pointer.y / 6, -state.pointer.x / 2, 0],
-        0.2,
-        delta
-      );
+      if (canvasProps.canvasType === "open")
+        easing.dampE(
+          // @ts-ignore
+          group.current.rotation,
+          [state.pointer.y / 10, -state.pointer.x / 2, 0],
+          0.2,
+          delta
+        );
+      else if (canvasProps.canvasType === "close")
+        easing.dampE(
+          // @ts-ignore
+          group.current.rotation,
+          // @ts-ignore
+          [0, -state.pointer.x / 2, 0],
+          0.3,
+          delta
+        );
     }
 
     // @ts-ignore
