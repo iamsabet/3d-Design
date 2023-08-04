@@ -2,6 +2,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { FiChevronDown, FiChevronUp } from "react-icons/fi";
 import CanvasModel from "../../canvas";
 import { useState } from "react";
+import { closet } from "../../store";
 
 const Closet = () => {
   const items = ["T-1", "T-2", "T-1", "T-2", "T-1", "T-2"];
@@ -34,15 +35,25 @@ const Closet = () => {
         >
           {items.map((item, index) => (
             <div
-              className="carousel-item h-1/2"
+              className="relative carousel-item h-1/2 cursor-pointer 
+              flex flex-col overflow-hidden"
               key={index}
               id={`slide-${index}`}
             >
-              <CanvasModel
-                canvasType="close"
-                canvasId={item}
-                // need to pass prompts to initiate tshirt
-              />
+              <div className="h-full">
+                <CanvasModel
+                  canvasType="close"
+                  canvasId={item}
+                  // need to pass prompts to initiate tshirt
+                />
+              </div>
+              <h2
+                className="absolute bottom-2 translate-x-[-50%] left-[50%] 
+                w-full text-center h-1/12 bg-gray-600 bg-opacity-50
+                text-semibold text-white"
+              >
+                {closet[item].title}
+              </h2>
             </div>
           ))}
         </div>
@@ -50,7 +61,7 @@ const Closet = () => {
           <a
             href={`#slide-${scrollStep - 1}`}
             className="absolute btn btn-circle translate-x-[-50%] left-[50%]
-          -top-3 z-10 text-2xl"
+            -top-4 z-10 text-2xl btn-sm"
           >
             <FiChevronUp />
           </a>
@@ -59,12 +70,11 @@ const Closet = () => {
           <a
             href={`#slide-${scrollStep + 1}`}
             className="absolute btn btn-circle translate-x-[-50%] left-[50%]
-          -bottom-3 z-10 text-2xl"
+          -bottom-4 z-10 text-2xl btn-sm"
           >
             <FiChevronDown />
           </a>
         )}
-
         {/* </motion.div> */}
       </div>
     </AnimatePresence>

@@ -17,7 +17,7 @@ const CanvasModel = ({ canvasId, canvasType }: CanvasType) => {
       id={"canvas-" + canvasId}
       className="w-full max-w-full h-full transition-all ease-in-out"
       style={{
-        backgroundColor: "#F5F3EF",
+        backgroundColor: canvasType === "open" ? "#F5F3EF" : "#E7E2DA",
       }}
       accessKey={"canvas-" + canvasId}
       title={canvasId}
