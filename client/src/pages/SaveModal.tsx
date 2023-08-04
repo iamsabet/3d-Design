@@ -8,12 +8,20 @@ import { useSnapshot } from "valtio";
 import { state, formState } from "../store";
 import { BiSolidError } from "react-icons/bi";
 import { MdCloudDone } from "react-icons/md";
-
+import useLocalStorage from "../hooks/useLocalStorage";
 const SaveModal = () => {
   const snap = useSnapshot(state);
   const formSnap = useSnapshot(formState);
   const [timer, setTimer] = useState(0);
   const titleRef = useRef(null);
+  const [closet, setCloset] = useLocalStorage("closet", []);
+  const errorStyle =
+    formSnap.status &&
+    formSnap.status.type === "error" &&
+    formSnap.status.message.startsWith("Title")
+      ? "outline-red-600"
+      : "";
+
   const saveToCloud = () => {
     const saveData = JSON.parse(JSON.stringify(snap));
     if (formSnap.title.length < 4) {
@@ -32,29 +40,7 @@ const SaveModal = () => {
     saveData.title = formSnap.title;
     // then send a post req to server with all
   };
-  const messagesTest = () => {
-    // implement loading
-    showFormMessage({
-      type: "info",
-      message: "Uploading your files, please wait and dont click ...",
-      timeout: null,
-    });
-    formState.isUploading = true;
-    setTimeout(() => {
-      // implement error
-      //   showFormMessage({
-      //     type: "error",
-      //     message: "Oops something went wrong, please try later.",
-      //     timeout: 5000,
-      //   });
-      // implement success
-      showFormMessage({
-        type: "success",
-        message: "Your design Saved Successfully.",
-        timeout: 4000,
-      });
-    }, 4000);
-  };
+
   const showFormMessage = ({ type, message, timeout }: MessageType) => {
     if (timer) {
       clearInterval(timer);
@@ -85,12 +71,30 @@ const SaveModal = () => {
       // @ts-ignore
       .click();
   };
-  const errorStyle =
-    formSnap.status &&
-    formSnap.status.type === "error" &&
-    formSnap.status.message.startsWith("Title")
-      ? "outline-red-600"
-      : "";
+  const messagesTest = () => {
+    // implement loading
+    showFormMessage({
+      type: "info",
+      message: "Uploading your files, please wait and dont click ...",
+      timeout: null,
+    });
+    formState.isUploading = true;
+    setTimeout(() => {
+      // implement error
+      //   showFormMessage({
+      //     type: "error",
+      //     message: "Oops something went wrong, please try later.",
+      //     timeout: 5000,
+      //   });
+      // implement success
+      showFormMessage({
+        type: "success",
+        message: "Your design Saved Successfully.",
+        timeout: 4000,
+      });
+    }, 4000);
+  };
+
   return (
     <dialog id="save_modal" className="modal">
       <form method="dialog" className="modal-box">
