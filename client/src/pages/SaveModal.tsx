@@ -16,7 +16,6 @@ const SaveModal = () => {
   const titleRef = useRef(null);
   const saveToCloud = () => {
     const saveData = JSON.parse(JSON.stringify(snap));
-    console.log(saveData);
     if (formSnap.title.length < 4) {
       showFormMessage({
         type: "error",
@@ -27,6 +26,13 @@ const SaveModal = () => {
       titleRef.current?.focus();
       return;
     }
+    // messagesTest();
+
+    // show modal enter title and save title to it
+    saveData.title = formSnap.title;
+    // then send a post req to server with all
+  };
+  const messagesTest = () => {
     // implement loading
     showFormMessage({
       type: "info",
@@ -48,12 +54,7 @@ const SaveModal = () => {
         timeout: 4000,
       });
     }, 4000);
-
-    // show modal enter title and save title to it
-
-    // then send a post req to server with all
   };
-
   const showFormMessage = ({ type, message, timeout }: MessageType) => {
     if (timer) {
       clearInterval(timer);
