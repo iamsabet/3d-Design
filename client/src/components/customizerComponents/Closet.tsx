@@ -4,6 +4,7 @@ import CanvasModel from "../../canvas";
 import { useState } from "react";
 import { state, closet, getModel } from "../../store";
 import { useSnapshot } from "valtio";
+import InfinityLoading from "../InfinityLoading";
 
 const Closet = () => {
   const items: StoreType[] = closet.list;
@@ -89,12 +90,18 @@ const Closet = () => {
                 // @ts-ignore
                 onClick={(_) => loadTshirtState(item.id)}
               >
-                <div className="h-full">
-                  <CanvasModel
-                    canvasType="close"
-                    canvasId={item.id}
-                    // need to pass prompts to initiate tshirt
-                  />
+                <div className="h-full flex flex-row justify-center items-center">
+                  {Math.abs(scrollStep - index) < 3 ? (
+                    <CanvasModel
+                      canvasType="close"
+                      canvasId={item.id}
+                      // need to pass prompts to initiate tshirt
+                    />
+                  ) : (
+                    <div className="btn btn-circle">
+                      <InfinityLoading size="3xl" />
+                    </div>
+                  )}
                 </div>
                 <h2
                   className="absolute bottom-2 translate-x-[-50%] left-[50%] 

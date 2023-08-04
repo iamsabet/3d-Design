@@ -8,7 +8,6 @@ import { useSnapshot } from "valtio";
 import { state, formState, closet } from "../store";
 import { BiSolidError } from "react-icons/bi";
 import { MdCloudDone } from "react-icons/md";
-import useLocalStorage from "../hooks/useLocalStorage";
 import { makeid } from "../config/helpers";
 const SaveModal = () => {
   const snap = useSnapshot(state);
