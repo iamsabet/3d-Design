@@ -2,13 +2,15 @@ import { useRef, useState } from "react";
 import { cloudSave } from "../assets";
 import Message from "../components/Message";
 import InfinityLoading from "../components/InfinityLoading";
-import { MAX_FORM_TITLE_LENGTH } from "../config/constants";
+import { HOST_NAME, MAX_FORM_TITLE_LENGTH } from "../config/constants";
 import { CustomButton } from "../components";
 import { useSnapshot } from "valtio";
 import { state, formState, closet } from "../store";
 import { BiSolidError } from "react-icons/bi";
 import { MdCloudDone } from "react-icons/md";
-import { makeid } from "../config/helpers";
+// import { makeid } from "../config/helpers";
+import axios from "axios";
+
 const SaveModal = () => {
   const snap = useSnapshot(state);
   const formSnap = useSnapshot(formState);
@@ -38,32 +40,68 @@ const SaveModal = () => {
 
     // show modal enter title and save title to it
     saveData.title = formSnap.title;
-    await saveToLocalStorage(saveData);
-    showFormMessage({
-      type: "success",
-      message: "Your design Saved Successfully.",
-      timeout: 2000,
-    });
-    // then send a post req to server with all
-  };
-  const saveToLocalStorage = (data: StoreType) => {
-    return new Promise((resolve, _reject) => {
+    // await saveToLocalStorage(saveData);
+    try {
       showFormMessage({
         type: "info",
         message: "Uploading your files, please wait and dont click ...",
         timeout: null,
       });
-      formState.isUploading = true;
-      // create random string for id
-      data.id = "T-" + makeid(10);
-      setTimeout(() => {
-        closet.list.push(data);
-        localStorage.setItem("closet", JSON.stringify(closet.list));
-        return resolve(true);
-        // for error reject, or resolve (false)
-      }, 2000);
+      const res: SaveModelResponseType = await sendToApi(saveData);
+      showFormMessage({
+        type: "success",
+        message: "Your design Saved Successfully." + res.model_id,
+        timeout: 2000,
+      });
+    } catch (e) {
+      showFormMessage({
+        type: "error",
+        message: "Oops something went wrong",
+        timeout: 3000,
+      });
+      console.error(e);
+    } finally {
+    }
+    // then send a post req to server with all
+  };
+  const sendToApi = async (data: StoreType): Promise<SaveModelResponseType> => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const response = await axios.post(
+          `${HOST_NAME}/api/v1/design/save`,
+          { model: data },
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Accept: "application/json",
+            },
+          }
+        );
+
+        resolve(response.data);
+      } catch (e) {
+        reject(e);
+      }
     });
   };
+  // const saveToLocalStorage = (data: StoreType) => {
+  //   return new Promise((resolve, _reject) => {
+  //     showFormMessage({
+  //       type: "info",
+  //       message: "Uploading your files, please wait and dont click ...",
+  //       timeout: null,
+  //     });
+  //     formState.isUploading = true;
+  //     // create random string for id
+  //     data.id = "T-" + makeid(10);
+  //     setTimeout(() => {
+  //       closet.list.push(data);
+  //       localStorage.setItem("closet", JSON.stringify(closet.list));
+  //       return resolve(true);
+  //       // for error reject, or resolve (false)
+  //     }, 2000);
+  //   });
+  // };
   const showFormMessage = ({ type, message, timeout }: MessageType) => {
     if (timer) {
       clearInterval(timer);

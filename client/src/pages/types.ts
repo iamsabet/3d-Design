@@ -7,3 +7,7 @@ type MessageType = {
     message: string;
     timeout: number | null;
 };
+type SaveModelResponseType = {
+    model_id: number,
+    title: string
+}

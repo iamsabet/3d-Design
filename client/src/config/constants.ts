@@ -1,7 +1,7 @@
 import { Euler, Vector3 } from "@react-three/fiber";
 import { swatch, fileIcon, ai, stylishShirt, greenLogo, tShirts } from "../assets";
 export const MAX_FORM_TITLE_LENGTH = 50;
-
+export const HOST_NAME = import.meta.env.PROD ? "http://localhost:8080" : (import.meta.env.DEV ? "http://localhost:8080" : "http://localhost:8080")
 export const initialState: StoreType = {
   id: "main",
   title: "edit",
