@@ -8,6 +8,7 @@ const CustomButton = ({
   styles,
   handleClick,
   children,
+  color,
   submit,
   disabled,
 }: CustomButtonProps) => {
@@ -15,10 +16,10 @@ const CustomButton = ({
   const generateStyle = (type: string) => {
     if (type === "filled") {
       return {
-        backgroundColor: snap.color,
-        color: getContrastingColor(snap.color),
+        backgroundColor: color ? color : snap.color,
+        color: getContrastingColor(color ? color : snap.color),
         borderWidth: "2px",
-        borderColor: snap.color,
+        borderColor: color ? color : snap.color,
       };
     } else if (type === "glass") {
       return {
@@ -31,8 +32,8 @@ const CustomButton = ({
       return {
         backgroundColor: "transparent",
         borderWidth: "2px",
-        borderColor: snap.color,
-        color: snap.color,
+        borderColor: color ? color : snap.color,
+        color: color ? color : snap.color,
       };
     }
   };

@@ -220,6 +220,7 @@ const SaveModal = () => {
             type="outline"
             title={"Cancel"}
             styles={"text-lg rounded-lg"}
+            color="#AEAEAF"
             disabled={formState.isUploading}
             handleClick={(e) => {
               e.preventDefault();
@@ -230,6 +231,7 @@ const SaveModal = () => {
             type="filled"
             submit
             title={"Save"}
+            color="#00EEBB"
             styles={"text-lg rounded-lg"}
             disabled={formState.isUploading}
             handleClick={(e) => {

@@ -5,6 +5,7 @@ interface CustomButtonProps {
     handleClick: React.MouseEventHandler<HTMLButtonElement>;
     children?: JSX.Element | JSX.Element[] | undefined;
     submit?: boolean;
+    color?: string,
     disabled?: boolean
 }
 interface MessagePropsType {
