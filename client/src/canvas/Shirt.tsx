@@ -4,7 +4,7 @@ import { useFrame } from "@react-three/fiber";
 import { Decal, useGLTF, useTexture } from "@react-three/drei";
 import { state, getModel } from "../store";
 import { LogoPositions } from "../config/constants";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 
 const Shirt = ({ canvasId, canvasType }: CanvasType) => {
   const snap = useSnapshot(canvasType === "open" ? state : getModel(canvasId)); // conditional on parent CanvasType -> state || closet[canvas_id] store
@@ -16,6 +16,12 @@ const Shirt = ({ canvasId, canvasType }: CanvasType) => {
   const fullTexture = useTexture(snap.fullDecal);
   const leftTexture = useTexture(snap.leftDecal);
   const rightTexture = useTexture(snap.rightDecal);
+
+  const [logoRatio, setLogoRatio] = useState(0);
+  const [fullRatio, setFullRatio] = useState(0);
+  const [leftRatio, setleftRatio] = useState(0);
+  const [rightRatio, setRightRatio] = useState(0);
+
   // if (canvasType === "open") {
   useFrame((_state, delta) => {
     if (canvasType === "open")
@@ -25,6 +31,26 @@ const Shirt = ({ canvasId, canvasType }: CanvasType) => {
   const state_string = JSON.stringify(
     canvasType === "open" ? state : getModel(canvasId)
   );
+  const setRatio = (
+    img: string,
+    setter: React.Dispatch<React.SetStateAction<number>>
+  ) => {
+    const image = new Image();
+    image.src = img;
+    //Validate the File Height and Width.
+    image.onload = function () {
+      // @ts-ignore
+      var height = this.height;
+      // @ts-ignore
+      var width = this.width;
+      setter((_) => width / height);
+    };
+  };
+
+  setRatio(snap.logoDecal, setLogoRatio);
+  setRatio(snap.fullDecal, setFullRatio);
+  setRatio(snap.leftDecal, setleftRatio);
+  setRatio(snap.rightDecal, setRightRatio);
 
   return (
     <group
@@ -59,33 +85,41 @@ const Shirt = ({ canvasId, canvasType }: CanvasType) => {
             map={fullTexture}
           />
         )}
-        {snap.isLogoTexture && (
+
+        {snap.isLogoTexture && !!logoRatio && (
           <Decal
             position={LogoPositions[snap.logoPosition].position}
             rotation={LogoPositions[snap.logoPosition].rotation}
-            scale={LogoPositions[snap.logoPosition].scale}
+            scale={[
+              LogoPositions[snap.logoPosition].scale,
+              LogoPositions[snap.logoPosition].scale / logoRatio,
+              LogoPositions[snap.logoPosition].scale,
+            ]}
+            // scale={[0.22, 0.44, 0.22]}
             map={logoTexture}
             // map-anisotropy={16}
             depthTest={false}
             // depthWrite={true}
           />
         )}
-        {leftTexture && (
+        {leftTexture && !!leftRatio && (
           <Decal
             position={[0.25, 0.085, -0.015]}
             rotation={[-(2 * Math.PI), (1 * Math.PI) / 2, 0]}
-            scale={0.067}
+            // since its rotated then x,y has changed
+            scale={[0.065 * leftRatio, 0.065, 0.065]}
             map={leftTexture}
             // map-anisotropy={16}
             depthTest={false}
             // depthWrite={true}
           />
         )}
-        {rightTexture && (
+        {rightTexture && !!rightRatio && (
           <Decal
             position={[-0.25, 0.085, -0.015]}
             rotation={[-(2 * Math.PI), (3 * Math.PI) / 2, 0]}
-            scale={0.067}
+            // since its rotated then x,y has changed
+            scale={[0.065 * rightRatio, 0.065, 0.065]}
             map={rightTexture}
             // map-anisotropy={16}
             depthTest={false}

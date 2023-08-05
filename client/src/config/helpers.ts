@@ -28,30 +28,78 @@ export const makeid = (length: number): string => {
 export const reader = (file: any) =>
   new Promise((resolve) => {
     const fileReader = new FileReader();
-    fileReader.onload = () => resolve(fileReader.result);
-    fileReader.readAsDataURL(file);
+    fileReader.onload = (e) => {
+      var image = new Image();
+      // @ts-ignore
+      image.src = e.target.result;
+      //Validate the File Height and Width.
+      image.onload = function () {
+        // @ts-ignore
+        var height = this.height;
+        // @ts-ignore
+        var width = this.width;
+        resolve({ "file": fileReader.result, "width": width, "height": height });
+      };
+
+
+    }
+    if (file && file.name)
+      fileReader.readAsDataURL(file);
   });
 export const readerResizer = (file: any) => {
-  let fileFormat: string = file.name.split(".")[file.name.split(".").length - 1]
-  if (fileFormat === "jpg") {
-    fileFormat = "jpeg";
-  }
-  fileFormat = fileFormat.toUpperCase()
   return new Promise((resolve, _reject) => {
-    Resizer.imageFileResizer(
-      file,
-      1024,
-      1024,
-      fileFormat,
-      100,
-      0,
-      (uri) => {
-        resolve(uri);
-      },
-      "base64"
-    );
+    reader(file)
+      .then((result: any) => {
+        const width: number = result["width"]
+        const height: number = result["height"]
+        const ratio = width / height;
+        const maxFixed = 1024;
+        console.log("Original : " + width + " X " + height)
 
-  });
+        var fileFormat: string = file.name.split(".")[file.name.split(".").length - 1]
+        if (fileFormat === "jpg") {
+          fileFormat = "jpeg";
+        }
+
+        fileFormat = fileFormat.toUpperCase()
+        var finalWidth = 0
+        var finalHeight = 0
+        if (width < maxFixed && height < maxFixed) {
+          console.log("Not Resized : " + width + " X " + height)
+          resolve(result["file"])
+        }
+        else {
+          if (ratio >= 1) {
+            finalWidth = maxFixed;
+            const wRatio = maxFixed / width
+            finalHeight = Math.round(height * wRatio)
+          }
+          else {
+            finalHeight = maxFixed;
+            const hRatio = maxFixed / height
+            finalWidth = Math.round(width * hRatio)
+          }
+          console.log("Resized : " + finalWidth + " X " + finalHeight)
+          Resizer.imageFileResizer(
+            file,
+            finalWidth,
+            finalHeight,
+            fileFormat,
+            100,
+            0,
+            (uri) => {
+              resolve(uri);
+            },
+            "base64"
+          );
+        }
+
+      }).catch(e => {
+        console.error(e)
+        _reject(e);
+      })
+  })
+
 }
 
 export const getContrastingColor = (color: any) => {
