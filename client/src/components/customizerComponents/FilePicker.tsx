@@ -74,7 +74,7 @@ const FilePicker = ({ file, setFile, readFile }: FilePickerProps) => {
                 id="file-upload"
                 ref={logoUploadRef}
                 type="file"
-                accept="images/*"
+                accept="image/png, image/jpeg"
                 onChange={(e) => {
                   //
                   if (e.target.files) {
@@ -149,7 +149,7 @@ const FilePicker = ({ file, setFile, readFile }: FilePickerProps) => {
                 id="file-upload-texture"
                 type="file"
                 ref={textureUploadRef}
-                accept="images/*"
+                accept="image/png, image/jpeg"
                 onChange={(e) => {
                   //
                   if (e.target.files) {
@@ -201,7 +201,7 @@ const FilePicker = ({ file, setFile, readFile }: FilePickerProps) => {
                 id="file-upload-left"
                 ref={leftUploadRef}
                 type="file"
-                accept="images/*"
+                accept="image/png, image/jpeg"
                 onChange={(e) => {
                   //
                   if (e.target.files) {
@@ -259,7 +259,7 @@ const FilePicker = ({ file, setFile, readFile }: FilePickerProps) => {
                 id="file-upload-right"
                 ref={rightUploadRef}
                 type="file"
-                accept="images/*"
+                accept="image/png, image/jpeg"
                 onChange={(e) => {
                   //
                   if (e.target.files) {

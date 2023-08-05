@@ -3,7 +3,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useSnapshot } from "valtio";
 import config from "../config/config";
 import { bin, cloudSave, download } from "../assets";
-import { downloadCanvasToImage } from "../config/helpers";
+import { downloadCanvasToImage, readerResizer } from "../config/helpers";
 import { reader } from "../config/helpers";
 import {
   EditorTabs,
@@ -124,6 +124,10 @@ const Customizer = () => {
       case "stylishShirt":
         state.isFullTexture = !snap.activeFilterTab[tabName];
         break;
+      case "leftLogo":
+        break;
+      case "rightLogo":
+        break;
       default:
         state.isLogoTexture = true;
         state.isFullTexture = false;
@@ -144,7 +148,8 @@ const Customizer = () => {
   };
   const readFile = (type: DecalType, file: Blob | MediaSource | undefined) => {
     // let file = type === "logo" ? logoFile : textureFile;
-    reader(file)
+    // reader(file)
+    readerResizer(file)
       .then((result) => {
         handleDecals(type, result);
         // setActiveEditorTab("");

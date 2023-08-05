@@ -1,6 +1,6 @@
+import Resizer from "react-image-file-resizer";
 
 export const downloadCanvasToImage = () => {
-
   const canvas = document.querySelector('canvas');
   setTimeout(() => {
 
@@ -31,6 +31,28 @@ export const reader = (file: any) =>
     fileReader.onload = () => resolve(fileReader.result);
     fileReader.readAsDataURL(file);
   });
+export const readerResizer = (file: any) => {
+  let fileFormat: string = file.name.split(".")[file.name.split(".").length - 1]
+  if (fileFormat === "jpg") {
+    fileFormat = "jpeg";
+  }
+  fileFormat = fileFormat.toUpperCase()
+  return new Promise((resolve, _reject) => {
+    Resizer.imageFileResizer(
+      file,
+      1024,
+      1024,
+      fileFormat,
+      100,
+      0,
+      (uri) => {
+        resolve(uri);
+      },
+      "base64"
+    );
+
+  });
+}
 
 export const getContrastingColor = (color: any) => {
   // Remove the '#' character if it exists
