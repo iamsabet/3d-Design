@@ -4,5 +4,6 @@ type EditorTabNameType = "colorpicker" | "filepicker" | "aipicker" | "closet" | 
 
 type EditorTabType = {
     name: EditorTabNameType,
-    icon: any
+    icon: any,
+    tooltip: string
 }

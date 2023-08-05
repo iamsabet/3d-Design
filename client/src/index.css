@@ -142,3 +142,24 @@ input[type="file"] {
   padding: 10px 0px 0px 10px !important;
   border-top: 1px solid rgb(210, 210, 210) !important;
 }
+.tooltip-right:before {
+  transform: translate(0,-50%);
+  top: 50%;
+  left: 100%;
+  right: var(--tooltip-offset);
+  bottom: 0;
+}
+.tooltip-left:before {
+  transform: translate(0,-50%);
+  top: 50%;
+  left: -90%;
+  right: var(--tooltip-offset);
+  bottom: 0;
+}
+.tooltip-bottom:before {
+  transform: translateX(-50%);
+  top: var(--tooltip-offset);
+  left: 50%;
+  right: auto;
+  bottom: auto;
+}

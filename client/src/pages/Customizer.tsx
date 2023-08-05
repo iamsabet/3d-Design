@@ -24,6 +24,7 @@ import {
 import { state } from "../store";
 
 import SaveModal from "./SaveModal";
+import { BiArrowBack } from "react-icons/bi";
 
 const Customizer = () => {
   const snap = useSnapshot(state);
@@ -184,7 +185,9 @@ const Customizer = () => {
                   <Tab
                     key={tab.name}
                     tab={tab}
+                    isFilterTab={false}
                     isActiveTab={tab.name === snap.activeEditorTab}
+                    tooltip={tab.tooltip}
                     handleClick={() => {
                       if (tab.name === snap.activeEditorTab) {
                         setActiveEditorTab("");
@@ -199,14 +202,11 @@ const Customizer = () => {
               </div>
             </div>
           </motion.div>
-          <motion.div
-            className="absolute z-10 right-5 top-5"
-            {...fadeAnimation}
-          >
+          <motion.div className="absolute z-10 left-3 top-3" {...fadeAnimation}>
             <CustomButton
               type="filled"
-              title="Go Back"
-              styles="w-fit px-4 py-2.5 text-sm"
+              title={<BiArrowBack size={20} />}
+              styles="w-fit px-3 py-3 text-sm rounded-full"
               handleClick={() => {
                 setActiveEditorTab("");
                 setTimeout(() => {
@@ -223,14 +223,31 @@ const Customizer = () => {
               <Tab
                 key={tab.name}
                 tab={tab}
+                tooltip={
+                  snap.activeFilterTab[tab.name]
+                    ? tab.activeTooltip
+                    : tab.deactiveTooltip
+                }
                 isFilterTab
                 isActiveTab={snap.activeFilterTab[tab.name]}
                 handleClick={() => handleActiveFilterTab(tab.name)}
               />
             ))}
             <Tab
+              key={"save"}
+              tab={{ name: "save", icon: cloudSave }}
+              tooltip="Save to cloud"
+              isFilterTab
+              isActiveTab={false}
+              handleClick={() => {
+                // @ts-ignore
+                window.save_modal.showModal();
+              }}
+            />
+            <Tab
               key={"download"}
               tab={{ name: "download", icon: download }}
+              tooltip="Download"
               isFilterTab
               isActiveTab={false}
               handleClick={downloadCanvasToImage}
@@ -238,19 +255,10 @@ const Customizer = () => {
             <Tab
               key={"clear"}
               tab={{ name: "clear", icon: bin }}
+              tooltip="Clear"
               isFilterTab
               isActiveTab={false}
               handleClick={restoreDefault}
-            />
-            <Tab
-              key={"save"}
-              tab={{ name: "save", icon: cloudSave }}
-              isFilterTab={false}
-              isActiveTab={false}
-              handleClick={() => {
-                // @ts-ignore
-                window.save_modal.showModal();
-              }}
             />
           </motion.div>
           <SaveModal />

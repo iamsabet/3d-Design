@@ -7,6 +7,7 @@ interface TabProps {
   tab: { name: string; icon: string };
   isFilterTab?: boolean;
   isActiveTab?: boolean;
+  tooltip?: string;
   handleClick: () => void;
 }
 
@@ -15,6 +16,7 @@ const Tab = ({
   tab,
   isFilterTab = false,
   isActiveTab,
+  tooltip = "hello",
   handleClick,
 }: TabProps) => {
   const snap = useSnapshot(state);
@@ -32,18 +34,23 @@ const Tab = ({
     !isFilterTab && isActiveTab ? "bg-gray-100" : "";
   return (
     <div
+      className={`tooltip tooltip-${isFilterTab ? "top" : "right"}`}
+      data-tip={tooltip}
       key={tab.name}
-      className={`tab-btn rounded-lg ${isActiveEditorTabClasses}  ${
-        isFilterTab ? "rounded-full glassmorphism" : "rounded-4"
-      } transition-all duration-200 ease-in-out`}
-      style={isFilterTab ? activeStyles : {}}
-      onClick={handleClick}
     >
-      <img
-        src={tab.icon}
-        alt={`${tab.name} icon`}
-        className={`${imageClasses}`}
-      />
+      <div
+        className={`tab-btn rounded-lg ${isActiveEditorTabClasses}  ${
+          isFilterTab ? "rounded-full glassmorphism" : "rounded-4"
+        } transition-all duration-200 ease-in-out`}
+        style={isFilterTab ? activeStyles : {}}
+        onClick={handleClick}
+      >
+        <img
+          src={tab.icon}
+          alt={`${tab.name} icon`}
+          className={`${imageClasses}`}
+        />
+      </div>
     </div>
   );
 };

@@ -30,18 +30,22 @@ export const EditorTabs: EditorTabType[] = [
   {
     name: "colorpicker",
     icon: swatch,
+    tooltip: "Pick a color"
   },
   {
     name: "filepicker",
     icon: fileIcon,
+    tooltip: "Upload your images"
   },
   {
     name: "aipicker",
     icon: ai,
+    tooltip: "Generate AI images"
   },
   {
     name: "closet",
     icon: tShirts,
+    tooltip: "Comunity designs"
   },
 ];
 
@@ -49,10 +53,14 @@ export const FilterTabs = [
   {
     name: "logoShirt",
     icon: greenLogo,
+    activeTooltip: "Hide logo",
+    deactiveTooltip: "Show logo",
   },
   {
     name: "stylishShirt",
     icon: stylishShirt,
+    activeTooltip: "Hide texture",
+    deactiveTooltip: "Show Texture",
   },
 ];
 

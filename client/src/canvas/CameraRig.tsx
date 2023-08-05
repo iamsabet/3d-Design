@@ -28,7 +28,7 @@ const CameraRig = ({ children, canvasProps }: Props) => {
       if (isMobile) targetPosition = [0, 0.2, 2.5];
 
       targetRotation = new Euler(0, (4 * Math.PI) / 3, 0);
-      smoothTime = 0.35;
+      smoothTime = 0.2;
       // const targ = modelRotations["front"];
       // targetRotation = new Euler(targ[0], targ[1], targ[2]);
     } else {
@@ -52,20 +52,25 @@ const CameraRig = ({ children, canvasProps }: Props) => {
       snap.uploadSelectedTab !== "left" &&
       snap.uploadSelectedTab !== "right"
     ) {
-      if (canvasProps.canvasType === "open")
+      if (canvasProps.canvasType === "open") {
+        if (snap.intro) {
+          var t = 6;
+        } else {
+          t = 2;
+        }
         easing.dampE(
           // @ts-ignore
           group.current.rotation,
-          [state.pointer.y / 10, -state.pointer.x / 2, 0],
+          [state.pointer.y / 10, -state.pointer.x / t, 0],
           0.2,
           delta
         );
-      else if (canvasProps.canvasType === "close")
+      } else if (canvasProps.canvasType === "close")
         easing.dampE(
           // @ts-ignore
           group.current.rotation,
           // @ts-ignore
-          [0, -state.pointer.x / 2, 0],
+          [0, -state.pointer.x / 4, 0],
           0.3,
           delta
         );

@@ -1,6 +1,6 @@
 interface CustomButtonProps {
     type: string;
-    title: string;
+    title: string | JSX.Element;
     styles: string;
     handleClick: React.MouseEventHandler<HTMLButtonElement>;
     children?: JSX.Element | JSX.Element[] | undefined;
