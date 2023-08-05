@@ -24,7 +24,7 @@ const CustomButton = ({
     } else if (type === "glass") {
       return {
         backgroundColor: "transparent",
-        color: getContrastingColor(snap.color),
+        color: "#666666", // getContrastingColor(snap.color),
         borderWidth: "2px",
         borderColor: snap.color,
       };

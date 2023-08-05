@@ -4,6 +4,10 @@ import DesignModel from "../models/design/design.ts";
 let paginateOptions = {
     page: 1,
     limit: 6,
+
+    sort: {
+        updatedAt: -1
+    },
     collation: {
         locale: 'en',
     },

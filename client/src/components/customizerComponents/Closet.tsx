@@ -9,60 +9,28 @@ import axios from "axios";
 import { HOST_NAME } from "../../config/constants";
 
 const Closet = () => {
-  const items: StoreType[] = closet.list;
-  const [scrollStep, setScrollStep] = useState(0);
-  const [isScrolling, setIsScrolling] = useState(false);
   const snap = useSnapshot(state);
-  const [page, setPage] = useState(1);
-  const [hasNextPage, setHasNextPage] = useState(true);
-  const [isLoading, setIsLoading] = useState(false);
+  const closetSnap = useSnapshot(closet);
   useEffect(() => {
     //
-    if (items.length === scrollStep || items.length === scrollStep + 2) {
-      if (hasNextPage && !isLoading) {
-        setIsLoading((_) => true);
-        initialCloset();
+    if (
+      closet.list.length === closet.scrollStep ||
+      closet.list.length === closet.scrollStep + 2
+    ) {
+      if (closet.hasNextPage && !closet.isLoading) {
+        closet.isLoading = true;
+        closet.initialCloset();
       }
     }
-    console.log(scrollStep);
+    console.log(closet.scrollStep);
     return () => {
       // cleanup function
     };
-  }, [scrollStep]);
-  const initialCloset = () => {
-    fetchCloset()
-      .then((response) => {
-        closet.list = Array.prototype.concat(closet.list, response);
-        setPage((prevPage) => prevPage + 1);
-        setIsLoading((_) => false);
-      })
-      .catch((e) => {
-        console.error(e);
-        setIsLoading((_) => false);
-      });
-  };
-  const fetchCloset = async () => {
-    return new Promise(async (resolve, _reject) => {
-      try {
-        const response = await axios.get(
-          `${HOST_NAME}/api/v1/design/paginate?page=${page}`,
-          {
-            headers: {
-              Accept: "application/json",
-            },
-          }
-        );
+  }, [closetSnap.scrollStep]);
 
-        setHasNextPage((_) => response.data.hasNextPage);
-        resolve(response.data.docs);
-      } catch (e) {
-        _reject(e);
-      }
-    });
-  };
   const linkHandler = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
     // console.log(isScrolling);
-    if (isScrolling) {
+    if (closet.isScrolling) {
       e.preventDefault();
     } else {
       setTimeout(() => {
@@ -79,15 +47,15 @@ const Closet = () => {
     var timeOut = atSnappingPoint ? 0 : 150; //see notes
     // @ts-ignore
     clearTimeout(e.target.scrollTimeout); //clear previous timeout
-    setIsScrolling((_) => true);
+    closet.isScrolling = true;
     // @ts-ignore
     e.target.scrollTimeout = setTimeout(function () {
       const newSnappingStep =
         // @ts-ignore
-        Math.round((e.target.scrollTop / e.target.offsetHeight) * 2);
+        Math.floor((e.target.scrollTop / e.target.offsetHeight) * 2);
       // console.log(newSnappingStep.toString());
-      setIsScrolling((_) => false);
-      setScrollStep((_) => newSnappingStep);
+      closet.isScrolling = false;
+      closet.scrollStep = newSnappingStep;
     }, timeOut);
   };
 
@@ -122,14 +90,14 @@ const Closet = () => {
           className="h-96 carousel carousel-vertical rounded-box"
           onScrollCapture={scrollHandler}
         >
-          {items && items.length == 0 && (
+          {closetSnap.list && closetSnap.list.length == 0 && (
             <h1 className="text-center my-auto mx-auto text-bold text-lg">
-              {!isLoading && "No design found"}
+              {!closetSnap.isLoading && "No design found"}
             </h1>
           )}
-          {items &&
-            items.length > 0 &&
-            items.map((item, index) => (
+          {closetSnap.list &&
+            closetSnap.list.length > 0 &&
+            closetSnap.list.map((item, index) => (
               <div
                 className="relative carousel-item h-1/2 cursor-pointer 
               flex flex-col overflow-hidden rounded-xl mt-1"
@@ -139,7 +107,7 @@ const Closet = () => {
                 onClick={(_) => loadTshirtState(item.id)}
               >
                 <div className="h-full flex flex-row justify-center items-center">
-                  {Math.abs(scrollStep - index) < 3 ? (
+                  {Math.abs(closetSnap.scrollStep - index) < 3 ? (
                     <CanvasModel
                       canvasType="close"
                       canvasId={item.id}
@@ -161,9 +129,9 @@ const Closet = () => {
               </div>
             ))}
         </div>
-        {scrollStep > 0 && (
+        {closetSnap.scrollStep > 0 && (
           <a
-            href={`#slide-${scrollStep - 1}`}
+            href={`#slide-${closetSnap.scrollStep - 1}`}
             className="carousel-btn -top-4"
             onClick={linkHandler}
           >
@@ -171,18 +139,18 @@ const Closet = () => {
           </a>
         )}
 
-        {isLoading ? (
+        {closetSnap.isLoading ? (
           <a
-            href={`#slide-${scrollStep + 1}`}
+            href={`#slide-${closetSnap.scrollStep + 1}`}
             className="carousel-btn -bottom-4"
             onClick={linkHandler}
           >
             <InfinityLoading size="3xl" />
           </a>
         ) : (
-          scrollStep + 2 < items.length && (
+          closetSnap.scrollStep + 2 < closetSnap.list.length && (
             <a
-              href={`#slide-${scrollStep + 1}`}
+              href={`#slide-${closetSnap.scrollStep + 1}`}
               className="carousel-btn -bottom-4"
               onClick={linkHandler}
             >

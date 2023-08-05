@@ -8,6 +8,7 @@ import { useSnapshot } from "valtio";
 import {
   state,
   formState,
+  closet,
   // closet
 } from "../store";
 import { BiSolidError } from "react-icons/bi";
@@ -52,10 +53,11 @@ const SaveModal = () => {
         timeout: null,
       });
       const res: SaveModelResponseType = await sendToApi(saveData);
+      resetCloset();
       showFormMessage({
         type: "success",
         message: "Your design Saved Successfully." + res.model_id,
-        timeout: 2000,
+        timeout: 1200,
       });
     } catch (e) {
       showFormMessage({
@@ -67,6 +69,15 @@ const SaveModal = () => {
     } finally {
     }
     // then send a post req to server with all
+  };
+  const resetCloset = () => {
+    closet.list = [];
+    closet.page = 1;
+    closet.hasNextPage = true;
+    closet.scrollStep = 0;
+    if (snap.activeEditorTab === "closet") {
+      closet.initialCloset();
+    }
   };
   const sendToApi = async (data: StoreType): Promise<SaveModelResponseType> => {
     return new Promise(async (resolve, reject) => {

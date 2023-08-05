@@ -2,14 +2,9 @@ import { proxy } from 'valtio'
 import { qMark } from '../assets';
 import { initialState } from '../config/constants';
 import formState from './form';
-
+import closet from './closet'
 const state = proxy<StoreType>(initialState);
 
-
-
-const closet = proxy<{ list: StoreType[] }>({
-    list: []
-});
 
 const mockData: StoreType = { // T-ShirtId map->Object
     id: "T-1",

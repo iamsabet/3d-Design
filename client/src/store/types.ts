@@ -5,6 +5,7 @@ type logoPositionType = "center" | "topLeft" | "topRight" | "bottomCenter";
 
 type ShirtTypes = "logoShirt" | "stylishShirt"
 
+
 type StoreType = {
     id: string,
     title: string,
@@ -35,4 +36,14 @@ type FormStateType = {
         type: "success" | "error" | "info" | "warning",
         message: string,
     }
+}
+
+type closetType = {
+    list: StoreType[],
+    scrollStep: number,
+    page: number,
+    hasNextPage: boolean,
+    isLoading: boolean,
+    isScrolling: boolean,
+    initialCloset: Function
 }
