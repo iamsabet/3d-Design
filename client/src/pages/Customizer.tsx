@@ -4,7 +4,6 @@ import { useSnapshot } from "valtio";
 import config from "../config/config";
 import { bin, cloudSave, download } from "../assets";
 import { downloadCanvasToImage, readerResizer } from "../config/helpers";
-import { reader } from "../config/helpers";
 import {
   EditorTabs,
   FilterTabs,
@@ -25,20 +24,18 @@ import {
 import { state } from "../store";
 
 import SaveModal from "./SaveModal";
+
 const Customizer = () => {
   const snap = useSnapshot(state);
   const [logoFile, setLogoFile] = useState("");
   const [prompt, setPrompt] = useState("");
   const [generatingImg, setGeneratingImg] = useState(false);
-  const [closetComponent, setClosetComponent] = useState<JSX.Element>(<></>);
 
   // const [activeFilterTab, setActiveFilterTab] = useState<ActiveFilterTabType>({
   //   logoShirt: true,
   //   stylishShirt: false,
   // });
-  useEffect(() => {
-    generateCloset();
-  }, []);
+
   const setActiveEditorTab = (type: EditorTabNameType) => {
     state.activeEditorTab = type;
     state.modelRotation = "front";
@@ -137,12 +134,7 @@ const Customizer = () => {
     // after setting state we need to set activeFilterTab to update the UI
     setActiveFilterTab(tabName);
   };
-  const generateCloset = () => {
-    setTimeout(() => {
-      setClosetComponent((_) => <Closet />);
-      console.log("closet initiated");
-    }, 2000);
-  };
+
   const setActiveFilterTab = (tabName: string) => {
     state.activeFilterTab[tabName] = !snap.activeFilterTab[tabName];
   };
@@ -203,7 +195,7 @@ const Customizer = () => {
                   />
                 ))}
                 {generateTabContent()}
-                {closetComponent}
+                <Closet />
               </div>
             </div>
           </motion.div>

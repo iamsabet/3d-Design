@@ -1,17 +1,65 @@
 import { AnimatePresence } from "framer-motion";
 import { FiChevronDown, FiChevronUp } from "react-icons/fi";
 import CanvasModel from "../../canvas";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { state, closet, getModel } from "../../store";
 import { useSnapshot } from "valtio";
 import InfinityLoading from "../InfinityLoading";
+import axios from "axios";
+import { HOST_NAME } from "../../config/constants";
 
 const Closet = () => {
   const items: StoreType[] = closet.list;
   const [scrollStep, setScrollStep] = useState(0);
   const [isScrolling, setIsScrolling] = useState(false);
   const snap = useSnapshot(state);
+  const [page, setPage] = useState(1);
+  const [hasNextPage, setHasNextPage] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
+  useEffect(() => {
+    //
+    if (items.length === scrollStep || items.length === scrollStep + 2) {
+      if (hasNextPage && !isLoading) {
+        setIsLoading((_) => true);
+        initialCloset();
+      }
+    }
+    console.log(scrollStep);
+    return () => {
+      // cleanup function
+    };
+  }, [scrollStep]);
+  const initialCloset = () => {
+    fetchCloset()
+      .then((response) => {
+        closet.list = Array.prototype.concat(closet.list, response);
+        setPage((prevPage) => prevPage + 1);
+        setIsLoading((_) => false);
+      })
+      .catch((e) => {
+        console.error(e);
+        setIsLoading((_) => false);
+      });
+  };
+  const fetchCloset = async () => {
+    return new Promise(async (resolve, _reject) => {
+      try {
+        const response = await axios.get(
+          `${HOST_NAME}/api/v1/design/paginate?page=${page}`,
+          {
+            headers: {
+              Accept: "application/json",
+            },
+          }
+        );
 
+        setHasNextPage((_) => response.data.hasNextPage);
+        resolve(response.data.docs);
+      } catch (e) {
+        _reject(e);
+      }
+    });
+  };
   const linkHandler = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
     // console.log(isScrolling);
     if (isScrolling) {
@@ -76,7 +124,7 @@ const Closet = () => {
         >
           {items && items.length == 0 && (
             <h1 className="text-center my-auto mx-auto text-bold text-lg">
-              No design found
+              {!isLoading && "No design found"}
             </h1>
           )}
           {items &&
@@ -99,7 +147,7 @@ const Closet = () => {
                     />
                   ) : (
                     <div className="btn btn-circle">
-                      <InfinityLoading size="3xl" />
+                      <InfinityLoading size="5xl" />
                     </div>
                   )}
                 </div>
@@ -122,14 +170,25 @@ const Closet = () => {
             <FiChevronUp />
           </a>
         )}
-        {scrollStep + 2 < items.length && (
+
+        {isLoading ? (
           <a
             href={`#slide-${scrollStep + 1}`}
             className="carousel-btn -bottom-4"
             onClick={linkHandler}
           >
-            <FiChevronDown />
+            <InfinityLoading size="3xl" />
           </a>
+        ) : (
+          scrollStep + 2 < items.length && (
+            <a
+              href={`#slide-${scrollStep + 1}`}
+              className="carousel-btn -bottom-4"
+              onClick={linkHandler}
+            >
+              <FiChevronDown />
+            </a>
+          )
         )}
         {/* </motion.div> */}
       </div>

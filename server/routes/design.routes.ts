@@ -3,7 +3,7 @@ import DesignModel from "../models/design/design.ts";
 
 let paginateOptions = {
     page: 1,
-    limit: 5,
+    limit: 6,
     collation: {
         locale: 'en',
     },

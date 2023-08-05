@@ -1,12 +1,12 @@
 import Home from "./pages/Home";
 import Customizer from "./pages/Customizer";
 import CanvasModel from "./canvas";
-import useLocalStorage from "./hooks/useLocalStorage";
-import { closet } from "./store";
+// import useLocalStorage from "./hooks/useLocalStorage";
+// import { closet } from "./store";
 function App() {
-  const [closetList, _setCloset] = useLocalStorage("closet", []);
+  // const [closetList, _setCloset] = useLocalStorage("closet", []);
   // @ts-ignore
-  closet.list = closetList;
+  // closet.list = closetList;
   return (
     <main className="app transition-all ease-in">
       <Home />
