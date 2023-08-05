@@ -1,10 +1,28 @@
 import express from "express";
-import DesignModel from "../models/design/index.ts";
+import DesignModel from "../models/design/design.ts";
+
+let paginateOptions = {
+    page: 1,
+    limit: 5,
+    collation: {
+        locale: 'en',
+    },
+};
 
 const router = express.Router()
 
-router.route("/").get((req, res) => {
-    res.status(200).json({ message: "Hello from Design routes" });
+router.route("/paginate").get((req, res) => {
+    if (req.query && req.query.page) {
+        paginateOptions.page = parseInt(req.query.page as string)
+    }
+    setTimeout(() => {
+        DesignModel.paginate({}, paginateOptions).then((result) => {
+            res.status(200).json(result);
+        }).catch(e => {
+            res.status(500).json({ message: e });
+        })
+    }, 1000)
+
 })
 
 router.route("/save").post((req, res) => {

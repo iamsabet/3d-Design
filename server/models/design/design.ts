@@ -1,4 +1,5 @@
-import { Schema, model, InferSchemaType } from "mongoose";
+import mongoose, { Schema, model, InferSchemaType } from "mongoose";
+import mongoosePaginate from "mongoose-paginate-v2"
 import IDesign from "./types";
 
 const designSchema = new Schema<IDesign>({
@@ -26,6 +27,8 @@ const designSchema = new Schema<IDesign>({
 
 }, { timestamps: true })
 
+designSchema.plugin(mongoosePaginate)
+
 designSchema.pre('save', async function (next) {
     const randomInteger = (x: number) => {
         return Math.floor(Math.random()) + x;
@@ -37,6 +40,6 @@ designSchema.pre('save', async function (next) {
 })
 type DesingSchemaType = InferSchemaType<typeof designSchema>
 
-const DesignModel = model<DesingSchemaType>('design', designSchema)
+const DesignModel = model<DesingSchemaType, mongoose.PaginateModel<DesingSchemaType>>('Design', designSchema, 'design')
 
 export default DesignModel;
