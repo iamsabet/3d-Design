@@ -52,8 +52,8 @@ html {
 .closet-container{
   @apply transition-all duration-500 ease-in-out absolute left-full  glassmorphism p-2 w-[240px] rounded-md flex flex-col gap-4;
 }
-.closet-container.hid{
-  @apply -ml-[300px]
+.closet-container.hide{
+  @apply -ml-[320px]
 }
 .closet-container.show{
   @apply ml-2

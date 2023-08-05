@@ -39,6 +39,7 @@ type FormStateType = {
 }
 
 type closetType = {
+    show: boolean,
     list: StoreType[],
     scrollStep: number,
     page: number,

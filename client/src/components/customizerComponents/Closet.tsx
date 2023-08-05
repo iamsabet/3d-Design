@@ -1,16 +1,14 @@
-import { AnimatePresence } from "framer-motion";
+// import { AnimatePresence } from "framer-motion";
 import { FiChevronDown, FiChevronUp } from "react-icons/fi";
 import CanvasModel from "../../canvas";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { state, closet, getModel } from "../../store";
 import { useSnapshot } from "valtio";
 import InfinityLoading from "../InfinityLoading";
-import axios from "axios";
-import { HOST_NAME } from "../../config/constants";
-
 const Closet = () => {
   const snap = useSnapshot(state);
   const closetSnap = useSnapshot(closet);
+
   useEffect(() => {
     //
     if (
@@ -22,7 +20,6 @@ const Closet = () => {
         closet.initialCloset();
       }
     }
-    console.log(closet.scrollStep);
     return () => {
       // cleanup function
     };
@@ -78,89 +75,80 @@ const Closet = () => {
   };
 
   return (
-    <AnimatePresence>
-      {/* <motion.div */}
+    <div
+      className={`closet-container h-[${130 * 3}px] ${
+        snap.activeEditorTab === "closet" ? "show" : "hide"
+      }`}
+    >
       <div
-        // {...slideAnimation("left")}
-        className={`closet-container h-[${130 * 3}px] ${
-          snap.activeEditorTab === "closet" ? "show" : "hid"
-        }`}
+        className="h-96 carousel carousel-vertical rounded-box"
+        onScrollCapture={scrollHandler}
       >
-        <div
-          className="h-96 carousel carousel-vertical rounded-box"
-          onScrollCapture={scrollHandler}
-        >
-          {closetSnap.list && closetSnap.list.length == 0 && (
-            <h1 className="text-center my-auto mx-auto text-bold text-lg">
-              {!closetSnap.isLoading && "No design found"}
-            </h1>
-          )}
-          {closetSnap.list &&
-            closetSnap.list.length > 0 &&
-            closetSnap.list.map((item, index) => (
-              <div
-                className="relative carousel-item h-1/2 cursor-pointer 
+        {closetSnap.list && closetSnap.list.length == 0 && (
+          <h1 className="text-center my-auto mx-auto text-bold text-lg">
+            {!closetSnap.isLoading && "No design found"}
+          </h1>
+        )}
+        {closetSnap.list &&
+          closetSnap.list.length > 0 &&
+          closetSnap.list.map((item, index) => (
+            <div
+              className="relative carousel-item h-1/2 cursor-pointer 
               flex flex-col overflow-hidden rounded-xl mt-1"
-                key={index}
-                id={`slide-${index}`}
-                // @ts-ignore
-                onClick={(_) => loadTshirtState(item.id)}
-              >
-                <div className="h-full flex flex-row justify-center items-center">
-                  {Math.abs(closetSnap.scrollStep - index) < 3 ? (
-                    <CanvasModel
-                      canvasType="close"
-                      canvasId={item.id}
-                      // need to pass prompts to initiate tshirt
-                    />
-                  ) : (
-                    <div className="btn btn-circle">
-                      <InfinityLoading size="5xl" />
-                    </div>
-                  )}
-                </div>
-                <h2
-                  className="absolute bottom-2 translate-x-[-50%] left-[50%] 
+              key={index}
+              id={`slide-${index}`}
+              // @ts-ignore
+              onClick={(_) => loadTshirtState(item.id)}
+            >
+              <div className="h-full flex flex-row justify-center items-center">
+                {Math.abs(closetSnap.scrollStep - index) < 3 ? (
+                  <CanvasModel
+                    canvasType="close"
+                    canvasId={item.id}
+                    // need to pass prompts to initiate tshirt
+                  />
+                ) : (
+                  <div className="btn btn-circle">
+                    <InfinityLoading size="5xl" />
+                  </div>
+                )}
+              </div>
+              <h2
+                className="absolute bottom-2 translate-x-[-50%] left-[50%] 
                 w-full text-center h-1/12 bg-gray-600 bg-opacity-50
                 text-semibold text-white"
-                >
-                  {item.title}
-                </h2>
-              </div>
-            ))}
-        </div>
-        {closetSnap.scrollStep > 0 && (
-          <a
-            href={`#slide-${closetSnap.scrollStep - 1}`}
-            className="carousel-btn -top-4"
-            onClick={linkHandler}
-          >
-            <FiChevronUp />
-          </a>
-        )}
+              >
+                {item.title}
+              </h2>
+            </div>
+          ))}
+      </div>
+      {closetSnap.scrollStep > 0 && (
+        <a
+          href={`#slide-${closetSnap.scrollStep - 1}`}
+          className="carousel-btn -top-4"
+          onClick={linkHandler}
+        >
+          <FiChevronUp />
+        </a>
+      )}
 
-        {closetSnap.isLoading ? (
+      {closetSnap.isLoading ? (
+        <a className="carousel-btn -bottom-4" onClick={linkHandler}>
+          <InfinityLoading size="3xl" />
+        </a>
+      ) : (
+        closetSnap.scrollStep + 2 < closetSnap.list.length && (
           <a
             href={`#slide-${closetSnap.scrollStep + 1}`}
             className="carousel-btn -bottom-4"
             onClick={linkHandler}
           >
-            <InfinityLoading size="3xl" />
+            <FiChevronDown />
           </a>
-        ) : (
-          closetSnap.scrollStep + 2 < closetSnap.list.length && (
-            <a
-              href={`#slide-${closetSnap.scrollStep + 1}`}
-              className="carousel-btn -bottom-4"
-              onClick={linkHandler}
-            >
-              <FiChevronDown />
-            </a>
-          )
-        )}
-        {/* </motion.div> */}
-      </div>
-    </AnimatePresence>
+        )
+      )}
+    </div>
   );
 };
 

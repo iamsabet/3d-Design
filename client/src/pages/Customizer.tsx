@@ -21,13 +21,14 @@ import {
   Closet,
 } from "../components";
 
-import { state } from "../store";
+import { closet, state } from "../store";
 
 import SaveModal from "./SaveModal";
 import { BiArrowBack } from "react-icons/bi";
 
 const Customizer = () => {
   const snap = useSnapshot(state);
+  const closetSnap = useSnapshot(closet);
   const [logoFile, setLogoFile] = useState("");
   const [prompt, setPrompt] = useState("");
   const [generatingImg, setGeneratingImg] = useState(false);
@@ -198,7 +199,7 @@ const Customizer = () => {
                   />
                 ))}
                 {generateTabContent()}
-                <Closet />
+                {closetSnap.show && <Closet />}
               </div>
             </div>
           </motion.div>
@@ -209,9 +210,10 @@ const Customizer = () => {
               styles="w-fit px-3 py-3 text-sm rounded-full"
               handleClick={() => {
                 setActiveEditorTab("");
+                closet.show = false;
                 setTimeout(() => {
                   state.intro = true;
-                }, 50);
+                }, 40);
               }}
             />
           </motion.div>

@@ -7,7 +7,7 @@ import {
   slideAnimation,
 } from "../config/motion";
 
-import { state } from "../store";
+import { closet, state } from "../store";
 import { CustomButton } from "../components";
 
 const Home = () => {
@@ -43,7 +43,12 @@ const Home = () => {
               <CustomButton
                 type="filled"
                 title="Customize It"
-                handleClick={() => (state.intro = false)}
+                handleClick={() => {
+                  state.intro = false;
+                  setTimeout(() => {
+                    closet.show = true;
+                  }, 1500);
+                }}
                 styles="w-fit px-4 py-2.5 font-bold text-sm"
               />
             </motion.div>

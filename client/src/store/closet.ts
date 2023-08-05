@@ -35,6 +35,7 @@ const init = () => {
 
 }
 const closet = proxy<closetType>({
+    show: false,
     list: [],
     scrollStep: 0,
     page: 1,

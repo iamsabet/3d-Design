@@ -146,6 +146,8 @@ const SaveModal = () => {
       .querySelectorAll(".modal-backdrop button")[0]
       // @ts-ignore
       .click();
+    // @ts-ignore
+    titleRef.current.value = "";
   };
   //   const messagesTest = () => {
   //     // implement loading

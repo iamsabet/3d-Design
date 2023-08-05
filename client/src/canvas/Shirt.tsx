@@ -77,55 +77,57 @@ const Shirt = ({ canvasId, canvasType }: CanvasType) => {
         {/* <meshToonMaterial color={snap.color} /> */}
         {canvasType === "close" && <meshMatcapMaterial color={snap.color} />}
 
-        {snap.isFullTexture && (
-          <Decal
-            position={[0, 0, 0]}
-            rotation={[0, 0, 0]}
-            scale={1}
-            map={fullTexture}
-          />
-        )}
+        <>
+          {snap.isFullTexture && (
+            <Decal
+              position={[0, 0, 0]}
+              rotation={[0, 0, 0]}
+              scale={1}
+              map={fullTexture}
+            />
+          )}
 
-        {snap.isLogoTexture && !!logoRatio && (
-          <Decal
-            position={LogoPositions[snap.logoPosition].position}
-            rotation={LogoPositions[snap.logoPosition].rotation}
-            scale={[
-              LogoPositions[snap.logoPosition].scale,
-              LogoPositions[snap.logoPosition].scale / logoRatio,
-              LogoPositions[snap.logoPosition].scale,
-            ]}
-            // scale={[0.22, 0.44, 0.22]}
-            map={logoTexture}
-            // map-anisotropy={16}
-            depthTest={false}
-            // depthWrite={true}
-          />
-        )}
-        {leftTexture && !!leftRatio && (
-          <Decal
-            position={[0.25, 0.085, -0.015]}
-            rotation={[-(2 * Math.PI), (1 * Math.PI) / 2, 0]}
-            // since its rotated then x,y has changed
-            scale={[0.065 * leftRatio, 0.065, 0.065]}
-            map={leftTexture}
-            // map-anisotropy={16}
-            depthTest={false}
-            // depthWrite={true}
-          />
-        )}
-        {rightTexture && !!rightRatio && (
-          <Decal
-            position={[-0.25, 0.085, -0.015]}
-            rotation={[-(2 * Math.PI), (3 * Math.PI) / 2, 0]}
-            // since its rotated then x,y has changed
-            scale={[0.065 * rightRatio, 0.065, 0.065]}
-            map={rightTexture}
-            // map-anisotropy={16}
-            depthTest={false}
-            // depthWrite={true}
-          />
-        )}
+          {snap.isLogoTexture && !!logoRatio && (
+            <Decal
+              position={LogoPositions[snap.logoPosition].position}
+              rotation={LogoPositions[snap.logoPosition].rotation}
+              scale={[
+                LogoPositions[snap.logoPosition].scale,
+                LogoPositions[snap.logoPosition].scale / logoRatio,
+                LogoPositions[snap.logoPosition].scale,
+              ]}
+              // scale={[0.22, 0.44, 0.22]}
+              map={logoTexture}
+              // map-anisotropy={16}
+              depthTest={false}
+              // depthWrite={true}
+            />
+          )}
+          {leftTexture && !!leftRatio && (
+            <Decal
+              position={[0.25, 0.085, -0.015]}
+              rotation={[-(2 * Math.PI), (1 * Math.PI) / 2, 0]}
+              // since its rotated then x,y has changed
+              scale={[0.065 * leftRatio, 0.065, 0.065]}
+              map={leftTexture}
+              // map-anisotropy={16}
+              depthTest={false}
+              // depthWrite={true}
+            />
+          )}
+          {rightTexture && !!rightRatio && (
+            <Decal
+              position={[-0.25, 0.085, -0.015]}
+              rotation={[-(2 * Math.PI), (3 * Math.PI) / 2, 0]}
+              // since its rotated then x,y has changed
+              scale={[0.065 * rightRatio, 0.065, 0.065]}
+              map={rightTexture}
+              // map-anisotropy={16}
+              depthTest={false}
+              // depthWrite={true}
+            />
+          )}
+        </>
       </mesh>
     </group>
   );
