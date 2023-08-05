@@ -18,7 +18,7 @@ const Shirt = ({ canvasId, canvasType }: CanvasType) => {
   const rightTexture = useTexture(snap.rightDecal);
 
   const [logoRatio, setLogoRatio] = useState(0);
-  const [fullRatio, setFullRatio] = useState(0);
+  // const [fullRatio, setFullRatio] = useState(0);
   const [leftRatio, setleftRatio] = useState(0);
   const [rightRatio, setRightRatio] = useState(0);
 
@@ -48,7 +48,7 @@ const Shirt = ({ canvasId, canvasType }: CanvasType) => {
   };
 
   setRatio(snap.logoDecal, setLogoRatio);
-  setRatio(snap.fullDecal, setFullRatio);
+  // setRatio(snap.fullDecal, setFullRatio);
   setRatio(snap.leftDecal, setleftRatio);
   setRatio(snap.rightDecal, setRightRatio);
 

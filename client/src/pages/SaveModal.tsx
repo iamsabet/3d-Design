@@ -5,7 +5,11 @@ import InfinityLoading from "../components/InfinityLoading";
 import { HOST_NAME, MAX_FORM_TITLE_LENGTH } from "../config/constants";
 import { CustomButton } from "../components";
 import { useSnapshot } from "valtio";
-import { state, formState, closet } from "../store";
+import {
+  state,
+  formState,
+  // closet
+} from "../store";
 import { BiSolidError } from "react-icons/bi";
 import { MdCloudDone } from "react-icons/md";
 // import { makeid } from "../config/helpers";
