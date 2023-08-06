@@ -1,6 +1,6 @@
 // import React from "react";
 import { Canvas } from "@react-three/fiber";
-import { Environment, Center } from "@react-three/drei";
+import { Environment, Center, Stage } from "@react-three/drei";
 import Shirt from "./Shirt";
 import BackDrop from "./BackDrop";
 import CameraRig from "./CameraRig";
@@ -43,7 +43,11 @@ const CanvasModel = ({ canvasId, canvasType }: CanvasType) => {
         }}
       >
         <ambientLight intensity={1} />
-        <Environment preset="city" />
+
+        <Environment
+          path="/src/assets/enviroments/"
+          files="potsdamer_platz_1k.hdr"
+        />
         {canvasType === "open" && (
           <CameraRig canvasProps={{ canvasId, canvasType }}>
             <BackDrop />

@@ -74,9 +74,9 @@ interface LogoPositionsType {
 
 export const LogoPositions: LogoPositionsType = {
   "center": {
-    position: [0, -0.02, 0.15],
+    position: [0, 0.02, 0.15],
     rotation: [0, 0, 0],
-    scale: 0.22
+    scale: 0.23
   },
   "bottomCenter": {
     position: [0, -0.08, 0.15],
