@@ -1,6 +1,5 @@
-// import React from "react";
 import { Canvas } from "@react-three/fiber";
-import { Environment, Center, Stage } from "@react-three/drei";
+import { Environment, Center } from "@react-three/drei";
 import Shirt from "./Shirt";
 import BackDrop from "./BackDrop";
 import CameraRig from "./CameraRig";
@@ -15,19 +14,13 @@ const CanvasModel = ({ canvasId, canvasType }: CanvasType) => {
     setTimeout(() => {
       if (!initial) setinitial((prev) => !prev);
       // console.log("after : " + new Date());
-    }, 500);
+    }, 1000);
     // }
     return () => {};
   }, []);
   const bgColor = canvasType === "open" ? "#F5F3EF" : "#E7E2DA";
   return (
     <>
-      {/* {!initial && (
-        <div
-          className="absolute w-full h-full opacity-100 z-10 transition-all duration-500 ease-linear"
-          style={{ background: "#ffffff" }}
-        ></div>
-      )} */}
       <Canvas
         shadows
         resize={{

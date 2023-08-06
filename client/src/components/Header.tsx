@@ -2,7 +2,6 @@ import {
   BiLogoDiscordAlt,
   BiLogoGithub,
   BiLogoLinkedin,
-  BiLogoTelegram,
   BiMailSend,
 } from "react-icons/bi";
 import { useSnapshot } from "valtio";
