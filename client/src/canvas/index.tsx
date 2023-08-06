@@ -38,8 +38,9 @@ const CanvasModel = ({ canvasId, canvasType }: CanvasType) => {
         <ambientLight intensity={1} />
 
         <Environment
-          path="/src/assets/enviroments/"
-          files="potsdamer_platz_1k.hdr"
+          // path="/src/assets/enviroments/"
+          // files="potsdamer_platz_1k.hdr"
+          preset="city"
         />
         {canvasType === "open" && (
           <CameraRig canvasProps={{ canvasId, canvasType }}>
