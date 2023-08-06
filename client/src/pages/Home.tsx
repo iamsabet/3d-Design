@@ -6,7 +6,6 @@ import {
   headTextAnimation,
   slideAnimation,
 } from "../config/motion";
-
 import { closet, state } from "../store";
 import { CustomButton } from "../components";
 
@@ -16,12 +15,11 @@ const Home = () => {
     <AnimatePresence>
       {snap.intro && (
         <motion.section className="home px-3" {...slideAnimation("left")}>
-          <motion.header {...slideAnimation("down")}>
-            <img
-              src="./threejs.png"
-              alt="logo"
-              className="w-8 h-8 object-contain"
-            />
+          <motion.header
+            className="h-5 flex flex-row justify-between items-center"
+            {...slideAnimation("down")}
+          >
+            {/* empty */}
           </motion.header>
           <motion.div className="home-content" {...headContainerAnimation}>
             <motion.div {...headTextAnimation}>
@@ -36,9 +34,11 @@ const Home = () => {
               className="flex flex-col gap-5"
             >
               <p className="max-w-md font-normal text-gray-600 text-base">
-                Create your unique and exclusive shirt with our brand-new 3D
-                customization tool.<strong>Unleash your imagination</strong> and
-                define your own style.
+                Ignite your creativity with our brand-new 3D customization tool
+                and design your exclusive T-Shirt.
+                <br />
+                <strong>Unleash your imagination</strong> and redefine your
+                style with ease.
               </p>
               <CustomButton
                 type="filled"

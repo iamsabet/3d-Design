@@ -76,7 +76,7 @@ export const LogoPositions: LogoPositionsType = {
   "center": {
     position: [0, 0.02, 0.15],
     rotation: [0, 0, 0],
-    scale: 0.23
+    scale: 0.24
   },
   "bottomCenter": {
     position: [0, -0.08, 0.15],
