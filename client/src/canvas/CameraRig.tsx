@@ -4,6 +4,7 @@ import { easing } from "maath";
 import { useSnapshot } from "valtio";
 import { state } from "../store";
 import { Euler } from "three/src/math/Euler.js";
+import { modelRotations } from "../config/constants";
 // import { modelRotations } from "../config/constants";
 type Props = {
   children?: JSX.Element | JSX.Element[];
@@ -14,9 +15,9 @@ const CameraRig = ({ children, canvasProps }: Props) => {
   const group = useRef();
   const snap = useSnapshot(state); // conditional on parent CanvasType -> state || closet[canvas_id] store
   let smoothTime = 0.2;
-  // const generateModelRotation = () => {
-  //   return modelRotations[snap.modelRotation];
-  // };
+  const generateModelRotation = () => {
+    return modelRotations[snap.modelRotation];
+  };
 
   useFrame((state, delta) => {
     const isBreakPoint = window.innerWidth < 1260;
@@ -34,8 +35,8 @@ const CameraRig = ({ children, canvasProps }: Props) => {
     } else {
       if (isMobile) targetPosition = [0, 0, 2.5];
       else targetPosition = [0, 0, 2];
-      // const targ = generateModelRotation();
-      // targetRotation = new Euler(targ[0], targ[1], targ[2]);
+      const targ = generateModelRotation();
+      targetRotation = new Euler(targ[0], targ[1], targ[2]);
     }
 
     // set the model camera position
@@ -86,6 +87,7 @@ const CameraRig = ({ children, canvasProps }: Props) => {
       //       targetRotation.toArray().toString()
       //   )
       // );
+      // console.log("Here");
       easing.dampE(
         // @ts-ignore
         group.current.rotation,

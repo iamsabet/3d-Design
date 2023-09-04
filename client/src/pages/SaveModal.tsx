@@ -75,9 +75,9 @@ const SaveModal = () => {
     closet.page = 1;
     closet.hasNextPage = true;
     closet.scrollStep = 0;
-    if (snap.activeEditorTab === "closet") {
-      closet.initialCloset();
-    }
+    // if (snap.activeEditorTab === "closet") {
+    closet.initialCloset();
+    // }
   };
   const sendToApi = async (data: StoreType): Promise<SaveModelResponseType> => {
     return new Promise(async (resolve, reject) => {
