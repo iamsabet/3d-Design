@@ -25,6 +25,7 @@ import { closet, state } from "../store";
 
 import SaveModal from "./SaveModal";
 import { BiArrowBack } from "react-icons/bi";
+import LoginModal from "./LoginModal";
 
 const Customizer = () => {
   const snap = useSnapshot(state);
@@ -218,6 +219,20 @@ const Customizer = () => {
             />
           </motion.div>
           <motion.div
+            className="absolute z-10 right-3 top-3"
+            {...fadeAnimation}
+          >
+            <CustomButton
+              type="filled"
+              title={"Login"}
+              styles="w-fit px-3 py-3 text-sm rounded-full font-semibold"
+              handleClick={() => {
+                // @ts-ignore
+                window.login_modal.showModal();
+              }}
+            />
+          </motion.div>
+          <motion.div
             className="filtertabs-container"
             {...slideAnimation("up")}
           >
@@ -263,6 +278,7 @@ const Customizer = () => {
               handleClick={restoreDefault}
             />
           </motion.div>
+          <LoginModal />
           <SaveModal />
         </>
       )}
