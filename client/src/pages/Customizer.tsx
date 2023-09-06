@@ -27,6 +27,7 @@ import SaveModal from "./SaveModal";
 import { BiArrowBack } from "react-icons/bi";
 import LoginModal from "./LoginModal";
 import { user } from "../store/user";
+import UserCard from "../components/login/UserCard";
 
 const Customizer = () => {
   const snap = useSnapshot(state);
@@ -176,7 +177,7 @@ const Customizer = () => {
     // not sure what to do with it
     state.title = "edit";
   };
-  const userLoggedIn = useMemo(() => userSnap.type === null, [userSnap]);
+  const userLoggedIn = useMemo(() => userSnap.type !== null, [userSnap]);
   return (
     <AnimatePresence>
       {!snap.intro && (
@@ -223,22 +224,33 @@ const Customizer = () => {
               }}
             />
           </motion.div>
-          <motion.div
-            className="absolute z-10 right-3 top-3"
-            {...fadeAnimation}
-          >
-            <CustomButton
-              type="filled"
-              title={userLoggedIn ? "Login" : "Logout"}
-              styles="w-fit px-3 py-3 text-sm rounded-full font-semibold"
-              handleClick={() => {
-                if (userSnap.type === null) {
-                  // @ts-ignore
-                  window.login_modal.showModal();
-                }
-              }}
-            />
-          </motion.div>
+          {!userLoggedIn && (
+            <motion.div
+              className="absolute z-10 right-3 top-3"
+              {...fadeAnimation}
+            >
+              <CustomButton
+                type="filled"
+                title={"Sign In"}
+                styles="w-36 px-3 py-3 text-sm rounded-full font-semibold"
+                handleClick={() => {
+                  if (userSnap.type === null) {
+                    // @ts-ignore
+                    window.login_modal.showModal();
+                  }
+                }}
+              />
+            </motion.div>
+          )}
+          {userLoggedIn && (
+            <motion.div
+              className="absolute z-10 right-3 top-3"
+              {...fadeAnimation}
+            >
+              <UserCard />
+            </motion.div>
+          )}
+
           <motion.div
             className="filtertabs-container"
             {...slideAnimation("up")}

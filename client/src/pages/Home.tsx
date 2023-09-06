@@ -8,9 +8,21 @@ import {
 } from "../config/motion";
 import { closet, state } from "../store";
 import { CustomButton } from "../components";
+import { fetchCookie, fetchProfile } from "../components/login/Profile";
+import { useEffect } from "react";
 
 const Home = () => {
   const snap = useSnapshot(state);
+
+  useEffect(() => {
+    const token = fetchCookie("Authorization");
+    if (token) {
+      fetchProfile(token);
+    }
+
+    return () => {};
+  }, []);
+
   return (
     <AnimatePresence>
       {snap.intro && (

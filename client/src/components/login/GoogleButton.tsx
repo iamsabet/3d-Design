@@ -1,17 +1,55 @@
+import { useEffect, useState } from "react";
 import { RiArrowRightLine } from "react-icons/ri";
+import config from "../../config/config";
+import { setCookie, fetchProfile } from "./Profile";
 
 const GoogleButton = () => {
+  const [externalPopup, setExternalPopup] = useState<Window | null>(null);
+  const width: number = 430;
+  const height: number = 650;
+  const connectClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    const left = window.screenX + (window.outerWidth - width) / 2;
+    const top = window.screenY + (window.outerHeight - height) / 2;
+    const title = "Google Authentication";
+    const url = config.development.backendUrl + "/api/v1/auth/google";
+    const params = `scrollbars=no,resizable=no,location=no,toolbar=no,menubar=no,width=${width},height=${height},left=${left},top=${top}`;
+    let popup = open(url, title, params);
+    setExternalPopup(popup);
+  };
+  useEffect(() => {
+    if (!externalPopup) {
+      return;
+    }
+
+    const timer = setInterval(() => {
+      if (!externalPopup) {
+        timer && clearInterval(timer);
+        return;
+      }
+      try {
+        const currentUrl = externalPopup.location.href;
+        if (!currentUrl) {
+          return;
+        }
+
+        const searchParams = new URL(currentUrl).searchParams;
+        const token = searchParams.get("token");
+        if (token) {
+          externalPopup.close();
+          timer && clearInterval(timer);
+          setCookie("Authorization", token);
+          fetchProfile(token);
+        }
+      } catch (e) {}
+    }, 200);
+  }, [externalPopup]);
   return (
-    <a
+    <button
       className="oauth-button group"
       style={{
         border: "1px solid rgba(255, 255, 255, 0.12)",
       }}
-      href=""
-      onClick={(e) => {
-        e.preventDefault();
-        console.log("Google Oauth Clicked");
-      }}
+      onClick={connectClick}
     >
       <div className="flex justify-start gap-5">
         {/* <IoLogoGoogle size={24} className="" style={{ color: "#0A66C2" }} /> */}
@@ -30,7 +68,7 @@ const GoogleButton = () => {
       >
         <RiArrowRightLine size={20} />
       </div>
-    </a>
+    </button>
   );
 };
 

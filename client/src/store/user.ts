@@ -23,4 +23,6 @@ const resetUser = () => {
     user.profilePic = "";
 }
 
+
+
 export { user, resetUser, setUser };

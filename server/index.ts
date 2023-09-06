@@ -56,12 +56,33 @@ app.get('/api/v1/auth/google',
 app.get('/api/v1/auth/google/callback',
 
     passport.authenticate('google', { failureRedirect: '/' }),
-    (req, res) => {
+    async (req, res) => {
 
-        // Successful authentication, redirect or respond as needed
+        const googleUser = req.user as any
         // @ts-ignore
         const token = req.user?.access_token
-        res.redirect("http://localhost:5173/auth/callback?token=" + token)
+        const newUser: IUser = {
+            id: googleUser.id.toString(),
+            accessToken: token,
+            username: googleUser.email.split("@")[0].trim(),
+            name: googleUser.given_name,
+            fullName: googleUser.name,
+            profilePic: googleUser.picture,
+            email: googleUser.email,
+            type: "google"
+        }
+        try {
+            const result = await UserModel.findOneAndUpdate({ id: googleUser.id.toString() }, { ...newUser }, { new: true, upsert: true })
+            if (result) {
+                res.redirect("http://localhost:5173/auth/callback?token=" + result.accessToken)
+            }
+            else {
+                res.send({ result: false, message: "Signed-In Failed" })
+            }
+        }
+        catch (e) {
+            res.send({ result: false, message: JSON.stringify(e) })
+        }
     }
 );
 app.get('/api/v1/auth/github',

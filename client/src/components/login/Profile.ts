@@ -1,5 +1,5 @@
 import config from "../../config/config"
-import { setUser } from "../../store/user"
+import { resetUser, setUser } from "../../store/user"
 
 const setCookie = (key: string, token: string) => {
     window.localStorage.setItem(key, token)
@@ -29,8 +29,14 @@ const fetchProfile = async (token: string) => {
         return data;
     } else {
         console.log(response.status + " / " + data.message);
+        removeCookie("Authorization")
         return null;
     }
 }
 
-export { setCookie, fetchCookie, removeCookie, fetchProfile }
+const logout = () => {
+    removeCookie("Authorization");
+    resetUser()
+}
+
+export { setCookie, fetchCookie, removeCookie, fetchProfile, logout }
