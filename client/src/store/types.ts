@@ -48,3 +48,11 @@ type closetType = {
     isScrolling: boolean,
     initialCloset: Function
 }
+
+interface UserStateType {
+    type: "google" | "github" | null,
+    username: string,
+    name: string,
+    fullName: string,
+    profilePic: string,
+}

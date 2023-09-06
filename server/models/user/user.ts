@@ -8,7 +8,7 @@ const userSchema = new Schema<IUser>({
     type: { type: String, required: true },
     username: { type: String, required: true, },
     name: { type: String, required: true },
-    fullName: { type: String, required: true },
+    fullName: { type: String, default: null },
     profilePic: { type: String, default: null },
     email: { type: String, default: null },
 

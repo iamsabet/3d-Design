@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useSnapshot } from "valtio";
 import config from "../config/config";
@@ -26,9 +26,11 @@ import { closet, state } from "../store";
 import SaveModal from "./SaveModal";
 import { BiArrowBack } from "react-icons/bi";
 import LoginModal from "./LoginModal";
+import { user } from "../store/user";
 
 const Customizer = () => {
   const snap = useSnapshot(state);
+  const userSnap = useSnapshot(user);
   const closetSnap = useSnapshot(closet);
   const [logoFile, setLogoFile] = useState("");
   const [prompt, setPrompt] = useState("");
@@ -79,13 +81,16 @@ const Customizer = () => {
     try {
       // call out backend to generate an AI image
       setGeneratingImg(true);
-      const response = await fetch(config.development.backendUrl, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          prompt,
-        }),
-      });
+      const response = await fetch(
+        config.development.backendUrl + "/api/v1/dalle",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            prompt,
+          }),
+        }
+      );
       const data = await response.json();
       if (response.status === 200) {
         handleDecals(type, `data:image/png;base64,${data.photo}`);
@@ -171,7 +176,7 @@ const Customizer = () => {
     // not sure what to do with it
     state.title = "edit";
   };
-
+  const userLoggedIn = useMemo(() => userSnap.type === null, [userSnap]);
   return (
     <AnimatePresence>
       {!snap.intro && (
@@ -224,11 +229,13 @@ const Customizer = () => {
           >
             <CustomButton
               type="filled"
-              title={"Login"}
+              title={userLoggedIn ? "Login" : "Logout"}
               styles="w-fit px-3 py-3 text-sm rounded-full font-semibold"
               handleClick={() => {
-                // @ts-ignore
-                window.login_modal.showModal();
+                if (userSnap.type === null) {
+                  // @ts-ignore
+                  window.login_modal.showModal();
+                }
               }}
             />
           </motion.div>

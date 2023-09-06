@@ -27,9 +27,10 @@ const googleClient = new OAuth2Strategy({
                 'Authorization': `Bearer ${accessToken}`
             }
         });
-        profile = data;
+        let new_profile = data;
+        new_profile.access_token = accessToken
         // console.warn(profile);
-        return done(null, profile);
+        return done(null, new_profile);
     } catch (error) {
         return done(error);
     }
@@ -56,8 +57,10 @@ const githubClient = new OAuth2Strategy({
                 'Authorization': `token ${accessToken}`
             }
         });
-        profile = data;
-        return done(null, profile);
+        let new_profile = data;
+        new_profile.access_token = accessToken
+        // console.warn(profile);
+        return done(null, new_profile);
     } catch (error) {
         return done(error);
     }

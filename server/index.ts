@@ -2,12 +2,16 @@ import express from 'express'
 import * as dotenv from 'dotenv'
 import cors from 'cors'
 import bodyParser from 'body-parser'
-import dalleRoutes from './routes/dalle.routes.js'
-import designRoutes from './routes/design.routes.js'
+import dalleRoutes from './routes/dalle.routes.ts'
+import designRoutes from './routes/design.routes.ts'
+import profileRoutes from './routes/profile.routes.ts'
 import { connect } from 'mongoose';
-import { passport } from './auth/passport.js'
+import { passport } from './auth/passport.ts'
 import session from 'express-session';
 import cookieParser from 'cookie-parser'
+import IUser from './models/user/types.ts'
+import UserModel from './models/user/user.ts'
+import authMiddleware from './middlewares/auth.middleware.ts'
 const port = 8080;
 dotenv.config()
 
@@ -35,10 +39,12 @@ app.use(passport.session());
 app.use(express.json({ limit: "100mb" }))
 app.use('/api/v1/dalle', dalleRoutes)
 app.use('/api/v1/design', designRoutes)
+app.use('/api/v1/profile', authMiddleware, profileRoutes)
 
 
 
 app.get("/", (req, res) => {
+
     res.status(200).json({ message: "Hello from DALL.E" })
 })
 
@@ -48,10 +54,14 @@ app.get('/api/v1/auth/google',
 );
 
 app.get('/api/v1/auth/google/callback',
+
     passport.authenticate('google', { failureRedirect: '/' }),
     (req, res) => {
+
         // Successful authentication, redirect or respond as needed
-        res.send({ user: req.user })
+        // @ts-ignore
+        const token = req.user?.access_token
+        res.redirect("http://localhost:5173/auth/callback?token=" + token)
     }
 );
 app.get('/api/v1/auth/github',
@@ -60,9 +70,34 @@ app.get('/api/v1/auth/github',
 
 app.get('/api/v1/auth/github/callback',
     passport.authenticate('github', { failureRedirect: '/' }),
-    (req, res) => {
+    async (req, res) => {
         // Successful authentication, redirect or respond as needed
-        res.send({ user: req.user })
+
+        const githubUser = req.user as any
+        // @ts-ignore
+        const token = req.user?.access_token
+        const newUser: IUser = {
+            id: githubUser.id.toString(),
+            accessToken: token,
+            username: githubUser.login,
+            name: githubUser.name,
+            fullName: githubUser.fullName,
+            profilePic: githubUser.avatar_url,
+            email: githubUser.email,
+            type: "github"
+        }
+        try {
+            const result = await UserModel.findOneAndUpdate({ id: githubUser.id.toString() }, { ...newUser }, { new: true, upsert: true })
+            if (result) {
+                res.redirect("http://localhost:5173/auth/callback?token=" + result.accessToken)
+            }
+            else {
+                res.send({ result: false, message: "Signed-In Failed" })
+            }
+        }
+        catch (e) {
+            res.send({ result: false, message: JSON.stringify(e) })
+        }
     }
 );
 
