@@ -142,10 +142,8 @@ const SaveModal = () => {
     formState.title = title;
   };
   const closeModal = () => {
-    window.document
-      .querySelectorAll(".modal-backdrop button")[0]
-      // @ts-ignore
-      .click();
+    // @ts-ignore
+    window.document.getElementById("save_backdrop")?.children[0]?.click();
     // @ts-ignore
     titleRef.current.value = "";
   };
@@ -254,7 +252,7 @@ const SaveModal = () => {
           />
         </div>
       </form>
-      <form method="dialog" className="modal-backdrop">
+      <form method="dialog" id="save_backdrop" className="modal-backdrop">
         <button
           onClick={() => {
             setFormTitle("");

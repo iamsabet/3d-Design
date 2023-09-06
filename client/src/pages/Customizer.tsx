@@ -28,6 +28,7 @@ import { BiArrowBack } from "react-icons/bi";
 import LoginModal from "./LoginModal";
 import { user } from "../store/user";
 import UserCard from "../components/login/UserCard";
+import { fetchCookie, logout } from "../components/login/Profile";
 
 const Customizer = () => {
   const snap = useSnapshot(state);
@@ -82,11 +83,15 @@ const Customizer = () => {
     try {
       // call out backend to generate an AI image
       setGeneratingImg(true);
+      const token = fetchCookie("Authorization") ?? "";
       const response = await fetch(
         config.development.backendUrl + "/api/v1/dalle",
         {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + token,
+          },
           body: JSON.stringify({
             prompt,
           }),
@@ -96,8 +101,10 @@ const Customizer = () => {
       if (response.status === 200) {
         handleDecals(type, `data:image/png;base64,${data.photo}`);
       } else {
+        if (response.status === 401) {
+          logout();
+        }
         console.log(JSON.stringify(data));
-        alert("Error");
       }
     } catch (e) {
       debugger;
@@ -200,6 +207,10 @@ const Customizer = () => {
                       if (tab.name === snap.activeEditorTab) {
                         setActiveEditorTab("");
                       } else {
+                        if (tab.name === "aipicker" && !userLoggedIn) {
+                          // @ts-ignore
+                          window.login_modal.showModal();
+                        }
                         setActiveEditorTab(tab.name);
                       }
                     }}
@@ -276,8 +287,13 @@ const Customizer = () => {
               isFilterTab
               isActiveTab={false}
               handleClick={() => {
-                // @ts-ignore
-                window.save_modal.showModal();
+                if (!userLoggedIn) {
+                  // @ts-ignore
+                  window.login_modal.showModal();
+                } else {
+                  // @ts-ignore
+                  window.save_modal.showModal();
+                }
               }}
             />
             <Tab
