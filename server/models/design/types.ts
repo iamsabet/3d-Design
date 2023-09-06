@@ -1,3 +1,5 @@
+import { Schema } from "mongoose";
+
 type EditorTabNameType = "colorpicker" | "filepicker" | "aipicker" | "closet" | "";
 type LogoPositionType = "center" | "topLeft" | "topRight" | "bottomCenter";
 type UploadSelectedTabType = "logo" | "texture" | "left" | "right";
@@ -22,6 +24,7 @@ interface IDesign {
 
     logoPosition: LogoPositionType;
     modelRotation: ModelRotationType;
+    owner: Schema.Types.ObjectId
 }
 
 export default IDesign

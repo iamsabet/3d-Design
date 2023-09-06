@@ -24,7 +24,11 @@ const designSchema = new Schema<IDesign>({
     },
     logoPosition: { type: String, required: true },
     modelRotation: { type: String, required: true },
-
+    owner: {
+        type: Schema.Types.ObjectId,
+        ref: 'User',
+        required: true
+    }
 }, { timestamps: true })
 
 designSchema.plugin(mongoosePaginate)

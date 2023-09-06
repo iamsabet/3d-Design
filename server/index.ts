@@ -77,11 +77,11 @@ app.get('/api/v1/auth/google/callback',
                 res.redirect("http://localhost:5173/auth/callback?token=" + result.accessToken)
             }
             else {
-                res.send({ result: false, message: "Signed-In Failed" })
+                res.status(403).json({ result: false, message: "Signed-In Failed" })
             }
         }
         catch (e) {
-            res.send({ result: false, message: JSON.stringify(e) })
+            res.status(500).json({ result: false, message: JSON.stringify(e) })
         }
     }
 );
@@ -113,11 +113,11 @@ app.get('/api/v1/auth/github/callback',
                 res.redirect("http://localhost:5173/auth/callback?token=" + result.accessToken)
             }
             else {
-                res.send({ result: false, message: "Signed-In Failed" })
+                res.status(403).json({ result: false, message: "Signed-In Failed" })
             }
         }
         catch (e) {
-            res.send({ result: false, message: JSON.stringify(e) })
+            res.status(500).json({ result: false, message: JSON.stringify(e) })
         }
     }
 );

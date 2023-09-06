@@ -15,14 +15,14 @@ const authMiddleWare = async (
                 next()
             }
             else
-                res.send({ result: false, message: "Unauthorized" }).status(401)
+                res.status(401).json({ result: false, message: "Unauthorized" })
 
         } catch (e) {
-            res.send({ result: false, message: JSON.stringify(e) }).status(500)
+            res.status(500).json({ result: false, message: JSON.stringify(e) })
         }
     }
     else {
-        res.send({ result: false, message: "Unauthorized" }).status(401)
+        res.status(401).json({ result: false, message: "Unauthorized" })
     }
 }
 export default authMiddleWare;
