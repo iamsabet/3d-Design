@@ -59,7 +59,7 @@ const UserCard = () => {
             type="filled"
             title={
               <div className="flex justify-evenly items-center gap-3">
-                <span>Logout</span>
+                <span>Sign Out</span>
                 <FiLogOut />
               </div>
             }
