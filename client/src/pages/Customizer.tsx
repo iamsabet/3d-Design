@@ -107,7 +107,6 @@ const Customizer = () => {
         console.log(JSON.stringify(data));
       }
     } catch (e) {
-      debugger;
       error = true;
       console.error(JSON.stringify(e));
       window.alert(e);

@@ -1,9 +1,10 @@
 import express from "express";
 import DesignModel from "../models/design/design.ts";
+import authMiddleware from "../middlewares/auth.middleware.ts";
 
 let paginateOptions = {
     page: 1,
-    limit: 6,
+    limit: 7,
 
     sort: {
         updatedAt: -1
@@ -29,7 +30,7 @@ router.route("/paginate").get((req, res) => {
 
 })
 
-router.route("/save").post((req, res) => {
+router.route("/save").post(authMiddleware, (req, res) => {
     // setTimeout(() => {
     const { model } = req.body;
     delete model.activeEditorTab

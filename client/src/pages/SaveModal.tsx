@@ -15,6 +15,7 @@ import { BiSolidError } from "react-icons/bi";
 import { MdCloudDone } from "react-icons/md";
 // import { makeid } from "../config/helpers";
 import axios from "axios";
+import { fetchCookie } from "../components/login/Profile";
 
 const SaveModal = () => {
   const snap = useSnapshot(state);
@@ -82,6 +83,7 @@ const SaveModal = () => {
   const sendToApi = async (data: StoreType): Promise<SaveModelResponseType> => {
     return new Promise(async (resolve, reject) => {
       try {
+        const token = fetchCookie("Authorization") ?? "";
         const response = await axios.post(
           `${HOST_NAME}/api/v1/design/save`,
           { model: data },
@@ -89,6 +91,7 @@ const SaveModal = () => {
             headers: {
               "Content-Type": "application/json",
               Accept: "application/json",
+              Authorization: "Bearer " + token,
             },
           }
         );
