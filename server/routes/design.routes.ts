@@ -33,7 +33,7 @@ router.route("/paginate").get(async (req, res) => {
         const docs = await DesignModel.find(query).populate({
             path: "owner",
             model: UserModel,
-            select: "name username fullName profilePic"
+            select: "name username fullName profilePic type"
         })
             .sort({ updatedAt: "desc" })
             .skip(skipAmount)

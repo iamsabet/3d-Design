@@ -5,6 +5,14 @@ type logoPositionType = "center" | "topLeft" | "topRight" | "bottomCenter";
 
 type ShirtTypes = "logoShirt" | "stylishShirt"
 
+interface OwnerType {
+    username?: string;
+    name: string;
+    profilePic: string;
+    fullName?: string;
+    type: "github" | "google";
+}
+
 
 type StoreType = {
     id: string,
@@ -26,6 +34,7 @@ type StoreType = {
 
     logoPosition: logoPositionType,
     modelRotation: "front" | "left" | "right" | "back"
+    owner?: OwnerType
 
 }
 

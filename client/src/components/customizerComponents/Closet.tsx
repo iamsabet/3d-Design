@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import { state, closet, getModel } from "../../store";
 import { useSnapshot } from "valtio";
 import InfinityLoading from "../InfinityLoading";
+import UserChip from "./UserChip";
 const Closet = () => {
   const snap = useSnapshot(state);
   const closetSnap = useSnapshot(closet);
@@ -100,6 +101,9 @@ const Closet = () => {
               // @ts-ignore
               onClick={(_) => loadTshirtState(item.id)}
             >
+              <div className="absolute top-2 w-full h-[16px] z-10 flex justify-start gap-1 items-center">
+                {item.owner && <UserChip {...item.owner} />}
+              </div>
               <div className="h-full flex flex-row justify-center items-center">
                 {Math.abs(closetSnap.scrollStep - index) < 3 ? (
                   <CanvasModel
