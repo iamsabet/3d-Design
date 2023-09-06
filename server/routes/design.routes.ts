@@ -14,20 +14,38 @@ let paginateOptions = {
     collation: {
         locale: 'en',
     },
+
 };
 
 const router = express.Router()
 
-router.route("/paginate").get((req, res) => {
+router.route("/paginate").get(async (req, res) => {
     if (req.query && req.query.page) {
         paginateOptions.page = parseInt(req.query.page as string)
     }
     // setTimeout(() => {
-    DesignModel.paginate({}, paginateOptions).then((result) => {
-        res.status(200).json(result);
-    }).catch(e => {
-        res.status(500).json({ message: e });
-    })
+    try {
+        const pageSize = paginateOptions.limit
+        const pageNumber = paginateOptions.page
+        const skipAmount = (pageNumber - 1) * pageSize
+
+        const query = {}
+        const docs = await DesignModel.find(query).populate({
+            path: "owner",
+            model: UserModel,
+            select: "name username fullName profilePic"
+        })
+            .sort({ updatedAt: "desc" })
+            .skip(skipAmount)
+            .limit(pageSize).exec()
+
+        const total = await DesignModel.countDocuments(query)
+        const hasNextPage = total > skipAmount + docs.length
+        res.status(200).json({ docs, total, hasNextPage });
+    }
+    catch (e) {
+        res.status(500).json({ result: false, message: JSON.stringify(e) });
+    }
     // }, 1000)
 
 })
