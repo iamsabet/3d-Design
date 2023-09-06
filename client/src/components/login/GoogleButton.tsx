@@ -2,12 +2,15 @@ import { useEffect, useState } from "react";
 import { RiArrowRightLine } from "react-icons/ri";
 import config from "../../config/config";
 import { setCookie, fetchProfile } from "./Profile";
+import { IoLogoGoogle } from "react-icons/io5";
 
 const GoogleButton = () => {
   const [externalPopup, setExternalPopup] = useState<Window | null>(null);
   const width: number = 430;
   const height: number = 650;
-  const connectClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const connectClick = (
+    _e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
     const left = window.screenX + (window.outerWidth - width) / 2;
     const top = window.screenY + (window.outerHeight - height) / 2;
     const title = "Google Authentication";
@@ -52,13 +55,13 @@ const GoogleButton = () => {
       onClick={connectClick}
     >
       <div className="flex justify-start gap-5">
-        {/* <IoLogoGoogle size={24} className="" style={{ color: "#0A66C2" }} /> */}
-        <img
+        <IoLogoGoogle size={22} className="" style={{ color: "#FF1122" }} />
+        {/* <img
           src="/src/assets/google-color-icon.webp"
           alt="edit"
           width={22}
           height={22}
-        />
+        /> */}
 
         <span className="text-light-1 text-[14px]">Continue with Google</span>
       </div>

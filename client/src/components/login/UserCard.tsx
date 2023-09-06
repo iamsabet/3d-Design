@@ -1,7 +1,7 @@
 import { useSnapshot } from "valtio";
 import { user } from "../../store/user";
 import CustomButton from "../CustomButton";
-import { IoLogoGithub } from "react-icons/io5";
+import { IoLogoGithub, IoLogoGoogle } from "react-icons/io5";
 import { useState } from "react";
 import { FiLogOut } from "react-icons/fi";
 import { logout } from "./Profile";
@@ -15,7 +15,7 @@ const UserCard = () => {
         <div
           className="user-card flex justify-evenly items-center gap-3 rounded-md cursor-pointer 
             bg-yellow-500 px-3 py-2 bg-opacity-30 hover:bg-opacity-50 transition-all duration-200 ease-in-out"
-          onClick={(e) => {
+          onClick={(_e) => {
             setOpen((_open) => !_open);
           }}
         >
@@ -39,11 +39,10 @@ const UserCard = () => {
                 style={{ color: "#121212" }}
               />
             ) : userSnap.type === "google" ? (
-              <img
-                src="/src/assets/google-color-icon.webp"
-                alt="edit"
-                width={20}
-                height={20}
+              <IoLogoGoogle
+                size={22}
+                className=""
+                style={{ color: "#FF1122" }}
               />
             ) : (
               <></>

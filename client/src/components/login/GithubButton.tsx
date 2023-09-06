@@ -8,7 +8,9 @@ const GithubButton = () => {
   const [externalPopup, setExternalPopup] = useState<Window | null>(null);
   const width: number = 430;
   const height: number = 650;
-  const connectClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const connectClick = (
+    _e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
     const left = window.screenX + (window.outerWidth - width) / 2;
     const top = window.screenY + (window.outerHeight - height) / 2;
     const title = "Github Authentication";
