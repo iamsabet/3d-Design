@@ -57,7 +57,7 @@ text-gray-300 hover:bg-dark-2 hover:bg-opacity-80 hover:text-gray-100 max-w-sm;
   @apply absolute left-full ml-2 glassmorphism p-2 w-[240px] h-[260px] rounded-md flex flex-col gap-4;
 }
 .closet-container{
-  @apply transition-all duration-500 ease-in-out absolute left-full  glassmorphism p-2 w-[240px] rounded-md flex flex-col gap-4;
+  @apply transition-all duration-500 ease-in-out absolute left-full  glassmorphism px-2 py-3 w-[240px] rounded-xl flex flex-col gap-4;
 }
 .closet-container.hide{
   @apply -ml-[320px]

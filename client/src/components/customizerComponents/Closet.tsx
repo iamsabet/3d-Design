@@ -95,13 +95,13 @@ const Closet = () => {
           closetSnap.list.map((item, index) => (
             <div
               className="relative carousel-item h-1/2 cursor-pointer 
-              flex flex-col overflow-hidden rounded-xl mt-1"
+              flex flex-col overflow-hidden rounded-xl mt-0.5"
               key={index}
               id={`slide-${index}`}
               // @ts-ignore
               onClick={(_) => loadTshirtState(item.id)}
             >
-              <div className="absolute top-2 w-full h-[16px] z-10 flex justify-start gap-1 items-center">
+              <div className="absolute bottom-2 left-0 w-full h-[16px] z-10 flex justify-center gap-1 items-center">
                 {item.owner && <UserChip {...item.owner} />}
               </div>
               <div className="h-full flex flex-row justify-center items-center">
@@ -118,9 +118,9 @@ const Closet = () => {
                 )}
               </div>
               <h2
-                className="absolute bottom-2 translate-x-[-50%] left-[50%] 
-                w-full text-center h-1/12 bg-gray-600 bg-opacity-50
-                text-semibold text-white"
+                className="absolute top-0 translate-x-[-50%] left-[50%] 
+                w-full text-center h-1/12 py-1 bg-dark-2 bg-opacity-80
+                text-semibold text-white text-[14px]"
               >
                 {item.title}
               </h2>
@@ -130,7 +130,7 @@ const Closet = () => {
       {closetSnap.scrollStep > 0 && (
         <a
           href={`#slide-${closetSnap.scrollStep - 1}`}
-          className="carousel-btn -top-4"
+          className="carousel-btn -top-5 shadow-lg"
           onClick={linkHandler}
         >
           <FiChevronUp />
@@ -138,14 +138,14 @@ const Closet = () => {
       )}
 
       {closetSnap.isLoading ? (
-        <a className="carousel-btn -bottom-4" onClick={linkHandler}>
+        <a className="carousel-btn -bottom-5 shadow-lg" onClick={linkHandler}>
           <InfinityLoading size="3xl" />
         </a>
       ) : (
         closetSnap.scrollStep + 2 < closetSnap.list.length && (
           <a
             href={`#slide-${closetSnap.scrollStep + 1}`}
-            className="carousel-btn -bottom-4"
+            className="carousel-btn -bottom-5 shadow-lg"
             onClick={linkHandler}
           >
             <FiChevronDown />
